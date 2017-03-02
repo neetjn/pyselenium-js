@@ -7,8 +7,55 @@ The official Selenium bindings operate in the most natural way a user would oper
 The problem with this, is with more advanced and modern websites, these bindings may not always work as expected on custom DOMs.
 
 ### Usage
+This project was created using Python 2.7.x and Selenium 3.0.0b3.
+
 Simply place `e2ejs.py` in your prefered directory and import it into your project.
 A very clean, and simply approach to referencing this library is instantiating it in your page object or factory, so it may be referenced with your active webdriver instance.
+
+```python
+from selenium import webdriver
+from warnings import warn
+from e2ejs import E2EJS
+
+
+class Page(object):
+
+  def __init__(self, browser):
+    self.browser = browser  # specify reference to browser instance
+    self.js = E2EJS(browser=browser)  # instantiate instance of jslib
+
+  def exit(self):
+    try:
+      self.browser.stop_client()
+    except (WebDriverException, AttributeError):
+      warn('Assumed use of a local webdriver')
+    finally:
+      self.browser.quit()
+
+
+MyPage(Page):
+
+  @property
+  def div_with_text(self):
+    return self.browser.find_element_by_css_selector('div.something')
+    
+  @property
+  def ng_elements(self):
+    return self.browser.find_elements_by_css_selector('[ng-repeat]')
+    
+page = Page(browser=webdriver.Firefox())
+print page.div_with_text.text  # bindings cannot pull text from divs
+print page.js.get_text(element=page.div_with_text)
+
+for el in page.ng_elements:
+  page.js.set_scope_property(
+    element=el,
+    property='searchText',
+    value='pls halp'
+  )
+  
+page.exit()
+```
 
 ===
 Copyright (c) 2017 John Nolette Licensed under the Apache License, Version 2.0.
