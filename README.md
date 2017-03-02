@@ -48,10 +48,19 @@ print page.div_with_text.text  # bindings cannot pull text from divs
 print page.js.get_text(element=page.div_with_text)
 
 for el in page.ng_elements:
-  page.js.set_scope_property(
+  page.js.ng_set_scope_property(
     element=el,
     property='searchText',
     value='pls halp'
+  )
+  page.js.ng_trigger_handler(
+    element=el,
+    event='change'
+  )
+  page.js.ng_call_scope_function(
+    element=el,
+    func='updateSearch',
+    params=[True, 40]
   )
   
 page.exit()
