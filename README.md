@@ -4,7 +4,9 @@ Lightweight, Python module to execute frequently used javascript functionality o
 ### About
 **pyselenium-js** is a very simple, lightweight module that helps relieve some of the burden of E2E testing with the official Selenium bindings.
 The official Selenium bindings operate in the most natural way a user would operate against a given web page.
-The problem with this, is with more advanced and modern websites, these bindings may not always work as expected on custom DOMs.
+The problem with this, is with more advanced and modern websites, these bindings may not always work as expected on certain/custom DOMs.
+
+An example of this being a div tag taking keyboard input, where div tags do not support the `onfocus` event listener by design -- and the selenium bindings invoke this before attempting to send input to the target DOM.
 
 ### Usage
 This project was created using Python 2.7.x and Selenium 3.0.0b3.
@@ -38,11 +40,11 @@ MyPage(Page):
   @property
   def div_with_text(self):
     return self.browser.find_element_by_css_selector('div.something')
-    
+
   @property
   def ng_elements(self):
     return self.browser.find_elements_by_css_selector('[ng-repeat]')
-    
+
 page = Page(browser=webdriver.Firefox())
 print page.div_with_text.text  # bindings cannot pull text from divs
 print page.js.get_text(element=page.div_with_text)
@@ -62,9 +64,10 @@ for el in page.ng_elements:
     func='updateSearch',
     params=[True, 40]
   )
-  
+
 page.exit()
 ```
 
-===
+---
+
 Copyright (c) 2017 John Nolette Licensed under the Apache License, Version 2.0.
