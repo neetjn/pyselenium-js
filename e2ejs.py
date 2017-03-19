@@ -25,6 +25,17 @@ class E2EJS(object):
     def __init__(self, browser):
         self.browser = browser
 
+    def is_visible(self, element):
+        """
+        :Description: Get's the visibility of the provided target element.
+        :param element: Element for browser instance to target.
+        :return: bool
+        """
+        return self.browser.execute_script(
+            'return arguments[0].offsetWidth || arguments[0].offsetHeight || arguments[0].getClientRects().length;',
+            element
+        )
+
     def click(self, element):
         """
         :Description: Execute the `click` event on the target element.
@@ -38,7 +49,7 @@ class E2EJS(object):
         :param element: Element for browser instance to target.
         """
         self.browser.execute_script(
-            'var dc = document.createEvent("mouseEvent"); dc.initEvent("dblclick", true, true); arguments[0].dispatchEvent(dc);',
+            'var e = document.createEvent("mouseEvent"); e.initEvent("dblclick", true, true); arguments[0].dispatchEvent(e);',
             element
         )
 
@@ -69,7 +80,10 @@ class E2EJS(object):
         :param attribute: Attribute of target element to return.
         :return: basestring
         """
-        return self.browser.execute_script('return arguments[0].getAttribute("%s");' % attribute, element)
+        return self.browser.execute_script(
+            'return arguments[0].getAttribute("%s");' % attribute,
+            element
+        )
 
     def set_attribute(self, element, attribute, value):
         """
@@ -78,7 +92,10 @@ class E2EJS(object):
         :param attribute: Attribute of target element to modify.
         :param value: Value of target element's attribute to modify.
         """
-        self.browser.execute_script('arguments[0].setAttribute("%s", "%s");' % (attribute, value), element)
+        self.browser.execute_script(
+            'arguments[0].setAttribute("%s", "%s");' % (attribute, value),
+            element
+        )
 
     def get_property(self, element, property):
         """
@@ -87,10 +104,7 @@ class E2EJS(object):
         :param element: Element for browser instance to target.
         :param property: Property of target element to return.
         """
-        return self.browser.execute_script(
-            'return arguments[0]["%s"];' % property,
-            element
-        )
+        return self.browser.execute_script('return arguments[0]["%s"];' % property, element)
 
     def set_property(self, element, property, value):
         """
@@ -168,31 +182,6 @@ class E2EJS(object):
         """
         self.browser.execute_script('arguments[0].scrollIntoView();', element)
 
-    def jq_click(self, element):
-        """
-        :Description: Execute the `click` event on the target element.
-        :Warning: This method relies on JQuery.
-        :param element: Element for browser instance to target.
-        """
-        self.browser.execute_script('$(arguments[0]).click();', element)
-
-    def jq_dbl_click(self, element):
-        """
-        :Description: Execute the `dbclick` event on the target element.
-        :Warning: This method relies on JQuery.
-        :param element: Element for browser instance to target.
-        """
-        self.browser.execute_script('$(arguments[0]).dblclick();', element)
-
-    def jq_trigger_event(self, element, event):
-        """
-        :Description: Trigger specified event of the given element, will trickle into parent scope when necessary.
-        :Warning: This method relies on JQuery.
-        :param element: Element for browser instance to target.
-        :param element: Element for browser instance to target.
-        """
-        self.browser.execute_script('$(arguments[0]).trigger("%s");' % event, element)
-
     def ng_get_text(self, element):
         """
         :Description: Will return the DOM's value, if not found will default to `innerHTML`.
@@ -220,6 +209,19 @@ class E2EJS(object):
         """
         self.browser.execute_script('angular.element(arguments[0]).toggleClass("%s");' % target, element)
 
+     def __property(self, property):
+        """
+        :Description: Turn nested properties into object tree.
+        :param property: Property to clean.
+        :type property: basestring
+        :return: basestring
+        """
+        pat = re.compile('[a-z]{0,}.')
+        results = pat.findall(property)
+        for i in range(0, len(results)):
+            results[i] = ("['%s']" % results[i]).replace('.', '')
+        return ''.join(results)
+
     def ng_get_scope_property(self, element, property):
         """
         :Description: Will return value of property of element's scope.
@@ -229,7 +231,7 @@ class E2EJS(object):
         :return: basestring
         """
         return self.browser.execute_script(
-            'return angular.element(arguments[0]).scope()["%s"];' % property,
+            'return angular.element(arguments[0]).scope()%s;' % self.__property(property=property),
             element
         )
 
@@ -242,7 +244,7 @@ class E2EJS(object):
         :param value: Value to specify to angular element's scope's property.
         """
         self.browser.execute_script(
-            'angular.element(arguments[0]).scope()["%s"] = "%s";' % (property, value),
+            'angular.element(arguments[0]).scope()%s = "%s";' % (self.__property(property=property), value),
             element
         )
 
@@ -265,9 +267,60 @@ class E2EJS(object):
             elif isinstance(param, bool):
                 param_str += '%s,' % 'true' if param else 'false'
         if param_str.endswith(','):
-            param_str = param_str.replace(param_str[len(param_str)-1:len(param_str)], '')
+            param_str = param_str.replace(param_str[-1], '')
         self.browser.execute_script(
             'angular.element(arguments[0]).scope().%s(%s);' % (func, param_str),
+            element
+        )
+
+    def ng_get_ctrl_property(self, element, property):
+        """
+        :Description: Will return value of property of element's controller.
+        :Warning: This will only work for angular elements.
+        :param element: Element for browser instance to target.
+        :param property: Property of element's angular controller to target.
+        :return: basestring
+        """
+        return self.browser.execute_script(
+            'return angular.element(arguments[0]).controller()%s;' % self.__property(property=property),
+            element
+        )
+
+    def ng_set_ctrl_property(self, element, property, value):
+        """
+        :Description: Will set value of property of element's controller.
+        :Warning: This will only work for angular elements.
+        :param element: Element for browser instance to target.
+        :param property: Property of element's angular scope to target.
+        :param value: Value to specify to angular element's controller's property.
+        """
+        self.browser.execute_script(
+            'angular.element(arguments[0]).controller()%s = "%s";' % (self.__property(property=property), value),
+            element
+        )
+
+    def ng_call_ctrl_function(self, element, func, params):
+        """
+        :Description: Will execute controller function with provided parameters.
+        :param element: Element for browser instance to target.
+        :param func: Function to execute from angular element controller.
+        :type func: basestring
+        :param params: List of parameters to pass to target function.
+        :type params: list
+        """
+        param_str = ''
+        numeric = (int, float)
+        for param in params:
+            if isinstance(param, basestring):
+                param_str += '"%s",' % param
+            elif isinstance(param, numeric):
+                param_str += '%s,' % param
+            elif isinstance(param, bool):
+                param_str += '%s,' % 'true' if param else 'false'
+        if param_str.endswith(','):
+            param_str = param_str.replace(param_str[-1] '')
+        self.browser.execute_script(
+            'angular.element(arguments[0]).controller().%s(%s);' % (func, param_str),
             element
         )
 
