@@ -182,6 +182,14 @@ class E2EJS(object):
         """
         self.browser.execute_script('arguments[0].scrollIntoView();', element)
 
+    def ng_enable_debugging(self):
+        """
+        :Description: Enables angular debugging on given webpage.
+        """
+        self.browser.execute_script(
+            'angular.reloadWithDebugInfo()'
+        )
+
     def ng_get_text(self, element):
         """
         :Description: Will return the DOM's value, if not found will default to `innerHTML`.
@@ -209,6 +217,18 @@ class E2EJS(object):
         """
         self.browser.execute_script('angular.element(arguments[0]).toggleClass("%s");' % target, element)
 
+    def ng_trigger_event_handler(self, element, event):
+        """
+        :Description: Trigger angular event handler of element.
+        :Warning: This will only work for angular elements.
+        :param element: Element for browser instance to target.
+        :param event: Event to trigger.
+        """
+        self.browser.execute_script(
+            'angular.element(arguments[0]).triggerHandler("%s");' % event,
+            element
+        )
+
      def __property(self, property):
         """
         :Description: Turn nested properties into object tree.
@@ -225,7 +245,7 @@ class E2EJS(object):
     def ng_get_scope_property(self, element, property):
         """
         :Description: Will return value of property of element's scope.
-        :Warning: This will only work for angular elements.
+        :Warning: Requires angular debugging to be enabled.
         :param element: Element for browser instance to target.
         :param property: Property of element's angular scope to target.
         :return: basestring
@@ -238,7 +258,7 @@ class E2EJS(object):
     def ng_set_scope_property(self, element, property, value):
         """
         :Description: Will set value of property of element's scope.
-        :Warning: This will only work for angular elements.
+        :Warning: Requires angular debugging to be enabled.
         :param element: Element for browser instance to target.
         :param property: Property of element's angular scope to target.
         :param value: Value to specify to angular element's scope's property.
@@ -251,6 +271,7 @@ class E2EJS(object):
     def ng_call_scope_function(self, element, func, params=[]):
         """
         :Description: Will execute scope function with provided parameters.
+        :Warning: Requires angular debugging to be enabled.
         :param element: Element for browser instance to target.
         :param func: Function to execute from angular element scope.
         :type func: basestring
@@ -276,7 +297,7 @@ class E2EJS(object):
     def ng_get_ctrl_property(self, element, property):
         """
         :Description: Will return value of property of element's controller.
-        :Warning: This will only work for angular elements.
+        :Warning: Requires angular debugging to be enabled.
         :param element: Element for browser instance to target.
         :param property: Property of element's angular controller to target.
         :return: basestring
@@ -289,7 +310,7 @@ class E2EJS(object):
     def ng_set_ctrl_property(self, element, property, value):
         """
         :Description: Will set value of property of element's controller.
-        :Warning: This will only work for angular elements.
+        :Warning: Requires angular debugging to be enabled.
         :param element: Element for browser instance to target.
         :param property: Property of element's angular scope to target.
         :param value: Value to specify to angular element's controller's property.
@@ -302,6 +323,7 @@ class E2EJS(object):
     def ng_call_ctrl_function(self, element, func, params):
         """
         :Description: Will execute controller function with provided parameters.
+        :Warning: Requires angular debugging to be enabled.
         :param element: Element for browser instance to target.
         :param func: Function to execute from angular element controller.
         :type func: basestring
@@ -321,17 +343,5 @@ class E2EJS(object):
             param_str = param_str.replace(param_str[-1] '')
         self.browser.execute_script(
             'angular.element(arguments[0]).controller().%s(%s);' % (func, param_str),
-            element
-        )
-
-    def ng_trigger_event_handler(self, element, event):
-        """
-        :Description: Trigger angular event handler of element.
-        :Warning: This will only work for angular elements.
-        :param element: Element for browser instance to target.
-        :param event: Event to trigger.
-        """
-        self.browser.execute_script(
-            'angular.element(arguments[0]).triggerHandler("%s");' % event,
             element
         )
