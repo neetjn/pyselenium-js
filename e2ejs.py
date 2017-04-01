@@ -25,6 +25,14 @@ class E2EJS(object):
     def __init__(self, browser):
         self.browser = browser
 
+    def open_window(location):
+        """
+        :Description: Open a new tab or window to the location specified.
+        :param location: Location for new tab or window to target.
+        :type location: basestring
+        """
+        self.browser.execute_script('window.open("%s");' % location)
+
     def is_visible(self, element):
         """
         :Description: Get's the visibility of the provided target element.
@@ -32,7 +40,7 @@ class E2EJS(object):
         :return: bool
         """
         return self.browser.execute_script(
-            'return arguments[0].offsetWidth || arguments[0].offsetHeight || arguments[0].getClientRects().length;',
+            'return !!(arguments[0].offsetWidth || arguments[0].offsetHeight || arguments[0].getClientRects().length);',
             element
         )
 
