@@ -147,6 +147,19 @@ class E2EJS(object):
             property='innerText'
         )
 
+    def get_raw_text(self, element):
+        """
+        :Description: Return the text content between the tags of the given element.
+        :Info: This may be helpful for reading text from elements that do not support the `value` property.
+        :Warning: This will return the raw text content of the DOM's child scope.
+        :param element: Element for browser instance to target.
+        :return: basestring
+        """
+        return self.get_property(
+            element=element,
+            property='innerHTML'
+        )
+
     def trigger_event(self, element, event):
         """
         :Description: Trigger specified event of the given element.
