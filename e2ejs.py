@@ -100,8 +100,27 @@ class E2EJS(object):
         :param attribute: Attribute of target element to modify.
         :param value: Value of target element's attribute to modify.
         """
+        if value is None:
+            exec_string = 'arguments[0].setAttribute("%s", null);' % attribute
+        elif isinstance(value, bool):
+            exec_string = 'arguments[0].setAttribute("%s", %s);' % (attribute, 'false' if not value else 'true')
+        elif isinstance(value, (int, float)):
+            exec_string = 'arguments[0].setAttribute("%s", %s);' % (attribute, value)
+        else:
+            exec_string = 'arguments[0].setAttribute("%s", "%s");' % (attribute, value)
         self.browser.execute_script(
-            'arguments[0].setAttribute("%s", "%s");' % (attribute, value),
+            exec_string,
+            element
+        )
+
+    def remove_attribute(self, element, attribute):
+        """
+        :Description: Remove the given attribute from the target element.
+        :param element: Element for browser instance to target.
+        :param attribute: Attribute of target element to remove.
+        """
+        self.browser.execute_script(
+            'arguments[0].removeAttribute("%s");' % attribute,
             element
         )
 
@@ -122,7 +141,18 @@ class E2EJS(object):
         :param property: Property of target element to modify.
         :param value: Value of target element's property to modify.
         """
-        self.browser.execute_script('arguments[0]["%s"] = "%s";' % (property, value), element)
+        if value is None:
+            exec_string = 'arguments[0]["%s"] = null;' % property
+        elif isinstance(value, bool):
+            exec_string = 'arguments[0]["%s"] = value;' % (property, 'false' if not value else 'true')
+        elif isinstance(value, (int, float)):
+            exec_string = 'arguments[0]["%s"] = %s;' % (property, value)
+        else:
+            exec_string = 'arguments[0]["%s"] = "%s";' % (property, value)
+        self.browser.execute_script(
+            exec_string,
+            element
+        )
 
     def get_value(self, element):
         """
