@@ -25,6 +25,21 @@ class E2EJS(object):
     def __init__(self, browser):
         self.browser = browser
 
+    def console_logger(self):
+        """
+        :Description: Override browser console for log and error store.
+        :Source: https://github.com/neetVeritas/pyselenium-js/issues/9#issuecomment-304284471
+        :Warning: This will only enable console logging per session.
+        """
+        self.browser.execute_script('var _0x5232=["\x24\x63\x6F\x6E\x73\x6F\x6C\x65","\x24\x6C\x6F\x67\x73","\x24\x65\x72\x72\x6F\x72\x73","\x24\x77\x61\x72\x6E\x69\x6E\x67\x73","\x61\x73\x73\x65\x72\x74","\x63\x6C\x65\x61\x72","\x67\x72\x6F\x75\x70","\x67\x72\x6F\x75\x70\x43\x6F\x6C\x6C\x61\x70\x73\x65\x64","\x67\x72\x6F\x75\x70\x45\x6E\x64","\x69\x6E\x66\x6F","\x74\x61\x62\x6C\x65","\x74\x69\x6D\x65","\x74\x69\x6D\x65\x45\x6E\x64","\x74\x72\x61\x63\x65","\x6C\x6F\x67","\x70\x72\x6F\x74\x6F\x74\x79\x70\x65","\x70\x75\x73\x68","\x65\x72\x72\x6F\x72","\x65\x78\x63\x65\x70\x74\x69\x6F\x6E","\x77\x61\x72\x6E","\x64\x75\x6D\x70","\x73\x74\x72\x69\x6E\x67\x69\x66\x79","\x63\x6F\x6E\x73\x6F\x6C\x65"];function Logger(){this[_0x5232[0]]= console;this[_0x5232[1]]= [];this[_0x5232[2]]= [];this[_0x5232[3]]= [];this[_0x5232[4]]= this[_0x5232[0]][_0x5232[4]];this[_0x5232[5]]= this[_0x5232[0]][_0x5232[5]];this[_0x5232[6]]= this[_0x5232[0]][_0x5232[6]];this[_0x5232[7]]= this[_0x5232[0]][_0x5232[7]];this[_0x5232[8]]= this[_0x5232[0]][_0x5232[8]];this[_0x5232[9]]= this[_0x5232[0]][_0x5232[9]];this[_0x5232[10]]= this[_0x5232[0]][_0x5232[10]];this[_0x5232[11]]= this[_0x5232[0]][_0x5232[11]];this[_0x5232[12]]= this[_0x5232[0]][_0x5232[12]];this[_0x5232[13]]= this[_0x5232[0]][_0x5232[13]]}Logger[_0x5232[15]][_0x5232[14]]= function(_0x8424x2){this[_0x5232[1]][_0x5232[16]](_0x8424x2);this[_0x5232[0]][_0x5232[14]](_0x8424x2)};Logger[_0x5232[15]][_0x5232[17]]= function(_0x8424x3){this[_0x5232[2]][_0x5232[16]](_0x8424x3);this[_0x5232[0]][_0x5232[17]](_0x8424x3)};Logger[_0x5232[15]][_0x5232[18]]= function(_0x8424x4){this[_0x5232[2]][_0x5232[16]](_0x8424x4);this[_0x5232[0]][_0x5232[18]](_0x8424x4)};Logger[_0x5232[15]][_0x5232[19]]= function(_0x8424x2){this[_0x5232[3]][_0x5232[16]](_0x8424x2);this[_0x5232[0]][_0x5232[19]](_0x8424x2)};Logger[_0x5232[15]][_0x5232[20]]= function(){return JSON[_0x5232[21]]({logs:this[_0x5232[1]],errors:this[_0x5232[2]],warnings:this[_0x5232[3]]})};window[_0x5232[22]]=  new Logger()')
+
+    def console_dump(self):
+        """
+        :Description: Return console logs as stringified JSON structure.
+        :Warning: This will only work once `console_logger` is executed.
+        """
+        return self.browser.execute_script('return console.dump()')
+
     def open_window(location):
         """
         :Description: Open a new tab or window to the location specified.
