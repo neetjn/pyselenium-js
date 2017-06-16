@@ -45,7 +45,7 @@ MyPage(Page):
   def ng_elements(self):
     return self.browser.find_elements_by_css_selector('[ng-repeat]')
 
-page = Page(browser=webdriver.Firefox())
+page = MyPage(browser=webdriver.Firefox())
 print page.div_with_text.text  # bindings cannot pull text from divs
 print page.js.get_text(element=page.div_with_text)
 
