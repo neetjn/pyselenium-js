@@ -24,6 +24,33 @@ class E2EJS(object):
     """
     def __init__(self, browser):
         self.browser = browser
+		
+	def wait(self, condition, element, interval=500):
+        """
+        :Description: Create an interval in vm.window, will clear interval after condition met.
+        :element: Element to target
+        :param condition: Condition in javascript to pass to interval.
+        :example: '$el.innerText = "cheesecake"'
+        :type condition: basestring
+        :param interval: Time in milliseconds to execute interval.
+        :type interval: int or float
+        :return: basestring
+        """
+        id = lambda: str(uuid.uuid1())[:8]
+        dom = id()
+        handle = id()
+        self.browser.execute_script(
+            'window["$%s"]=arguments[0];window["$%s"]=window.setInterval(function(){if(%s){(window.clearInterval(window["$%s"])||true)&&(window["$%s"]=-1); delete window["$%s"];}}, %s)' % (
+                dom, handle, condition.replace('$el', 'window["$%s"]' % dom), handle, handle, dom, interval
+            ), element
+        )
+        return handle
+
+    def wait_status(self, handle):
+        """
+        :Description: Check the status of browser wait.
+        """
+        return self.browser.execute_script('return window["$%s"] == -1' % handle)
 
     def console_logger(self):
         """
