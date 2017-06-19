@@ -57,6 +57,9 @@ class E2EJS(object):
     def wait_status(self, handle):
         """
         :Description: Check the status of browser wait.
+        :param handle: Interval handle returned from `self.wait`.
+        :type handle: basestring
+        :return: bool
         """
         return self.browser.execute_script('return window["$%s"] == -1' % handle)
 
