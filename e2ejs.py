@@ -25,25 +25,33 @@ class E2EJS(object):
     def __init__(self, browser):
         self.browser = browser
 
-    def wait(self, condition, element, interval=500):
+    def wait(self, condition, element=None, interval=500):
         """
-        :Description: Create an interval in vm.window, will clear interval after condition met.
-        :element: Element to target
+        :Description: Create an interval in js engine window, will clear interval after condition met.
         :param condition: Condition in javascript to pass to interval.
         :example: '$el.innerText = "cheesecake"'
         :type condition: basestring
+        :element: Optional element to target in condition -- will be aliased to '$el' in conditional.
+        :type element: WebElement
         :param interval: Time in milliseconds to execute interval.
         :type interval: int or float
         :return: basestring
         """
         id = lambda: str(uuid.uuid1())[:8]
-        dom = id()
         handle = id()
-        self.browser.execute_script(
-            'window["$%s"]=arguments[0];window["$%s"]=window.setInterval(function(){if(%s){(window.clearInterval(window["$%s"])||true)&&(window["$%s"]=-1); delete window["$%s"];}}, %s)' % (
-                dom, handle, condition.replace('$el', 'window["$%s"]' % dom), handle, handle, dom, interval
-            ), element
-        )
+        if element:
+            dom = id()
+            self.browser.execute_script(
+                'window["$%s"]=arguments[0];window["$%s"]=window.setInterval(function(){if(%s){(window.clearInterval(window["$%s"])||true)&&(window["$%s"]=-1); delete window["$%s"];}}, %s)' % (
+                    dom, handle, condition.replace('$el', 'window["$%s"]' % dom), handle, handle, dom, interval
+                ), element
+            )
+        else:
+            self.browser.execute_script(
+                'window["$%s"]=window.setInterval(function(){if(%s){(window.clearInterval(window["$%s"])||true)&&(window["$%s"]=-1);}}, %s)' % (
+                    handle, condition, handle, handle, interval
+                )
+            )
         return handle
 
     def wait_status(self, handle):
