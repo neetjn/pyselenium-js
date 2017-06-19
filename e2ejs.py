@@ -24,8 +24,8 @@ class E2EJS(object):
     """
     def __init__(self, browser):
         self.browser = browser
-		
-	def wait(self, condition, element, interval=500):
+
+    def wait(self, condition, element, interval=500):
         """
         :Description: Create an interval in vm.window, will clear interval after condition met.
         :element: Element to target
