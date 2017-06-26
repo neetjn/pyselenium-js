@@ -333,7 +333,7 @@ class E2EJS(object):
             element
         )
 
-     def __property(self, property):
+    def __property(self, property):
         """
         :Description: Turn nested properties into object tree.
         :param property: Property to clean.
