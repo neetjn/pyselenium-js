@@ -9,7 +9,7 @@ setup(
     author_email='john@neetgroup.net',
     license='Apache2',
     classifiers=[
-        'Development Status :: 2 - Beta',
+        'Development Status :: 4 - Beta',
         'Intended Audience :: Quality Assurance',
         'License :: OSI Approved :: Apache Software License',
         'Programming Language :: Python :: 2.7'
