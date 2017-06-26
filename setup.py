@@ -10,7 +10,7 @@ setup(
     license='Apache2',
     classifiers=[
         'Development Status :: 4 - Beta',
-        'Intended Audience :: Quality Assurance',
+        'Intended Audience :: Developers',
         'License :: OSI Approved :: Apache Software License',
         'Programming Language :: Python :: 2.7'
     ],
