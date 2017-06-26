@@ -9,15 +9,19 @@ The problem with this, is with more advanced and modern websites, these bindings
 An example of this being a div tag taking keyboard input, where div tags do not support the `onfocus` event listener by design -- and the selenium bindings invoke this before attempting to send input to the target DOM.
 
 ### Usage
-This project was created using Python 2.7.x and Selenium 3.0.0b3.
+This project was created using Python 2.7.x and Selenium 3.0.0b3. **pyselenium-js** can be installed using pip like so,
 
-Simply place `e2ejs.py` in your prefered directory and import it into your project.
+```bash
+pip install pyselenium-js
+```
+
+Simply import `E2EJS` from `pyselenium-js`.
 A very clean, and simply approach to referencing this library is instantiating it in your page object or factory, so it may be referenced with your active webdriver instance.
 
 ```python
 from selenium import webdriver
 from warnings import warn
-from e2ejs import E2EJS
+from pyseleniumjs import E2EJS
 
 
 class Page(object):
