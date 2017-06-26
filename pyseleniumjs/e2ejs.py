@@ -15,6 +15,8 @@
 # specific language governing permissions and limitations
 # under the License.
 
+import uuid, re
+
 class E2EJS(object):
     """
     :Description: Packaged library for javascript operations.
@@ -77,14 +79,6 @@ class E2EJS(object):
         :Warning: This will only work once `console_logger` is executed.
         """
         return self.browser.execute_script('return console.dump()')
-
-    def open_window(location):
-        """
-        :Description: Open a new tab or window to the location specified.
-        :param location: Location for new tab or window to target.
-        :type location: basestring
-        """
-        self.browser.execute_script('window.open("%s");' % location)
 
     def is_visible(self, element):
         """
@@ -197,7 +191,7 @@ class E2EJS(object):
         if value is None:
             exec_string = 'arguments[0]["%s"] = null;' % property
         elif isinstance(value, bool):
-            exec_string = 'arguments[0]["%s"] = value;' % (property, 'false' if not value else 'true')
+            exec_string = 'arguments[0]["%s"] = %s;' % (property, 'false' if not value else 'true')
         elif isinstance(value, (int, float)):
             exec_string = 'arguments[0]["%s"] = %s;' % (property, value)
         else:
@@ -333,7 +327,7 @@ class E2EJS(object):
             element
         )
 
-     def __property(self, property):
+    def __property(self, property):
         """
         :Description: Turn nested properties into object tree.
         :param property: Property to clean.
@@ -444,7 +438,7 @@ class E2EJS(object):
             elif isinstance(param, bool):
                 param_str += '%s,' % 'true' if param else 'false'
         if param_str.endswith(','):
-            param_str = param_str.replace(param_str[-1] '')
+            param_str = param_str.replace(param_str[-1], '')
         self.browser.execute_script(
             'angular.element(arguments[0]).controller().%s(%s);' % (func, param_str),
             element
