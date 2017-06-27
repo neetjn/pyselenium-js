@@ -14,8 +14,5 @@ setup(
         'License :: OSI Approved :: Apache Software License',
         'Programming Language :: Python :: 2.7'
     ],
-    packages=find_packages(),
-    install_requires=[
-        'selenium>=3.0.0b3'
-    ]
+    packages=find_packages()
 )
