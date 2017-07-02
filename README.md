@@ -1,4 +1,7 @@
 # pyselenium-js
+![https://travis-ci.org/neetVeritas/pyselenium-js.svg?branch=master](https://travis-ci.org/neetVeritas/pyselenium-js.svg?branch=master)
+[![PyPI version](https://badge.fury.io/py/pyseleniumjs.svg)](https://badge.fury.io/py/pyseleniumjs)
+
 Lightweight, Python module to execute frequently used javascript functionality on a Selenium webdriver.
 
 ### About
