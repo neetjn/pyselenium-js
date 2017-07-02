@@ -1,6 +1,0 @@
-- hosts: localhost
-  connection: local
-  sudo: yes
-  tasks:
-  - pip: requirements={{ playbook_dir }}/requirements.txt
-         virtualenv={{ playbook_dir }}/venv

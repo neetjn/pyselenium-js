@@ -4,3 +4,6 @@ eggs
 dist/
 build/
 .vscode/
+
+examples/npm-debug.log
+examples/node_modules
