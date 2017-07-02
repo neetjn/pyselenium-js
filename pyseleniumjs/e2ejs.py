@@ -126,7 +126,8 @@ class E2EJS(object):
         :type element: WebElement
         """
         self.browser.execute_script(
-            'var e = document.createEvent("mouseEvent"); e.initEvent("dblclick", true, true); arguments[0].dispatchEvent(e);',
+            'var e = document.createEvent("mouseEvent"); e.initEvent("dblclick", true, true); \
+            arguments[0].dispatchEvent(e);',
             element
         )
 
@@ -370,7 +371,7 @@ class E2EJS(object):
         :return: basestring
         """
         return self.browser.execute_script(
-            'return angular.element(arguments[0]).scope()%s;' % self.__d2b_notification(
+            'return angular.element(arguments[0]).scope()%s;' % self.__d2b_notation(
                 prop=prop
             ), element
         )
@@ -388,7 +389,7 @@ class E2EJS(object):
         """
         self.browser.execute_script(
             'angular.element(arguments[0]).scope()%s = "%s";' % (
-                self.__d2b_notification(prop=prop), value
+                self.__d2b_notation(prop=prop), self.__type2js(value=value)
             ), element
         )
 
