@@ -15,7 +15,9 @@
 # specific language governing permissions and limitations
 # under the License.
 
-import uuid, re
+import uuid
+import re
+import json
 
 class E2EJS(object):
     """
@@ -77,6 +79,7 @@ class E2EJS(object):
         """
         :Description: Return console logs as stringified JSON structure.
         :Warning: This will only work once `console_logger` is executed.
+        :return: basestring
         """
         return self.browser.execute_script('return console.dump()')
 
@@ -84,17 +87,20 @@ class E2EJS(object):
         """
         :Description: Get's the visibility of the provided target element.
         :param element: Element for browser instance to target.
+        :type element: WebElement
         :return: bool
         """
-        return self.browser.execute_script(
-            'return !!(arguments[0].offsetWidth || arguments[0].offsetHeight || arguments[0].getClientRects().length);',
+        return bool(self.browser.execute_script(
+            'return !!(arguments[0].offsetWidth || arguments[0].offsetHeight || \
+            arguments[0].getClientRects().length);',
             element
-        )
+        ))
 
     def click(self, element):
         """
         :Description: Execute the `click` event on the target element.
         :param element: Element for browser instance to target.
+        :type element: WebElement
         """
         self.browser.execute_script('arguments[0].click();', element)
 
@@ -102,6 +108,7 @@ class E2EJS(object):
         """
         :Description: Execute the `dbclick` event on the target element.
         :param element: Element for browser instance to target.
+        :type element: WebElement
         """
         self.browser.execute_script(
             'var e = document.createEvent("mouseEvent"); e.initEvent("dblclick", true, true); arguments[0].dispatchEvent(e);',
@@ -112,6 +119,7 @@ class E2EJS(object):
         """
         :Description: Sets the attribute `selected` to true on target element and triggers `change` event.
         :param element: Element for browser instance to target.
+        :type element: WebElement
         """
         self.browser.execute_script(
             'arguments[0].selected = "selected"; arguments[0].dispatchEvent(new Event("change"));',
@@ -122,6 +130,7 @@ class E2EJS(object):
         """
         :Description: Sets the attribute `selected` to true on target element and triggers `change` event.
         :param element: Element for browser instance to target.
+        :type element: WebElement
         """
         self.browser.execute_script(
             'arguments[0].selected = null; arguments[0].dispatchEvent(new Event("change"));',
@@ -132,8 +141,10 @@ class E2EJS(object):
         """
         :Description: Return the given attribute of the target element.
         :param element: Element for browser instance to target.
+        :type element: WebElement
         :param attribute: Attribute of target element to return.
-        :return: basestring
+        :type attribute: basestring
+        :return: basestring, bool, None
         """
         return self.browser.execute_script(
             'return arguments[0].getAttribute("%s");' % attribute,
@@ -144,13 +155,18 @@ class E2EJS(object):
         """
         :Description: Modify the given attribute of the target element.
         :param element: Element for browser instance to target.
+        :type element: WebElement
         :param attribute: Attribute of target element to modify.
+        :type attribute: basestring
         :param value: Value of target element's attribute to modify.
+        :type value: None, bool, int, float, basestring
         """
         if value is None:
             exec_string = 'arguments[0].setAttribute("%s", null);' % attribute
         elif isinstance(value, bool):
-            exec_string = 'arguments[0].setAttribute("%s", %s);' % (attribute, 'false' if not value else 'true')
+            exec_string = 'arguments[0].setAttribute("%s", %s);' % (
+                attribute, 'false' if not value else 'true'
+            )
         elif isinstance(value, (int, float)):
             exec_string = 'arguments[0].setAttribute("%s", %s);' % (attribute, value)
         else:
@@ -164,38 +180,43 @@ class E2EJS(object):
         """
         :Description: Remove the given attribute from the target element.
         :param element: Element for browser instance to target.
+        :type element: WebElement
         :param attribute: Attribute of target element to remove.
+        :type attribute: basestring
         """
-        self.browser.execute_script(
-            'arguments[0].removeAttribute("%s");' % attribute,
-            element
-        )
+        self.browser.execute_script('arguments[0].removeAttribute("%s");' % attribute, element)
 
-    def get_property(self, element, property):
+    def get_property(self, element, prop):
         """
         :Description: Return the given attribute of the target element.
-        :Warning: This method relies on JQuery.
         :param element: Element for browser instance to target.
-        :param property: Property of target element to return.
+        :type element: WebElement
+        :param prop: Property of target element to return.
+        :type prop: basestring
+        :return: basestring, bool, None
         """
-        return self.browser.execute_script('return arguments[0]["%s"];' % property, element)
+        return self.browser.execute_script('return arguments[0]["%s"];' % prop, element)
 
-    def set_property(self, element, property, value):
+    def set_property(self, element, prop, value):
         """
         :Description: Modify the given attribute of the target element.
-        :Warning: This method relies on JQuery.
         :param element: Element for browser instance to target.
-        :param property: Property of target element to modify.
+        :type element: WebElement
+        :param prop: Property of target element to modify.
+        :type prop: basestring
         :param value: Value of target element's property to modify.
+        :type value: None, bool, int float, basestring
         """
         if value is None:
-            exec_string = 'arguments[0]["%s"] = null;' % property
+            exec_string = 'arguments[0]["%s"] = null;' % prop
         elif isinstance(value, bool):
-            exec_string = 'arguments[0]["%s"] = %s;' % (property, 'false' if not value else 'true')
+            exec_string = 'arguments[0]["%s"] = %s;' % (
+                prop, 'false' if not value else 'true'
+            )
         elif isinstance(value, (int, float)):
-            exec_string = 'arguments[0]["%s"] = %s;' % (property, value)
+            exec_string = 'arguments[0]["%s"] = %s;' % (prop, value)
         else:
-            exec_string = 'arguments[0]["%s"] = "%s";' % (property, value)
+            exec_string = 'arguments[0]["%s"] = "%s";' % (prop, value)
         self.browser.execute_script(
             exec_string,
             element
@@ -205,62 +226,58 @@ class E2EJS(object):
         """
         :Description: Return the value of the given element.
         :param element: Element for browser instance to target.
+        :type element: WebElement
         :return: basestring
         """
-        return self.get_property(
-            element=element,
-            property='value'
-        )
+        return self.get_property(element=element, prop='value')
 
     def get_text(self, element):
         """
         :Description: Return the text content between the tags of the given element.
-        :Info: This may be helpful for reading text from elements that do not support the `value` property.
+        :Info: Helpful for reading text from elements that do not support the `value` property.
         :param element: Element for browser instance to target.
         :return: basestring
         """
         return self.get_property(
             element=element,
-            property='innerText'
+            prop='innerText'
         )
 
     def get_raw_text(self, element):
         """
         :Description: Return the text content between the tags of the given element.
-        :Info: This may be helpful for reading text from elements that do not support the `value` property.
+        :Info: Helpful for reading text from elements that do not support the `value` property.
         :Warning: This will return the raw text content of the DOM's child scope.
         :param element: Element for browser instance to target.
+        :type element: WebElement
         :return: basestring
         """
         return self.get_property(
             element=element,
-            property='innerHTML'
+            prop='innerHTML'
         )
 
-    def trigger_event(self, element, event):
+    def trigger_event(self, element, event, type=None, options=None):
         """
         :Description: Trigger specified event of the given element.
-        :Warning: This method relies on JQuery.
         :param element: Element for browser instance to target.
+        :type element: WebElement
         :param event: Event to trigger from target element.
+        :type event: basestring
+        :param type: Event type.
+        :type type: basestring
+        :example: 'KeyboardEvent'
+        :param options: Event options.
+        :example: { 'bubbles': True, 'cancelable': False }
+        :type options: dict
         """
-        self.browser.execute_script('arguments[0].dispatchEvent(new Event("%s"));' % event, element)
+        self.browser.execute_script(
+            'arguments[0].dispatchEvent(new %s("%s", %s));' % type if type else 'Event',
+            event, element, json.dumps(options) if options else '{}'
+        )
 
-    def trigger_mouse_event(self, element, event):
-        """
-        :Description: Trigger specified mouse related event of the given element.
-        :param element: Element for browser instance to target.
-        :param event: Event to trigger from target element.
-        """
-        self.browser.execute_script('arguments[0].dispatchEvent(new MouseEvent("%s"));' % event, element)
-
-    def trigger_keyboard_event(self, element, event):
-        """
-        :Description: Trigger specified keyboard related event of the given element.
-        :param element: Element for browser instance to target.
-        :param event: Event to trigger from target element.
-        """
-        self.browser.execute_script('arguments[0].dispatchEvent(new KeyboardEvent("%s"));' % event, element)
+    def press_key(self, element, key_code):
+        pass
 
     def trigger_enter_key(self, element):
         """
@@ -268,7 +285,8 @@ class E2EJS(object):
         :param element: Element for browser instance to target.
         """
         self.browser.execute_script(
-            'var e = new Event("KeyboardEvent"); e.initEvent("keydown", true, true); e.which=13; arguments[0].dispatchEvent(e);',
+            'var e = new Event("KeyboardEvent"); e.initEvent("keydown", true, true); \
+            e.which=13; arguments[0].dispatchEvent(e);',
             element
         )
 
@@ -277,6 +295,7 @@ class E2EJS(object):
         :Description: Scroll the target element into view.
         :Warning: This method relies on JQuery.
         :param element: Element for browser instance to target.
+        :type element: WebElement
         """
         self.browser.execute_script('arguments[0].scrollIntoView();', element)
 
@@ -284,15 +303,14 @@ class E2EJS(object):
         """
         :Description: Enables angular debugging on given webpage.
         """
-        self.browser.execute_script(
-            'angular.reloadWithDebugInfo()'
-        )
+        self.browser.execute_script('angular.reloadWithDebugInfo()')
 
     def ng_get_text(self, element):
         """
         :Description: Will return the DOM's value, if not found will default to `innerHTML`.
         :Warning: This will only work for angular elements.
         :param element: Element for browser instance to target.
+        :type element: WebElement
         :return: basestring
         """
         return self.browser.execute_script('return angular.element(arguments[0]).text();', element)
@@ -302,7 +320,9 @@ class E2EJS(object):
         :Description: Will set a DOM's value, if not found will default to `innerHTML`.
         :Warning: This will only work for angular elements.
         :param element: Element for browser instance to target.
+        :type element: WebElement
         :param text: Text used for related operation.
+        :type text: basestring
         """
         self.browser.execute_script('angular.element(arguments[0]).text("%s");' % text, element)
 
@@ -313,7 +333,9 @@ class E2EJS(object):
         :param element: Element for browser instance to target.
         :param target: Class to toggle.
         """
-        self.browser.execute_script('angular.element(arguments[0]).toggleClass("%s");' % target, element)
+        self.browser.execute_script(
+            'angular.element(arguments[0]).toggleClass("%s");' % target, element
+        )
 
     def ng_trigger_event_handler(self, element, event):
         """
@@ -327,54 +349,60 @@ class E2EJS(object):
             element
         )
 
-    def __property(self, property):
+    def __d2b_notification(self, prop):
         """
-        :Description: Turn nested properties into object tree.
-        :param property: Property to clean.
-        :type property: basestring
+        :Description: Transform javascript dot notation to bracket notation.
+        :param prop: Property to transform.
+        :type prop: basestring
+        :example: 'messages.total' >> someObject['messages']['total']
         :return: basestring
         """
-        pat = re.compile('[a-z]{0,}.')
-        results = pat.findall(property)
+        results = re.compile('[a-z]{0,}.').findall(prop)
         for i in range(0, len(results)):
             results[i] = ("['%s']" % results[i]).replace('.', '')
         return ''.join(results)
 
-    def ng_get_scope_property(self, element, property):
+    def ng_get_scope_property(self, element, prop):
         """
         :Description: Will return value of property of element's scope.
         :Warning: Requires angular debugging to be enabled.
         :param element: Element for browser instance to target.
-        :param property: Property of element's angular scope to target.
+        :param prop: Property of element's angular scope to target.
+        :type prop: basestring
+        :example: 'messages.total'
         :return: basestring
         """
         return self.browser.execute_script(
-            'return angular.element(arguments[0]).scope()%s;' % self.__property(property=property),
-            element
+            'return angular.element(arguments[0]).scope()%s;' % self.__d2b_notification(
+                prop=prop
+            ), element
         )
 
-    def ng_set_scope_property(self, element, property, value):
+    def ng_set_scope_property(self, element, prop, value):
         """
-        :Description: Will set value of property of element's scope.
+        :Description: Will set value of property of angular element's scope.
         :Warning: Requires angular debugging to be enabled.
         :param element: Element for browser instance to target.
-        :param property: Property of element's angular scope to target.
+        :param prop: Property of element's angular scope to target.
+        :type prop: basestring
+        :example: 'messages.total'
         :param value: Value to specify to angular element's scope's property.
         """
         self.browser.execute_script(
-            'angular.element(arguments[0]).scope()%s = "%s";' % (self.__property(property=property), value),
-            element
+            'angular.element(arguments[0]).scope()%s = "%s";' % (
+                self.__d2b_notification(prop=prop), value
+            ), element
         )
 
-    def ng_call_scope_function(self, element, func, params=[]):
+    def ng_call_scope_function(self, element, func, params=()):
         """
         :Description: Will execute scope function with provided parameters.
         :Warning: Requires angular debugging to be enabled.
         :param element: Element for browser instance to target.
         :param func: Function to execute from angular element scope.
         :type func: basestring
-        :param params: List of parameters to pass to target function.
-        :type params: list
+        :param params: Tuple or list of parameters to pass to target function.
+        :type params: tuple, list
         """
         param_str = ''
         numeric = (int, float)
