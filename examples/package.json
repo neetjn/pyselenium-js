@@ -4,8 +4,12 @@
   "description": "pyseleniumjs use-case examples",
   "main": "index.js",
   "directories": {
+    "setup": "npm install && npm run build && npm run virtualenv",
+    "virtualenv": "virtualenv venv && source venv/bin/activate && pip install -r requirements.txt",
+    "app": "node_modules/.bin/webpack-dev-server --config build/webpack.conf.js --port 3000",
     "test": "pytest test",
-    "build":
+    "build": "node_modules/.bin/cross-env NODE_ENV=production NODE_ENV=production node_modules/.bin/webpack --config build/webpack.conf.js",
+    "build:dev": "node_modules/.bin/webpack --config build/webpack.conf.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -19,6 +23,7 @@
   "license": "MIT",
   "dependencies": {
     "angular": "^1.5.2",
+    "angular-ui-router": "^1.0.3",
     "animate.css": "^3.5.2",
     "bulma": "^0.4.2",
     "fontawesome": "^4.7.2",
@@ -36,6 +41,12 @@
     "babel-preset-stage-2": "^6.22.0",
     "babel-register": "^6.22.0",
     "cross-env": "^5.0.1",
-    "eslint-loader": "^1.6.1"
+    "eslint-loader": "^1.6.1",
+    "css-loader": "^0.28.0",
+    "extract-text-webpack-plugin": "^2.1.0",
+    "sass-loader": "^6.0.5",
+    "style-loader": "^0.18.0",
+    "webpack-dev-middleware": "^1.10.2",
+    "webpack-hot-middleware": "^2.18.0"
   }
 }
