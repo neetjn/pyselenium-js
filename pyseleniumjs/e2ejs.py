@@ -29,6 +29,21 @@ class E2EJS(object):
     def __init__(self, browser):
         self.browser = browser
 
+    def __type2js(self, value):
+        """
+        :Description: Convert python value to executable javascript value by type.
+        :param value: Value to transform.
+        :type value: None, bool, int float, basestring
+        """
+        if value is None:
+            return 'null'
+        elif isinstance(value, bool):
+            return 'false' if not value else 'true'
+        elif isinstance(value, (int, float)):
+            return '%s' % value
+        else:
+            return '"%s"'
+
     def wait(self, condition, element=None, interval=500):
         """
         :Description: Create an interval in js engine window, will clear interval after condition met.
@@ -117,7 +132,7 @@ class E2EJS(object):
 
     def select(self, element):
         """
-        :Description: Sets the attribute `selected` to true on target element and triggers `change` event.
+        :Description: Sets the attribute `selected` to true and triggers `change` event.
         :param element: Element for browser instance to target.
         :type element: WebElement
         """
@@ -128,7 +143,7 @@ class E2EJS(object):
 
     def deselect(self, element):
         """
-        :Description: Sets the attribute `selected` to true on target element and triggers `change` event.
+        :Description: Sets the attribute `selected` to null and triggers `change` event.
         :param element: Element for browser instance to target.
         :type element: WebElement
         """
@@ -144,7 +159,7 @@ class E2EJS(object):
         :type element: WebElement
         :param attribute: Attribute of target element to return.
         :type attribute: basestring
-        :return: basestring, bool, None
+        :return: None, bool, int, float, basestring
         """
         return self.browser.execute_script(
             'return arguments[0].getAttribute("%s");' % attribute,
@@ -161,18 +176,10 @@ class E2EJS(object):
         :param value: Value of target element's attribute to modify.
         :type value: None, bool, int, float, basestring
         """
-        if value is None:
-            exec_string = 'arguments[0].setAttribute("%s", null);' % attribute
-        elif isinstance(value, bool):
-            exec_string = 'arguments[0].setAttribute("%s", %s);' % (
-                attribute, 'false' if not value else 'true'
-            )
-        elif isinstance(value, (int, float)):
-            exec_string = 'arguments[0].setAttribute("%s", %s);' % (attribute, value)
-        else:
-            exec_string = 'arguments[0].setAttribute("%s", "%s");' % (attribute, value)
         self.browser.execute_script(
-            exec_string,
+            'arguments[0].setAttribute("%s", %s);' % (
+                attribute, self.__type2js(value=value)
+            ),
             element
         )
 
@@ -193,7 +200,7 @@ class E2EJS(object):
         :type element: WebElement
         :param prop: Property of target element to return.
         :type prop: basestring
-        :return: basestring, bool, None
+        :return: None, bool, int, float, basestring
         """
         return self.browser.execute_script('return arguments[0]["%s"];' % prop, element)
 
@@ -207,18 +214,8 @@ class E2EJS(object):
         :param value: Value of target element's property to modify.
         :type value: None, bool, int float, basestring
         """
-        if value is None:
-            exec_string = 'arguments[0]["%s"] = null;' % prop
-        elif isinstance(value, bool):
-            exec_string = 'arguments[0]["%s"] = %s;' % (
-                prop, 'false' if not value else 'true'
-            )
-        elif isinstance(value, (int, float)):
-            exec_string = 'arguments[0]["%s"] = %s;' % (prop, value)
-        else:
-            exec_string = 'arguments[0]["%s"] = "%s";' % (prop, value)
         self.browser.execute_script(
-            exec_string,
+            'arguments[0]["%s"] = %s' % self.__type2js(value=value),
             element
         )
 
@@ -257,22 +254,22 @@ class E2EJS(object):
             prop='innerHTML'
         )
 
-    def trigger_event(self, element, event, type=None, options=None):
+    def trigger_event(self, element, event, event_type=None, options=None):
         """
         :Description: Trigger specified event of the given element.
         :param element: Element for browser instance to target.
         :type element: WebElement
         :param event: Event to trigger from target element.
         :type event: basestring
-        :param type: Event type.
-        :type type: basestring
+        :param event_type: Event type.
+        :type event_type: basestring
         :example: 'KeyboardEvent'
         :param options: Event options.
         :example: { 'bubbles': True, 'cancelable': False }
         :type options: dict
         """
         self.browser.execute_script(
-            'arguments[0].dispatchEvent(new %s("%s", %s));' % type if type else 'Event',
+            'arguments[0].dispatchEvent(new %s("%s", %s));' % event_type if event_type else 'Event',
             event, element, json.dumps(options) if options else '{}'
         )
 
@@ -349,7 +346,7 @@ class E2EJS(object):
             element
         )
 
-    def __d2b_notification(self, prop):
+    def __d2b_notation(self, prop):
         """
         :Description: Transform javascript dot notation to bracket notation.
         :param prop: Property to transform.
@@ -387,6 +384,7 @@ class E2EJS(object):
         :type prop: basestring
         :example: 'messages.total'
         :param value: Value to specify to angular element's scope's property.
+        :type value: None, bool, int, float, basestring
         """
         self.browser.execute_script(
             'angular.element(arguments[0]).scope()%s = "%s";' % (
@@ -440,6 +438,7 @@ class E2EJS(object):
         :param element: Element for browser instance to target.
         :param property: Property of element's angular scope to target.
         :param value: Value to specify to angular element's controller's property.
+        :type value: None, bool, int, float, basestring
         """
         self.browser.execute_script(
             'angular.element(arguments[0]).controller()%s = "%s";' % (self.__property(property=property), value),
