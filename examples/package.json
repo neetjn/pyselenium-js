@@ -9,7 +9,8 @@
     "app": "node_modules/.bin/webpack-dev-server --config build/webpack.conf.js --port 3000",
     "test": "pytest test",
     "build": "node_modules/.bin/cross-env NODE_ENV=production NODE_ENV=production node_modules/.bin/webpack --config build/webpack.conf.js",
-    "build:dev": "node_modules/.bin/webpack --config build/webpack.conf.js"
+    "build:dev": "node_modules/.bin/webpack --config build/webpack.conf.js",
+    "lint": "node_modules/.bin/eslint src/**.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

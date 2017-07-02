@@ -1,1 +1,3 @@
-import { angular } from 'angular'
+import ''
+
+angular.module('psjs').controller('FooCtrl')
