@@ -29,7 +29,8 @@ class E2EJS(object):
     def __init__(self, browser):
         self.browser = browser
 
-    def __type2js(self, value):
+    @staticmethod
+    def __type2js(value):
         """
         :Description: Convert python value to executable javascript value by type.
         :param value: Value to transform.
@@ -56,10 +57,10 @@ class E2EJS(object):
         :type interval: int or float
         :return: basestring
         """
-        id = lambda: str(uuid.uuid1())[:8]
-        handle = id()
+        hid = lambda: str(uuid.uuid1())[:8]
+        handle = hid()
         if element:
-            dom = id()
+            dom = hid()
             self.browser.execute_script(
                 'window["$%s"]=arguments[0];window["$%s"]=window.setInterval(function(){if(%s){(window.clearInterval(window["$%s"])||true)&&(window["$%s"]=-1); delete window["$%s"];}}, %s)' % (
                     dom, handle, condition.replace('$el', 'window["$%s"]' % dom), handle, handle, dom, interval
@@ -216,7 +217,7 @@ class E2EJS(object):
         :type value: None, bool, int float, basestring
         """
         self.browser.execute_script(
-            'arguments[0]["%s"] = %s' % self.__type2js(value=value),
+            'arguments[0]["%s"] = %s' % (prop, self.__type2js(value=value)),
             element
         )
 
@@ -274,17 +275,17 @@ class E2EJS(object):
             event, element, json.dumps(options) if options else '{}'
         )
 
-    def press_key(self, element, key_code):
-        pass
-
-    def trigger_enter_key(self, element):
+    def trigger_keypress(self, element, key_code):
         """
-        :Description: Trigger enter key keypress on given event.
+        :Description: Trigger specific key "keypress" event on given element.
         :param element: Element for browser instance to target.
+        :type element: WebElement
+        :param key_code: Code of key to invoke event.
+        :type key_code: int
         """
         self.browser.execute_script(
-            'var e = new Event("KeyboardEvent"); e.initEvent("keydown", true, true); \
-            e.which=13; arguments[0].dispatchEvent(e);',
+            'var e = new Event("KeyboardEvent"); e.initEvent("keypress", true, true); \
+            e.which=%s; arguments[0].dispatchEvent(e);' % key_code,
             element
         )
 
@@ -347,7 +348,8 @@ class E2EJS(object):
             element
         )
 
-    def __d2b_notation(self, prop):
+    @staticmethod
+    def __d2b_notation(prop):
         """
         :Description: Transform javascript dot notation to bracket notation.
         :param prop: Property to transform.
@@ -404,14 +406,8 @@ class E2EJS(object):
         :type params: tuple, list
         """
         param_str = ''
-        numeric = (int, float)
         for param in params:
-            if isinstance(param, basestring):
-                param_str += '"%s",' % param
-            elif isinstance(param, numeric):
-                param_str += '%s,' % param
-            elif isinstance(param, bool):
-                param_str += '%s,' % 'true' if param else 'false'
+            param_str += '%s,' % self.__type2js(value=param)
         if param_str.endswith(','):
             param_str = param_str.replace(param_str[-1], '')
         self.browser.execute_script(
@@ -419,52 +415,53 @@ class E2EJS(object):
             element
         )
 
-    def ng_get_ctrl_property(self, element, property):
+    def ng_get_ctrl_property(self, element, prop):
         """
         :Description: Will return value of property of element's controller.
         :Warning: Requires angular debugging to be enabled.
         :param element: Element for browser instance to target.
-        :param property: Property of element's angular controller to target.
+        :type element: WebElement
+        :param prop: Property of element's angular controller to target.
+        :type prop: basestring
+        :example: 'messages.total'
         :return: basestring
         """
         return self.browser.execute_script(
-            'return angular.element(arguments[0]).controller()%s;' % self.__property(property=property),
+            'return angular.element(arguments[0]).controller()%s;' % self.__d2b_notation(prop=prop),
             element
         )
 
-    def ng_set_ctrl_property(self, element, property, value):
+    def ng_set_ctrl_property(self, element, prop, value):
         """
         :Description: Will set value of property of element's controller.
         :Warning: Requires angular debugging to be enabled.
         :param element: Element for browser instance to target.
-        :param property: Property of element's angular scope to target.
+        :type element: WebElement
+        :param prop: Property of element's angular scope to target.
+        :type prop: basestring
+        :example: 'messages.total'
         :param value: Value to specify to angular element's controller's property.
         :type value: None, bool, int, float, basestring
         """
         self.browser.execute_script(
-            'angular.element(arguments[0]).controller()%s = "%s";' % (self.__property(property=property), value),
-            element
+            'angular.element(arguments[0]).controller()%s = %s;' % (
+                self.__d2b_notation(prop=prop), self.__type2js(value=value)
+            ), element
         )
 
-    def ng_call_ctrl_function(self, element, func, params):
+    def ng_call_ctrl_function(self, element, func, params=()):
         """
         :Description: Will execute controller function with provided parameters.
         :Warning: Requires angular debugging to be enabled.
         :param element: Element for browser instance to target.
         :param func: Function to execute from angular element controller.
         :type func: basestring
-        :param params: List of parameters to pass to target function.
-        :type params: list
+        :param params: Tuple or list of parameters to pass to target function.
+        :type params: tuple, list
         """
         param_str = ''
-        numeric = (int, float)
         for param in params:
-            if isinstance(param, basestring):
-                param_str += '"%s",' % param
-            elif isinstance(param, numeric):
-                param_str += '%s,' % param
-            elif isinstance(param, bool):
-                param_str += '%s,' % 'true' if param else 'false'
+            param_str += '%s,' % self.__type2js(value=param)
         if param_str.endswith(','):
             param_str = param_str.replace(param_str[-1], '')
         self.browser.execute_script(

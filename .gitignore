@@ -3,3 +3,4 @@
 eggs
 dist/
 build/
+.vscode/

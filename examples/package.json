@@ -1,0 +1,19 @@
+{
+  "name": "pyseleniumjs",
+  "version": "1.0.0",
+  "description": "pyseleniumjs use-case examples",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "selenium",
+    "js",
+    "python"
+  ],
+  "author": "John Nolette",
+  "license": "MIT"
+}

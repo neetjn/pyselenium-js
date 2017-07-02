@@ -5,7 +5,7 @@
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.9~svn20110310	//
 E2EJS	../pyseleniumjs/e2ejs.py	/^class E2EJS(object):$/;"	kind:class	line:22
-__d2b_notation	../pyseleniumjs/e2ejs.py	/^    def __d2b_notation(self, prop):$/;"	kind:member	line:349
+__d2b_notation	../pyseleniumjs/e2ejs.py	/^    def __d2b_notation(self, prop):$/;"	kind:member	line:350
 __init__	../pyseleniumjs/e2ejs.py	/^    def __init__(self, browser):$/;"	kind:member	line:29
 __init__.py	../pyseleniumjs/__init__.py	1;"	kind:file	line:1
 __type2js	../pyseleniumjs/e2ejs.py	/^    def __type2js(self, value):$/;"	kind:member	line:32
@@ -17,38 +17,38 @@ console_dump	../pyseleniumjs/e2ejs.py	/^    def console_dump(self):$/;"	kind:mem
 console_logger	../pyseleniumjs/e2ejs.py	/^    def console_logger(self):$/;"	kind:member	line:85
 dbl_click	../pyseleniumjs/e2ejs.py	/^    def dbl_click(self, element):$/;"	kind:member	line:122
 description	../setup.py	/^    description='Small library with javascript utilities for official Python selenium bindings.',$/;"	kind:variable	line:5
-deselect	../pyseleniumjs/e2ejs.py	/^    def deselect(self, element):$/;"	kind:member	line:144
+deselect	../pyseleniumjs/e2ejs.py	/^    def deselect(self, element):$/;"	kind:member	line:145
 e2ejs.py	../pyseleniumjs/e2ejs.py	1;"	kind:file	line:1
-get_attribute	../pyseleniumjs/e2ejs.py	/^    def get_attribute(self, element, attribute):$/;"	kind:member	line:155
-get_property	../pyseleniumjs/e2ejs.py	/^    def get_property(self, element, prop):$/;"	kind:member	line:196
-get_raw_text	../pyseleniumjs/e2ejs.py	/^    def get_raw_text(self, element):$/;"	kind:member	line:243
-get_text	../pyseleniumjs/e2ejs.py	/^    def get_text(self, element):$/;"	kind:member	line:231
-get_value	../pyseleniumjs/e2ejs.py	/^    def get_value(self, element):$/;"	kind:member	line:222
+get_attribute	../pyseleniumjs/e2ejs.py	/^    def get_attribute(self, element, attribute):$/;"	kind:member	line:156
+get_property	../pyseleniumjs/e2ejs.py	/^    def get_property(self, element, prop):$/;"	kind:member	line:197
+get_raw_text	../pyseleniumjs/e2ejs.py	/^    def get_raw_text(self, element):$/;"	kind:member	line:244
+get_text	../pyseleniumjs/e2ejs.py	/^    def get_text(self, element):$/;"	kind:member	line:232
+get_value	../pyseleniumjs/e2ejs.py	/^    def get_value(self, element):$/;"	kind:member	line:223
 is_visible	../pyseleniumjs/e2ejs.py	/^    def is_visible(self, element):$/;"	kind:member	line:101
 license	../setup.py	/^    license='Apache2',$/;"	kind:variable	line:10
 name	../setup.py	/^    name='pyseleniumjs',$/;"	kind:variable	line:4
-ng_call_ctrl_function	../pyseleniumjs/e2ejs.py	/^    def ng_call_ctrl_function(self, element, func, params):$/;"	kind:member	line:448
-ng_call_scope_function	../pyseleniumjs/e2ejs.py	/^    def ng_call_scope_function(self, element, func, params=()):$/;"	kind:member	line:395
-ng_enable_debugging	../pyseleniumjs/e2ejs.py	/^    def ng_enable_debugging(self):$/;"	kind:member	line:299
-ng_get_ctrl_property	../pyseleniumjs/e2ejs.py	/^    def ng_get_ctrl_property(self, element, property):$/;"	kind:member	line:421
-ng_get_scope_property	../pyseleniumjs/e2ejs.py	/^    def ng_get_scope_property(self, element, prop):$/;"	kind:member	line:362
-ng_get_text	../pyseleniumjs/e2ejs.py	/^    def ng_get_text(self, element):$/;"	kind:member	line:305
-ng_set_ctrl_property	../pyseleniumjs/e2ejs.py	/^    def ng_set_ctrl_property(self, element, property, value):$/;"	kind:member	line:434
-ng_set_scope_property	../pyseleniumjs/e2ejs.py	/^    def ng_set_scope_property(self, element, prop, value):$/;"	kind:member	line:378
-ng_set_text	../pyseleniumjs/e2ejs.py	/^    def ng_set_text(self, element, text):$/;"	kind:member	line:315
-ng_toggle_class	../pyseleniumjs/e2ejs.py	/^    def ng_toggle_class(self, element, target):$/;"	kind:member	line:326
-ng_trigger_event_handler	../pyseleniumjs/e2ejs.py	/^    def ng_trigger_event_handler(self, element, event):$/;"	kind:member	line:337
+ng_call_ctrl_function	../pyseleniumjs/e2ejs.py	/^    def ng_call_ctrl_function(self, element, func, params):$/;"	kind:member	line:449
+ng_call_scope_function	../pyseleniumjs/e2ejs.py	/^    def ng_call_scope_function(self, element, func, params=()):$/;"	kind:member	line:396
+ng_enable_debugging	../pyseleniumjs/e2ejs.py	/^    def ng_enable_debugging(self):$/;"	kind:member	line:300
+ng_get_ctrl_property	../pyseleniumjs/e2ejs.py	/^    def ng_get_ctrl_property(self, element, property):$/;"	kind:member	line:422
+ng_get_scope_property	../pyseleniumjs/e2ejs.py	/^    def ng_get_scope_property(self, element, prop):$/;"	kind:member	line:363
+ng_get_text	../pyseleniumjs/e2ejs.py	/^    def ng_get_text(self, element):$/;"	kind:member	line:306
+ng_set_ctrl_property	../pyseleniumjs/e2ejs.py	/^    def ng_set_ctrl_property(self, element, property, value):$/;"	kind:member	line:435
+ng_set_scope_property	../pyseleniumjs/e2ejs.py	/^    def ng_set_scope_property(self, element, prop, value):$/;"	kind:member	line:379
+ng_set_text	../pyseleniumjs/e2ejs.py	/^    def ng_set_text(self, element, text):$/;"	kind:member	line:316
+ng_toggle_class	../pyseleniumjs/e2ejs.py	/^    def ng_toggle_class(self, element, target):$/;"	kind:member	line:327
+ng_trigger_event_handler	../pyseleniumjs/e2ejs.py	/^    def ng_trigger_event_handler(self, element, event):$/;"	kind:member	line:338
 packages	../setup.py	/^    packages=find_packages()$/;"	kind:variable	line:17
-press_key	../pyseleniumjs/e2ejs.py	/^    def press_key(self, element, key_code):$/;"	kind:member	line:276
-remove_attribute	../pyseleniumjs/e2ejs.py	/^    def remove_attribute(self, element, attribute):$/;"	kind:member	line:186
-scroll_into_view	../pyseleniumjs/e2ejs.py	/^    def scroll_into_view(self, element):$/;"	kind:member	line:290
-select	../pyseleniumjs/e2ejs.py	/^    def select(self, element):$/;"	kind:member	line:133
-set_attribute	../pyseleniumjs/e2ejs.py	/^    def set_attribute(self, element, attribute, value):$/;"	kind:member	line:169
-set_property	../pyseleniumjs/e2ejs.py	/^    def set_property(self, element, prop, value):$/;"	kind:member	line:207
+press_key	../pyseleniumjs/e2ejs.py	/^    def press_key(self, element, key_code):$/;"	kind:member	line:277
+remove_attribute	../pyseleniumjs/e2ejs.py	/^    def remove_attribute(self, element, attribute):$/;"	kind:member	line:187
+scroll_into_view	../pyseleniumjs/e2ejs.py	/^    def scroll_into_view(self, element):$/;"	kind:member	line:291
+select	../pyseleniumjs/e2ejs.py	/^    def select(self, element):$/;"	kind:member	line:134
+set_attribute	../pyseleniumjs/e2ejs.py	/^    def set_attribute(self, element, attribute, value):$/;"	kind:member	line:170
+set_property	../pyseleniumjs/e2ejs.py	/^    def set_property(self, element, prop, value):$/;"	kind:member	line:208
 setup.py	../setup.py	1;"	kind:file	line:1
 test_wait.py	../tests/test_wait.py	1;"	kind:file	line:1
-trigger_enter_key	../pyseleniumjs/e2ejs.py	/^    def trigger_enter_key(self, element):$/;"	kind:member	line:279
-trigger_event	../pyseleniumjs/e2ejs.py	/^    def trigger_event(self, element, event, event_type=None, options=None):$/;"	kind:member	line:257
+trigger_enter_key	../pyseleniumjs/e2ejs.py	/^    def trigger_enter_key(self, element):$/;"	kind:member	line:280
+trigger_event	../pyseleniumjs/e2ejs.py	/^    def trigger_event(self, element, event, event_type=None, options=None):$/;"	kind:member	line:258
 url	../setup.py	/^    url='https:\/\/github.com\/neetVeritas\/pyselenium-js',$/;"	kind:variable	line:7
 version	../setup.py	/^    version='1.0.2b7',$/;"	kind:variable	line:6
 wait	../pyseleniumjs/e2ejs.py	/^    def wait(self, condition, element=None, interval=500):$/;"	kind:member	line:47
