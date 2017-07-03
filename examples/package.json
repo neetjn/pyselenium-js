@@ -32,7 +32,6 @@
     "webpack-dev-server": "^2.5.0"
   },
   "devDependencies": {
-    "eslint": "^4.1.1",
     "babel-core": "^6.22.1",
     "babel-eslint": "^7.2.3",
     "babel-loader": "^7.1.1",
@@ -42,9 +41,12 @@
     "babel-preset-stage-2": "^6.22.0",
     "babel-register": "^6.22.0",
     "cross-env": "^5.0.1",
-    "eslint-loader": "^1.6.1",
     "css-loader": "^0.28.0",
+    "eslint": "^4.1.1",
+    "eslint-loader": "^1.6.1",
     "extract-text-webpack-plugin": "^2.1.0",
+    "ngtemplate-loader": "^2.0.1",
+    "node-sass": "^4.0.0",
     "sass-loader": "^6.0.5",
     "style-loader": "^0.18.0",
     "webpack-dev-middleware": "^1.10.2",
