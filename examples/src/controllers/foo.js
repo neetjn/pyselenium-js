@@ -1,4 +1,11 @@
 export default ['$scope', function($scope) {
+
+  $scope.author = {
+    fname: 'John',
+    lname: 'Nolette',
+    age: 21
+  }
+
   $scope.users = [
     {
       fname: 'John',
@@ -19,4 +26,5 @@ export default ['$scope', function($scope) {
       field: 'Liberal Arts'
     }
   ]
+
 }]

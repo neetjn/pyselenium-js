@@ -7,12 +7,12 @@ export default function($stateProvider) {
   }
 
   const about = {
-    name: 't',
+    name: 'About',
     url: '/about',
     template: require('@/views/about.html')
   }
 
-  $stateProvider.state(helloState)
-  $stateProvider.state(aboutState)
+  $stateProvider.state(home)
+  $stateProvider.state(about)
 
 }

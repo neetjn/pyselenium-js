@@ -1,13 +1,15 @@
 import { angular } from 'angular'
 
-const App = angular.module('psjs', [])
+const App = angular.module('psjs', ['ui.router'])
+
+angular.config(require('@/router'))
 
 import FooCtrl from '@/controllers/foo.js'
 App.controller('FooCtrl', FooCtrl)
 
-import { author } from '@/components/author'
+import { author } from '@/components/author-tile'
 import { userList } from '@/components/user-list'
-App.component('author', author)
-App.component('user-list', userList)
+App.component('authorTile', author)
+App.component('userList', userList)
 
 export default App
