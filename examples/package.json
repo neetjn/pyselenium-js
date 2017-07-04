@@ -43,7 +43,6 @@
     "eslint": "^4.1.1",
     "eslint-loader": "^1.6.1",
     "extract-text-webpack-plugin": "^2.1.0",
-    "ngtemplate-loader": "^2.0.1",
     "node-sass": "^4.0.0",
     "sass-loader": "^6.0.5",
     "style-loader": "^0.18.0",
