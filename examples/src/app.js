@@ -2,7 +2,7 @@ import { angular } from 'angular'
 
 const App = angular.module('psjs', ['ui.router'])
 
-angular.config(require('@/router'))
+App.config(require('@/router'))
 
 import FooCtrl from '@/controllers/foo.js'
 App.controller('FooCtrl', FooCtrl)

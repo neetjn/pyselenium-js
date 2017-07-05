@@ -1,5 +1,5 @@
 export default {
-  template: require('@/components/author-tile/author-tile.html'),
+  template: require('angularjs-template-loader!@/components/author-tile/author-tile.html'),
   bindings: {
     author: '='
   }
