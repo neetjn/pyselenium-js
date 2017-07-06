@@ -2,7 +2,6 @@
 *.egg-info/
 eggs
 dist/
-build/
 .vscode/
 
 examples/npm-debug.log
