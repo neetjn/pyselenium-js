@@ -1,3 +1,3 @@
 export default {
-  template: ''
+  template: require('angularjs-template-loader!@/components/footer/footer.html')
 }
