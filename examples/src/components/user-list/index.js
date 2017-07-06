@@ -4,6 +4,5 @@ export default {
     users: '='
   },
   controllerAs: 'ctrl',
-  controller: ['$scope', function($scope) {
-  }]
+  controller: require('@/components/user-list/controller.js')
 }

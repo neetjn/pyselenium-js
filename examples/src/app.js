@@ -3,15 +3,13 @@ import 'angular-ui-router'
 
 const App = angular.module('psjs', ['ui.router'])
 
-import router from '@/router'
-App.config(router)
+App.config(require('@/router'))
 
-import FooCtrl from '@/controllers/foo.js'
-App.controller('FooCtrl', FooCtrl)
+App.controller('FooCtrl', require('@/controllers/foo.js'))
 
-import authorTile from '@/components/author-tile'
-App.component('authorTile', authorTile)
-import userList from '@/components/user-list'
-App.component('userList', userList)
+App.component('header', require('@/components/header'))
+App.component('footer', require('@/components/footer'))
+App.component('authorTile', require('@/components/author-tile'))
+App.component('userList', require('@/components/user-list'))
 
 export default App

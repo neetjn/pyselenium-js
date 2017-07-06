@@ -4,7 +4,5 @@ export default {
     author: '='
   },
   controllerAs: 'ctrl',
-  controller: ['$scope', function($scope) {
-    $scope.date = new Date()
-  }]
+  controller: require('@/components/author-tile/controller.js')
 }
