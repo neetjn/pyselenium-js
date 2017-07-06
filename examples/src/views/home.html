@@ -1,10 +1,14 @@
-<div class="container is-fluid">
+<div class="container">
   <div class="columns">
-    <div class="column is-8">
-      <author-tile author="ctrl.author"></author-tile>
+    <div class="column is-4">
+      <author-tile author="author"></author-tile>
     </div>
     <div class="column is-4">
-      <user-list users="ctrl.users"></user-list>
+      <user-list users="users"></user-list>
+    </div>
+    <div class="column is-4">
+      <button ng-click="incrementClicked()">Click Me!</button>
+      <h1>Clicked: <small>{{ clicked }}</small> times!</h1>
     </div>
   </div>
 </div>

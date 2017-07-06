@@ -12,16 +12,16 @@
         </figure>
       </div>
       <div class="media-content">
-        <p class="title is-4">{{ author.fname + ' ' + author.lname }}</p>
-        <p class="subtitle is-6">@{{ author.fname }}</p>
+        <p class="title is-4">{{ ctrl.author.fname + ' ' + ctrl.author.lname }}</p>
+        <p class="subtitle is-6">@{{ ctrl.author.fname }}</p>
       </div>
     </div>
     <div class="content">
       Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-      Phasellus nec iaculis mauris. <a>@bulmaio</a>.
-      <a>#css</a> <a>#responsive</a>
+      Phasellus nec iaculis mauris. <a href="https://twitter.com/neet_jn">@neet_jn</a>.
+      <a>#selenium</a>
       <br>
-      <small>11:09 PM - 1 Jan 2016</small>
+      <small>{{ date | date:'medium' }}</small>
     </div>
   </div>
 </div>

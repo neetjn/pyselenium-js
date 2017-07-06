@@ -10,8 +10,8 @@ import FooCtrl from '@/controllers/foo.js'
 App.controller('FooCtrl', FooCtrl)
 
 import authorTile from '@/components/author-tile'
-import userList from '@/components/user-list'
 App.component('authorTile', authorTile)
+import userList from '@/components/user-list'
 App.component('userList', userList)
 
 export default App
