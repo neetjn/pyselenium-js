@@ -19,7 +19,7 @@ pip install pyselenium-js
 ```
 
 Simply import `E2EJS` from `pyselenium-js`.
-A very clean, and simply approach to referencing this library is instantiating it in your page object or factory, so it may be referenced with your active webdriver instance.
+If you're using page objects or factories, you can instantiate a new instance in your object's sontructor passing your target web driver.
 
 ```python
 from selenium import webdriver
@@ -48,33 +48,31 @@ MyPage(Page):
   def div_with_text(self):
     return self.browser.find_element_by_css_selector('div.something')
 
-  @property
-  def ng_elements(self):
-    return self.browser.find_elements_by_css_selector('[ng-repeat]')
-
 page = MyPage(browser=webdriver.Firefox())
 print page.div_with_text.text  # bindings cannot pull text from divs
 print page.js.get_text(element=page.div_with_text)
-
-for el in page.ng_elements:
-  page.js.ng_set_scope_property(
-    element=el,
-    property='searchText',
-    value='pls halp'
-  )
-  page.js.ng_trigger_handler(
-    element=el,
-    event='change'
-  )
-  page.js.ng_call_scope_function(
-    element=el,
-    func='updateSearch',
-    params=[True, 40]
-  )
-
 page.exit()
 ```
 
+**pyselenium-js** also contains angular.js (1.x) support, including scope and controller access for angular debugging.
+
+```python
+MyPage(Page):
+
+  @property
+  def div_with_text(self):
+    return self.browser.find_element_by_css_selector('div.something')
+
+  @property
+  def ng_elements(self):
+    return self.browser.find_elements_by_css_selector('li[ng-repeat]')
+
+page = Page(browser=webdriver.Firefox())
+for el in page.ng_elements:
+  page.js.ng_toggle_class(element=el, target='active')
+  page.js.ng_set_scope_property(element=el, prop='data.views', value=None)
+  page.js.ng_set_scope_property(element=el, prop='data.viewed', value=False)
+```
 ---
 
 Copyright (c) 2017 John Nolette Licensed under the Apache License, Version 2.0.
