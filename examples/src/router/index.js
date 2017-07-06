@@ -1,18 +1,15 @@
-export default function($stateProvider) {
+export default ['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
 
-  const home = {
-    name: 'Home',
+  $urlRouterProvider.otherwise('/')
+
+  $stateProvider.state('home', {
     url: '/',
     template: require('angularjs-template-loader!@/views/home.html')
-  }
+  })
 
-  const about = {
-    name: 'About',
+  $stateProvider.state('about', {
     url: '/about',
     template: require('angularjs-template-loader!@/views/about.html')
-  }
+  })
 
-  $stateProvider.state(home)
-  $stateProvider.state(about)
-
-}
+}]

@@ -4,7 +4,7 @@ function resolve (dir) {
   return path.join(__dirname, '..', dir)
 };
 
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
   entry: {
@@ -37,9 +37,16 @@ module.exports = {
           use: 'css-loader!sass-loader'
         })
       },
+      {
+        test: /\.css$/,
+        loader: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: 'css-loader'
+        })
+      },
       { 
         test: /\.html$/, 
-        use: ['raw-loader']
+        loader: 'raw-loader'
       }
     ]
   },
