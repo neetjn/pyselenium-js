@@ -47,6 +47,14 @@ module.exports = {
       { 
         test: /\.html$/, 
         loader: 'raw-loader'
+      },
+      {
+        test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+        loader: 'url-loader',
+        options: {
+          limit: 10000,
+          name: resolve('assets/imgages/[name].[hash:7].[ext]')
+        }
       }
     ]
   },
