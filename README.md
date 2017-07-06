@@ -2,7 +2,7 @@
 ![https://travis-ci.org/neetVeritas/pyselenium-js.svg?branch=master](https://travis-ci.org/neetVeritas/pyselenium-js.svg?branch=master)
 [![PyPI version](https://badge.fury.io/py/pyseleniumjs.svg)](https://badge.fury.io/py/pyseleniumjs)
 
-Lightweight, Python module to execute frequently used javascript functionality on a Selenium webdriver.
+Lightweight python module to execute frequently used javascript functionality on a Selenium webdriver.
 
 ### About
 **pyselenium-js** is a very simple, lightweight module that helps relieve some of the burden of E2E testing with the official Selenium bindings.
