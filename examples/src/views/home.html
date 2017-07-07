@@ -1,4 +1,4 @@
-<div class="container">
+<div id="home" class="container">
   <div class="columns">
     <div class="column is-4">
       <author-tile author="author"></author-tile>
@@ -7,10 +7,16 @@
       <user-list users="users"></user-list>
     </div>
     <div class="column is-4">
-      <button class="button is-primary is-large" ng-click="incrementClicked()">
-        <i class="ico ico-left fa fa-plus-circle"></i> Click Me!
-      </button>
-      <h1>Clicked: <small>{{ clicked }}</small> times!</h1>
+      <div class="tile is-ancestor">
+        <div class="tile is-vertical is-7">
+          <h1 class="logo has-text-centered">{{ clicked }}</h1>
+        </div>
+        <div class="tile is-vertical is-5">
+          <button class="button is-link" ng-click="incrementClicked()">
+            <i class="ico ico-left fa fa-plus-circle"></i> Click Me!
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 </div>
