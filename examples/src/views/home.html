@@ -7,7 +7,9 @@
       <user-list users="users"></user-list>
     </div>
     <div class="column is-4">
-      <button ng-click="incrementClicked()">Click Me!</button>
+      <button class="button is-primary" ng-click="incrementClicked()">
+        <i class="ico ico-left fa fa-plus-circle"></i> Click Me!
+      </button>
       <h1>Clicked: <small>{{ clicked }}</small> times!</h1>
     </div>
   </div>

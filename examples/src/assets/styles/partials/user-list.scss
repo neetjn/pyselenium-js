@@ -1,0 +1,9 @@
+user-list {
+    ul li:first-of-type {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+    ul li:not(:first-of-type) {
+        padding: 1rem;
+    }
+}
