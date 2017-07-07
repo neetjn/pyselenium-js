@@ -1,0 +1,47 @@
+@import 'variables.scss';
+
+@import 'partials/header.scss';
+@import 'partials/footer.scss';
+
+body {
+  background-color: $color-pale-shade;
+}
+
+* {
+  font-family: $font-general;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: $font-title;
+}
+
+.logo {
+  font-family: $font-logo;
+}
+
+div#app {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+div#view {
+  margin-top: 5rem;
+  flex: 1;
+}
+
+.ico {
+  display: inline-block;
+
+  .ico-left {
+    padding-right: $ico-dist;
+  }
+  .ico-right {
+    padding-left: $ico-dist;
+  }
+  .ico-center {
+    padding-right: $ico-dist;
+    padding-left: $ico-dist;
+  }
+}

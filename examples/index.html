@@ -2,13 +2,13 @@
 <html lang="en">
   <head>
     <meta chartset="utf-8">
-    <title>pyseleniumjs example</title>
+    <title>pyselenium-js example</title>
     <link rel="stylesheet" type="text/css" href="dist/dist.css">
   </head>
   <body ng-app="psjs">
-    <div ng-controller="FooCtrl as ctrl">
+    <div id="app" ng-controller="FooCtrl as ctrl">
       <header></header>
-      <section ui-view></section>
+      <div id="view" class="container" ui-view></div>
       <footer></footer>
     </div>
     <script type="text/javascript" src="dist/dist.js"></script>
