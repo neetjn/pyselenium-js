@@ -49,12 +49,12 @@ module.exports = {
         loader: 'raw-loader'
       },
       {
-        test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
-        loader: 'url-loader',
-        options: {
-          limit: 10000,
-          name: resolve('assets/imgages/[name].[hash:7].[ext]')
-        }
+        test: /\.(png|jpe|jpg|woff|woff2|eot|ttf|svg)(\?.*$|$)/,
+        loader: 'url-loader'
+      },
+      { 
+        test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/, 
+        loader: 'file-loader'
       }
     ]
   },

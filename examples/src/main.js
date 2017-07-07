@@ -1,6 +1,6 @@
 import App from '@/app.js'
 
-import 'fontawesome/css/font-awesome.min.css'
+import 'font-awesome/css/font-awesome.css'
 import 'bulma/css/bulma.css'
 import 'animate.css/animate.min.css'
 
