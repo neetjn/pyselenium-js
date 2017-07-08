@@ -1,12 +1,5 @@
 #home {
   .tile.is-vertical {
     padding: 1.5rem;
-
-    &.tile.is-7 {
-      background-color: $color-warning;
-    }
-    &.tile.is-5{
-      background-color: $color-primary;
-    }
   }
 }
