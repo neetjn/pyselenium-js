@@ -1,9 +1,14 @@
 user-list {
-    ul li:first-of-type {
-        padding-left: 1rem;
-        padding-right: 1rem;
-    }
-    ul li:not(:first-of-type) {
-        padding: 1rem;
-    }
+  #userManager {
+    padding: 1rem;
+    background-color: $color-white;
+    @include card(2);
+  }
+  ul li:first-of-type {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  ul li:not(:first-of-type) {
+    padding: 1rem;
+  }
 }
