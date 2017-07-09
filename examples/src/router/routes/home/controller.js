@@ -7,7 +7,7 @@ export default ['$scope', function($scope) {
   $scope.users = [
     {
       name: 'John',
-      field: 'Compuer Science'
+      field: 'Computer Science'
     }
   ]
 }]

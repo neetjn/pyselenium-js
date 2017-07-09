@@ -3,28 +3,22 @@
     <li>
       <form id="userManager">
         <div class="field">
-          <label class="label">First Name</label>
+          <label class="label">Name</label>
           <p class="control">
-            <input class="input" type="text" placeholder="First Name">
-          </p>
-        </div>
-        <div class="field">
-          <label class="label">Last Name</label>
-          <p class="control">
-            <input class="input" type="text" placeholder="Last Name">
+            <input class="input" type="text" placeholder="Name" ng-model="name">
           </p>
         </div>
         <div class="field">
           <label class="label">Profession</label>
           <p class="control has-icons-left has-icons-right">
-            <input class="input" type="text" placeholder="Profession" value="">
+            <input class="input" type="text" placeholder="Profession" ng-model="field">
             <span class="icon is-small is-left">
               <i class="fa fa-book"></i>
             </span>
           </p>
         </div>
         <div class="field">
-          <buton class="button is-primary">
+          <buton class="button is-primary" ng-click="addUser()">
             <i class="ico ico-left fa fa-address-book"></i> New User
           </buton>
         </div>
@@ -36,6 +30,9 @@
           <p class="subtitle">
             {{ user.name }} | {{ user.field }}
           </p>
+          <div class="field">
+            <button class="button is-danger" ng-click="removeUser($index)">Remove</button>
+          </div>
         </div>
         <footer class="card-footer">
           <p class="card-footer-item">

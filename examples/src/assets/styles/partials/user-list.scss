@@ -2,7 +2,7 @@ user-list {
   #userManager {
     padding: 1rem;
     background-color: $color-white;
-    @include card(2);
+    @include card(1.5);
   }
   ul li:first-of-type {
     padding-left: 1rem;
