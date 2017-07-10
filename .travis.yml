@@ -4,12 +4,11 @@ python:
 env:
   - NODE_VERSION="6"
 before_install:
-  - "sudo apt-get install npm -y"
   - "nvm install $NODE_VERSION"  # install node.js for example app
-install:
   - "pip install virtualenv"
   - "pip install pylint"
-  - "sudo npm install -g phantomjs-prebuilt"  # install phantom-js for e2e tests
+  - "npm install -g phantomjs-prebuilt"  # install phantom-js for e2e tests
+install:
   - "cd example && npm run setup"  # install example app dependencies and test
 script:
   - "pylint pyseleniumjs/e2ejs.py --errors-only"
