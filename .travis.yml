@@ -9,7 +9,8 @@ before_install:
   - "pip install pylint"
   - "npm install -g phantomjs-prebuilt"  # install phantom-js for e2e tests
 install:
-  - "cd example && npm run setup"  # install example app dependencies and test
+  - "npm run --prefix example setup"  # install example app dependencies and test
 script:
-  - "ls -al && pylint pyseleniumjs/e2ejs.py --errors-only"
-  - "cd example && npm run test"
+  - "pylint pyseleniumjs/e2ejs.py --errors-only"  # lint module
+  - "npm run --prefix example app:detached"  # start example app
+  - "npm run --prefix example test"
