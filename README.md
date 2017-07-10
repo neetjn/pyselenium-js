@@ -23,6 +23,7 @@ If you're using page objects or factories, you can instantiate a new instance in
 
 ```python
 from selenium import webdriver
+from selenium.common.exceptions import WebDriverException
 from warnings import warn
 from pyseleniumjs import E2EJS
 
@@ -42,7 +43,7 @@ class Page(object):
       self.browser.quit()
 
 
-MyPage(Page):
+class MyPage(Page):
 
   @property
   def div_with_text(self):
@@ -57,7 +58,7 @@ page.exit()
 **pyselenium-js** also contains angular.js (1.x) support, including scope and controller access for angular debugging.
 
 ```python
-MyPage(Page):
+class MyPage(Page):
 
   @property
   def div_with_text(self):

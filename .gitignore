@@ -1,8 +1,13 @@
+.cache/
+.vscode/
 *.pyc
 *.egg-info/
 eggs
+__pycache__
 dist/
-.vscode/
+nohup.out
+ghostdriver.log
+venv
 
-examples/npm-debug.log
-examples/node_modules
+npm-debug.log
+node_modules

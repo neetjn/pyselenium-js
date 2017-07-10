@@ -14,5 +14,5 @@ setup(
         'License :: OSI Approved :: Apache Software License',
         'Programming Language :: Python :: 2.7'
     ],
-    packages=find_packages()
+    packages=['pyseleniumjs']
 )

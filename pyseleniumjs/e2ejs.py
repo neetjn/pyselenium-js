@@ -43,7 +43,7 @@ class E2EJS(object):
         elif isinstance(value, (int, float)):
             return '%s' % value
         else:
-            return '"%s"'
+            return '"%s"' % value
 
     def wait(self, condition, element=None, interval=500):
         """
