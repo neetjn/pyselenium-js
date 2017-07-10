@@ -4,6 +4,7 @@ Test example web app angularjs bindings.
 
 from unittest import TestCase
 from warnings import warn
+from uuid import uuid4 as uuid
 
 from selenium import webdriver
 from selenium.common.exceptions import WebDriverException
@@ -70,11 +71,44 @@ class MyPage(Page):
         return user.find_element_by_css_selector('button[ng-click="removeUser($index)"]')
 
 
-class AttributeTest(TestCase):
+class AngularTest(TestCase):
 
     def setUp(self):
         self.page = MyPage(browser=webdriver.PhantomJS())
         self.page.browser.get('http://localhost:3000')
+
+    @staticmethod
+    @property
+    def rand_id():
+        """
+        :Description: 
+        :return: basestring
+        """
+        return str(uuid4()).replace('-', '')
+
+    def test_scope_get_val(self):
+        """Test: Set and read from scope model manipulated by DOM."""
+        check = self.rand_id
+        self.page.user_name_field.send_keys(name)
+        self.assertEqual(
+            self.page.js.ng_get_scope_property(
+                element=self.page.user_name_field,
+                prop='name'
+            ), check, 'Expected "%s" found "%s"' %  self.page.js.ng_get_scope_property(
+                element=self.page.user_name_field,
+                prop='name'
+            )
+        )
+
+    def test_scope_set_val(self):
+        """Test: ..."""
+        self.assertEqual(
+            self.page.js.ng_get_scope_property(
+                element=self.page.user_name_field,
+                prop='name'
+            ), ''
+        )
+        self.assert
 
     def test_scope_func_call(self):
         """Test: Remove user from list of users by invoking scope function directly."""
@@ -95,6 +129,9 @@ class AttributeTest(TestCase):
             len(self.page.user_list), 0,
             'Expected no users found "%s"' % len(self.page.user_list)
         )
+
+    def test_ctrl_prop_get_set(self):
+        pass
 
     def tearDown(self):
         self.page.exit()                 

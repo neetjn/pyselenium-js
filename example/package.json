@@ -4,7 +4,7 @@
   "description": "pyseleniumjs use-case examples",
   "main": "index.js",
   "scripts": {
-    "cleanup": "rm -rf dist node_modules venv",
+    "cleanup": "rm -rf dist node_modules venv cleanup nohup.out ghostdriver.log",
     "setup": "npm install && npm run build && npm run virtualenv",
     "build": "node_modules/.bin/cross-env NODE_ENV=production NODE_ENV=production node_modules/.bin/webpack --config build/webpack.conf.js",
     "build:dev": "node_modules/.bin/webpack --config build/webpack.conf.js",

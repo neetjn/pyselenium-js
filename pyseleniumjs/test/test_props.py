@@ -33,7 +33,7 @@ class MyPage(Page):
         return self.browser.find_element_by_css_selector('button[ng-click="addUser()"]')
 
 
-class AttributeTest(TestCase):
+class PropertyTest(TestCase):
 
     def setUp(self):
         self.page = MyPage(browser=webdriver.PhantomJS())
