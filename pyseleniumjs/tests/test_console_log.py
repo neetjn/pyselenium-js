@@ -38,14 +38,14 @@ class MyPage(Page):
         return self.browser.find_element_by_css_selector('button[ng-click="incrementClicked()"]')
 
 
-class PropertyTest(TestCase):
+class ConsoleTest(TestCase):
 
     def setUp(self):
         self.page = MyPage(browser=webdriver.PhantomJS())
         self.page.browser.get('http://localhost:3000')
 
     def test_set_get_property(self):
-        """Test: Enable browser logging, invoke a console log, verify store."""
+        """Test: Enable browser logging, invoke a console log, verify store"""
         self.page.js.console_logger()  # enable console logging
         self.page.add_counter_button.click()  # increment counter
         logs = json.loads(self.page.js.console_dump())
