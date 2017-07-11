@@ -74,6 +74,22 @@ for el in page.ng_elements:
   page.js.ng_set_scope_property(element=el, prop='data.views', value=None)
   page.js.ng_set_scope_property(element=el, prop='data.viewed', value=False)
 ```
+
+### Testing
+
+All module related e2e tests are in the `pyselenium/tests` subdirectory. To setup your environment run `make setup`. To stand up the test application, run `make app`. This will serve the application on `localhost:3000`. To run the test suite, use `make tests`.
+
+Requirements:
+* PhantomJS (can be installed using `npm install -g phantomjs-prebuilt`)
+* Node.js 6
+* Python 2.7
+* Pip
+
+### Contributing
+
+1. Make sure your code passes our lint and e2e tests.
+2. Any new features added must also be tested in the `pyseleniumjs/tests` subdirectory.
+3. 
 ---
 
 Copyright (c) 2017 John Nolette Licensed under the Apache License, Version 2.0.
