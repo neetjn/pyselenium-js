@@ -8,6 +8,9 @@ from uuid import uuid4
 
 from selenium import webdriver
 from selenium.common.exceptions import WebDriverException
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
 from .. import E2EJS
 
 
@@ -28,6 +31,14 @@ class Page(object):
 
 
 class MyPage(Page):
+
+    @property
+    def binded_elements(self):
+        """
+        :Description: Returns all elements binded to a scope or controller property.
+        :return: [WebElement, ...]
+        """
+        return self.browser.find_elements_by_css_selector('.ng-binding')
 
     @property
     def add_user_button(self):
@@ -85,7 +96,39 @@ class AngularTest(TestCase):
         """
         return str(uuid4())
 
-    def test_scope_get_val(self):
+    def test_ng_debugging(self):
+        """Test: Enable angular debugging and verify binded elements"""
+        self.page.js.ng_enable_debugging()
+        WebDriverWait(self.page.browser, 5).until(EC.presence_of_element_located((By.ID, 'app')))
+        self.page.js.trigger_event(
+            element=self.page.user_name_field,
+            event='focus'
+        )  # wait for page reload
+        self.assertGreater(
+            len(self.page.binded_elements), 0,
+            'Expected at least one binded element found none'
+        )
+
+    def test_toggle_class(self):
+        """Test: Toggle blass on DOM and verify changes"""
+        check = self.rand_id
+        self.page.js.ng_toggle_class(
+            element=self.page.add_user_button,
+            target=check
+        )
+        self.assertIn(
+            check, self.page.js.get_attribute(
+                element=self.page.add_user_button,
+                attribute='class'
+            ), 'Expected class to contain "%s" found "%s"' % (
+                check, self.page.js.get_attribute(
+                    element=self.page.add_user_button,
+                    attribute='class'
+                )
+            )
+        )
+
+    def test_scope_get_prop(self):
         """Test: Modify DOM binded to scope and observe changes"""
         check = self.rand_id
         self.page.user_name_field.send_keys(check)
@@ -99,7 +142,7 @@ class AngularTest(TestCase):
             ))
         )
 
-    def test_scope_set_val(self):
+    def test_scope_set_prop(self):
         """Test: Modify angular scope and observe changes in binded DOM"""
         self.assertEqual(
             self.page.js.ng_get_scope_property(
@@ -148,7 +191,13 @@ class AngularTest(TestCase):
             'Expected no users found "%s"' % len(self.page.user_list)
         )
 
-    def test_ctrl_prop_get_set(self):
+    def test_ctrl_get_prop(self):
+        pass
+
+    def test_ctrl_set_prop(self):
+        pass
+
+    def test_ctrl_func_call(self):
         pass
 
     def tearDown(self):
