@@ -8,8 +8,7 @@ before_install:
   - "pip install virtualenv"
   - "npm install -g phantomjs-prebuilt"  # install phantom-js for e2e tests
 install:
-  - "npm run --prefix test setup"  # install example app dependencies and test
+  - "make setup"  # install example app dependencies and test
 script:
-  - "npm run --prefix test lint"  # lint module and test bundle
-  - "npm run --prefix test app:detached"  # start example app
-  - "npm run --prefix test test"
+  - "make app"  # start example app
+  - "make tests"  # start lint and e2e tests

@@ -112,8 +112,14 @@ class AngularTest(TestCase):
             element=self.page.user_name_field,
             prop='name',
             value=check
+        )  # set scope property
+        self.page.user_profession_field.send_keys('0')  # trigger digest
+        self.assertEqual(
+            self.page.user_name_field.text,
+            check, 'Expected user name field text to be "%s" found "%s"' % (
+                self.page.user_name_field.text, check
+            )
         )
-
 
     def test_scope_func_call(self):
         """Test: Invoke `removeUser` from scope and observe changes on page"""
