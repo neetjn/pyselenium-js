@@ -105,7 +105,10 @@ class AngularTest(TestCase):
             self.page.js.ng_get_scope_property(
                 element=self.page.user_name_field,
                 prop='name'
-            ), ''
+            ), '', 'Expected scope value to be "", found "%s"' % self.page.js.ng_get_scope_property(
+                element=self.page.user_name_field,
+                prop='name'
+            )
         )
         check = self.rand_id
         self.page.js.ng_set_scope_property(
@@ -113,11 +116,15 @@ class AngularTest(TestCase):
             prop='name',
             value=check
         )  # set scope property
-        self.page.user_profession_field.send_keys('0')  # trigger digest
         self.assertEqual(
-            self.page.user_name_field.text,
-            check, 'Expected user name field text to be "%s" found "%s"' % (
-                self.page.user_name_field.text, check
+            self.page.js.ng_get_scope_property(
+                element=self.page.user_name_field,
+                prop='name'
+            ), check, 'Expected scope value to be "%s" found "%s"' % (
+                check, self.page.js.ng_get_scope_property(
+                    element=self.page.user_name_field,
+                    prop='name'
+                )
             )
         )
 
