@@ -191,14 +191,5 @@ class AngularTest(TestCase):
             'Expected no users found "%s"' % len(self.page.user_list)
         )
 
-    def test_ctrl_get_prop(self):
-        pass
-
-    def test_ctrl_set_prop(self):
-        pass
-
-    def test_ctrl_func_call(self):
-        pass
-
     def tearDown(self):
         self.page.exit()                 
