@@ -87,9 +87,8 @@ Requirements:
 
 ### Contributing
 
-1. Make sure your code passes our lint and e2e tests.
-2. Any new features added must also be tested in the `pyseleniumjs/tests` subdirectory.
-3. 
+* Make sure your code passes our lint and e2e tests.
+* Any new features added must also be tested in the `pyseleniumjs/tests` subdirectory.
 ---
 
 Copyright (c) 2017 John Nolette Licensed under the Apache License, Version 2.0.
