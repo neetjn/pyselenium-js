@@ -4,7 +4,7 @@ Test example web app angularjs bindings.
 
 from unittest import TestCase
 from warnings import warn
-from uuid import uuid4 as uuid
+from uuid import uuid4
 
 from selenium import webdriver
 from selenium.common.exceptions import WebDriverException
@@ -77,41 +77,46 @@ class AngularTest(TestCase):
         self.page = MyPage(browser=webdriver.PhantomJS())
         self.page.browser.get('http://localhost:3000')
 
-    @staticmethod
     @property
-    def rand_id():
+    def rand_id(self):
         """
         :Description: 
         :return: basestring
         """
-        return str(uuid4()).replace('-', '')
+        return str(uuid4())
 
     def test_scope_get_val(self):
-        """Test: Set and read from scope model manipulated by DOM."""
+        """Test: Modify DOM binded to scope and observe changes"""
         check = self.rand_id
-        self.page.user_name_field.send_keys(name)
+        self.page.user_name_field.send_keys(check)
         self.assertEqual(
             self.page.js.ng_get_scope_property(
                 element=self.page.user_name_field,
                 prop='name'
-            ), check, 'Expected "%s" found "%s"' %  self.page.js.ng_get_scope_property(
+            ), check, 'Expected "%s" found "%s"' % (check, self.page.js.ng_get_scope_property(
                 element=self.page.user_name_field,
                 prop='name'
-            )
+            ))
         )
 
     def test_scope_set_val(self):
-        """Test: ..."""
+        """Test: Modify angular scope and observe changes in binded DOM"""
         self.assertEqual(
             self.page.js.ng_get_scope_property(
                 element=self.page.user_name_field,
                 prop='name'
             ), ''
         )
-        self.assert
+        check = self.rand_id
+        self.page.js.ng_set_scope_property(
+            element=self.page.user_name_field,
+            prop='name',
+            value=check
+        )
+
 
     def test_scope_func_call(self):
-        """Test: Remove user from list of users by invoking scope function directly."""
+        """Test: Invoke `removeUser` from scope and observe changes on page"""
         remove_button = self.page.user_remove_button(
             user=self.page.user_list[0]
         )  # get removal button of first user in list

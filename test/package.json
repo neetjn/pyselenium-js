@@ -11,9 +11,9 @@
     "virtualenv": "virtualenv venv && venv/bin/pip install -r requirements.txt",
     "app": "node_modules/.bin/webpack-dev-server --config build/webpack.conf.js --port 3000",
     "app:detached": "nohup npm run app &",
-    "lint": "node_modules/.bin/eslint src/**.js",
+    "lint": "venv/bin/pylint ../pyseleniumjs/e2ejs.py --errors-only && node_modules/.bin/eslint src/**.js",
     "test": "npm run lint && npm run test:e2e",
-    "test:e2e": "venv/bin/pytest ../pyseleniumjs/test"
+    "test:e2e": "venv/bin/pytest ../pyseleniumjs/tests"
   },
   "keywords": [
     "selenium",

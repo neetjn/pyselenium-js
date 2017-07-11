@@ -6,11 +6,10 @@ env:
 before_install:
   - "nvm install $NODE_VERSION"  # install node.js for example app
   - "pip install virtualenv"
-  - "pip install pylint"
   - "npm install -g phantomjs-prebuilt"  # install phantom-js for e2e tests
 install:
-  - "npm run --prefix example setup"  # install example app dependencies and test
+  - "npm run --prefix test setup"  # install example app dependencies and test
 script:
-  - "pylint pyseleniumjs/e2ejs.py --errors-only"  # lint module
-  - "npm run --prefix example app:detached"  # start example app
-  - "npm run --prefix example test"
+  - "npm run --prefix test lint"  # lint module and test bundle
+  - "npm run --prefix test app:detached"  # start example app
+  - "npm run --prefix test test"

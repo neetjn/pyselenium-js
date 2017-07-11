@@ -390,7 +390,7 @@ class E2EJS(object):
         :type value: None, bool, int, float, basestring
         """
         self.browser.execute_script(
-            'angular.element(arguments[0]).scope()%s = "%s";' % (
+            'angular.element(arguments[0]).scope()%s = %s;' % (
                 self.__d2b_notation(prop=prop), self.__type2js(value=value)
             ), element
         )
