@@ -4,6 +4,7 @@ export default ['$scope', function($scope) {
 
   $scope.incrementClicked = function() {
     $scope.clicked++
+    console.log('Incremented!')
   }
 
 }]

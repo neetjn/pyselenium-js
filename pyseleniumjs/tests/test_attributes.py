@@ -30,6 +30,10 @@ class MyPage(Page):
 
     @property
     def add_user_button(self):
+        """
+        :Description: Returns the user creation button.
+        :return: WebElement
+        """
         return self.browser.find_element_by_css_selector('button[ng-click="addUser()"]')
 
 
@@ -40,7 +44,7 @@ class AttributeTest(TestCase):
         self.page.browser.get('http://localhost:3000')
 
     def test_get_set_class_attribute(self):
-        """Test: Ensure DOM attribute can be pulled, change DOM attribue and verify change."""
+        """Test: Ensure DOM attribute can be pulled, change DOM attribue and verify change"""
         self.assertIn(
             'is-primary', self.page.js.get_attribute(
                 element=self.page.add_user_button,

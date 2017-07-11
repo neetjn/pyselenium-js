@@ -30,6 +30,10 @@ class MyPage(Page):
 
     @property
     def add_user_button(self):
+        """
+        :Description: Returns the user creation button.
+        :return: WebElement
+        """
         return self.browser.find_element_by_css_selector('button[ng-click="addUser()"]')
 
 
@@ -40,7 +44,7 @@ class PropertyTest(TestCase):
         self.page.browser.get('http://localhost:3000')
 
     def test_set_get_property(self):
-        """Test: Set disabled property of button, ensure property set correctly."""
+        """Test: Set disabled property of button, ensure property set correctly"""
         self.page.js.set_property(
             element=self.page.add_user_button,
             prop='disabled',
