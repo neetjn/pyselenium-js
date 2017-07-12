@@ -1,5 +1,5 @@
 """
-Test example web app property manipulation.
+Test example web app wait status.
 """
 
 from unittest import TestCase

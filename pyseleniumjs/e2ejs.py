@@ -271,8 +271,10 @@ class E2EJS(object):
         :type options: dict
         """
         self.browser.execute_script(
-            'arguments[0].dispatchEvent(new %s("%s", %s));' % event_type if event_type else 'Event',
-            event, element, json.dumps(options) if options else '{}'
+            'arguments[0].dispatchEvent(new %s("%s"%s));' % (
+                event_type if event_type else 'Event',
+                event, ', ' + json.dumps(options) if options else ''
+            ), element
         )
 
     def trigger_keypress(self, element, key_code):

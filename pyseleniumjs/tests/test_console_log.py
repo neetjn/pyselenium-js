@@ -1,5 +1,5 @@
 """
-Test example web app property manipulation.
+Test example web app console logging.
 """
 
 from unittest import TestCase
