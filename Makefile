@@ -1,4 +1,5 @@
 clean:
+	rm -rf build dist *.egg-info
 	npm run --prefix test cleanup
 
 setup:
