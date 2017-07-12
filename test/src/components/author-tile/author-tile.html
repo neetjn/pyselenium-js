@@ -1,0 +1,27 @@
+<div class="card animated fadeIn">
+  <div class="card-image">
+    <figure class="image is-4by3">
+      <img src="src/assets/images/placeholder-male.jpg" alt="Image">
+    </figure>
+  </div>
+  <div class="card-content">
+    <div class="media">
+      <div class="media-left">
+        <figure class="image is-48x48">
+          <img src="src/assets/images/placeholder-male.jpg" alt="Image">
+        </figure>
+      </div>
+      <div class="media-content">
+        <p class="title is-4">{{ ctrl.author.fname + ' ' + ctrl.author.lname }}</p>
+        <p class="subtitle is-6">@{{ ctrl.author.fname }}</p>
+      </div>
+    </div>
+    <div class="content">
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+      Phasellus nec iaculis mauris. <a href="https://twitter.com/neet_jn" target="_blank">@neet_jn</a>.
+      <a>#selenium</a>
+      <br>
+      <small>{{ date | date:'medium' }}</small>
+    </div>
+  </div>
+</div>

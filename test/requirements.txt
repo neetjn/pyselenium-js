@@ -1,0 +1,3 @@
+selenium==3.0.0b3
+pytest
+pylint

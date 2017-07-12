@@ -1,5 +1,13 @@
+.cache/
+.vscode/
 *.pyc
 *.egg-info/
 eggs
+__pycache__
 dist/
-build/
+nohup.out
+ghostdriver.log
+venv
+
+npm-debug.log
+node_modules

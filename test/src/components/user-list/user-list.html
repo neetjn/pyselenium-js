@@ -1,0 +1,52 @@
+<div>
+  <ul>
+    <li>
+      <form id="userManager">
+        <div class="field">
+          <label class="label">Name</label>
+          <p class="control">
+            <input class="input" type="text" placeholder="Name" ng-model="name">
+          </p>
+        </div>
+        <div class="field">
+          <label class="label">Profession</label>
+          <p class="control has-icons-left has-icons-right">
+            <input class="input" type="text" placeholder="Profession" ng-model="field">
+            <span class="icon is-small is-left">
+              <i class="fa fa-book"></i>
+            </span>
+          </p>
+        </div>
+        <div class="field">
+          <button class="button is-primary" ng-click="addUser()">
+            <i class="ico ico-left fa fa-address-book"></i> New User
+          </button>
+        </div>
+      </form>
+    </li>
+    <li ng-repeat="user in ctrl.users" class="animated zoomIn">
+      <div class="card">
+        <div class="card-content">
+          <p class="subtitle">
+            {{ user.name }} | {{ user.field }}
+          </p>
+          <div class="field">
+            <button class="button is-danger" ng-click="removeUser($index)">Remove</button>
+          </div>
+        </div>
+        <footer class="card-footer">
+          <p class="card-footer-item">
+            <span>
+              View on <a href="https://twitter.com/codinghorror/status/506010907021828096">Twitter</a>
+            </span>
+          </p>
+          <p class="card-footer-item">
+            <span>
+              Share on <a href="#">Facebook</a>
+            </span>
+          </p>
+        </footer>
+      </div>
+    </li>
+  </ul>
+</div>

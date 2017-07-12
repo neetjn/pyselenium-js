@@ -1,5 +1,8 @@
 # pyselenium-js
-Lightweight, Python module to execute frequently used javascript functionality on a Selenium webdriver.
+![https://travis-ci.org/neetVeritas/pyselenium-js.svg?branch=master](https://travis-ci.org/neetVeritas/pyselenium-js.svg?branch=master)
+[![PyPI version](https://badge.fury.io/py/pyseleniumjs.svg)](https://badge.fury.io/py/pyseleniumjs)
+
+Lightweight python module to execute frequently used javascript functionality on a Selenium webdriver.
 
 ### About
 **pyselenium-js** is a very simple, lightweight module that helps relieve some of the burden of E2E testing with the official Selenium bindings.
@@ -16,10 +19,11 @@ pip install pyselenium-js
 ```
 
 Simply import `E2EJS` from `pyselenium-js`.
-A very clean, and simply approach to referencing this library is instantiating it in your page object or factory, so it may be referenced with your active webdriver instance.
+If you're using page objects or factories, you can instantiate a new instance in your object's sontructor passing your target web driver.
 
 ```python
 from selenium import webdriver
+from selenium.common.exceptions import WebDriverException
 from warnings import warn
 from pyseleniumjs import E2EJS
 
@@ -39,7 +43,22 @@ class Page(object):
       self.browser.quit()
 
 
-MyPage(Page):
+class MyPage(Page):
+
+  @property
+  def div_with_text(self):
+    return self.browser.find_element_by_css_selector('div.something')
+
+page = MyPage(browser=webdriver.Firefox())
+print page.div_with_text.text  # bindings cannot pull text from divs
+print page.js.get_text(element=page.div_with_text)
+page.exit()
+```
+
+**pyselenium-js** also contains angular.js (1.x) support, including scope and controller access for angular debugging.
+
+```python
+class MyPage(Page):
 
   @property
   def div_with_text(self):
@@ -47,31 +66,29 @@ MyPage(Page):
 
   @property
   def ng_elements(self):
-    return self.browser.find_elements_by_css_selector('[ng-repeat]')
+    return self.browser.find_elements_by_css_selector('li[ng-repeat]')
 
-page = MyPage(browser=webdriver.Firefox())
-print page.div_with_text.text  # bindings cannot pull text from divs
-print page.js.get_text(element=page.div_with_text)
-
+page = Page(browser=webdriver.Firefox())
 for el in page.ng_elements:
-  page.js.ng_set_scope_property(
-    element=el,
-    property='searchText',
-    value='pls halp'
-  )
-  page.js.ng_trigger_handler(
-    element=el,
-    event='change'
-  )
-  page.js.ng_call_scope_function(
-    element=el,
-    func='updateSearch',
-    params=[True, 40]
-  )
-
-page.exit()
+  page.js.ng_toggle_class(element=el, target='active')
+  page.js.ng_set_scope_property(element=el, prop='data.views', value=None)
+  page.js.ng_set_scope_property(element=el, prop='data.viewed', value=False)
 ```
 
+### Testing
+
+All module related e2e tests are in the `pyselenium/tests` subdirectory. To setup your environment run `make setup`. To stand up the test application, run `make app`. This will serve the application on `localhost:3000`. To run the test suite, use `make tests`.
+
+Requirements:
+* PhantomJS (can be installed using `npm install -g phantomjs-prebuilt`)
+* Node.js 6
+* Python 2.7
+* Pip
+
+### Contributing
+
+* Make sure your code passes our lint and e2e tests.
+* Any new features added must also be tested in the `pyseleniumjs/tests` subdirectory.
 ---
 
 Copyright (c) 2017 John Nolette Licensed under the Apache License, Version 2.0.

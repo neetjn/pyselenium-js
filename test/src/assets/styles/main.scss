@@ -1,0 +1,63 @@
+@import 'variables.scss';
+
+@import 'mixins/card.scss';
+
+@import 'partials/header.scss';
+@import 'partials/footer.scss';
+@import 'partials/home.scss';
+@import 'partials/user-list.scss';
+
+body {
+  background-color: $color-pale-shade;
+}
+
+* {
+  font-family: $font-general;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: $font-title;
+}
+
+.logo {
+  font-family: $font-logo;
+}
+
+.ico {
+  display: inline-block;
+
+  &.ico-left {
+    padding-right: $ico-dist;
+  }
+  &.ico-right {
+    padding-left: $ico-dist;
+  }
+  &.ico-fixed {
+    padding-right: $ico-dist;
+    padding-left: $ico-dist;
+  }
+}
+
+div.card {
+  @include card(1.5);
+}
+
+ul {
+  &.unstyled {
+    li {
+      list-style-type: none;
+    }
+  }
+}
+
+div#app {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+div#view {
+  margin-top: 5rem;
+  flex: 1;
+}

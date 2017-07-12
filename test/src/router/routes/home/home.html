@@ -1,0 +1,22 @@
+<div id="home" class="container">
+  <div class="columns">
+    <div class="column is-4">
+      <author-tile author="author"></author-tile>
+    </div>
+    <div class="column is-4">
+      <user-list users="users"></user-list>
+    </div>
+    <div class="column is-4">
+      <div class="tile is-ancestor">
+        <div class="tile is-vertical is-5">
+          <h1 class="logo has-text-centered">Clicked {{ clicked }} times</h1>
+        </div>
+        <div class="tile is-vertical is-7">
+          <button class="button is-link" ng-click="incrementClicked()">
+            <i class="ico ico-left fa fa-plus-circle"></i> Click Me!
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
