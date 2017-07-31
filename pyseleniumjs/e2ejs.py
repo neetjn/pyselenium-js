@@ -262,7 +262,7 @@ class E2EJS(object):
         :param element: Element for browser instance to target.
         :type element: WebElement
         :param event: Event to trigger from target element.
-        :type event: basestring
+        :type event: basestring, (basestring, ...)
         :param event_type: Event type.
         :type event_type: basestring
         :example: 'KeyboardEvent'
@@ -270,12 +270,21 @@ class E2EJS(object):
         :example: { 'bubbles': True, 'cancelable': False }
         :type options: dict
         """
-        self.browser.execute_script(
-            'arguments[0].dispatchEvent(new %s("%s"%s));' % (
-                event_type if event_type else 'Event',
-                event, ', ' + json.dumps(options) if options else ''
-            ), element
-        )
+        if isinstance(event, (tuple, list)):
+            for e in event:
+                self.browser.execute_script(
+                    'arguments[0].dispatchEvent(new %s("%s"%s));' % (
+                        event_type if event_type else 'Event',
+                        e, ', ' + json.dumps(options) if options else ''
+                    ), element
+                )
+        else:
+            self.browser.execute_script(
+                'arguments[0].dispatchEvent(new %s("%s"%s));' % (
+                    event_type if event_type else 'Event',
+                    event, ', ' + json.dumps(options) if options else ''
+                ), element
+            )
 
     def trigger_keypress(self, element, key_code):
         """
