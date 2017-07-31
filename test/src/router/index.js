@@ -6,6 +6,6 @@ export default ['$stateProvider', '$urlRouterProvider', function($stateProvider,
   $urlRouterProvider.otherwise('/')
 
   $stateProvider.state('home', Home)
-  $stateProvider.state('about' About)
+  $stateProvider.state('about', About)
 
 }]
