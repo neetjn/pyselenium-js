@@ -54,7 +54,7 @@ class EventTest(TestCase):
         self.page = MyPage(browser=webdriver.PhantomJS())
         self.page.browser.get('http://localhost:3000')
 
-    def test_set_get_property(self):
+    def test_trigger_single_event(self):
         """Test: Trigger click event on button, validate dispatched"""
         regex = '([0-9]{1,3})'
         original = eval(re.findall(regex, self.page.counter_label.text)[0])
@@ -65,9 +65,31 @@ class EventTest(TestCase):
         for i in range(10):
             if (original == eval(re.findall(regex, self.page.counter_label.text)[0])):
                 time.sleep(1)
-        self.assertGreater(
-            eval(re.findall(regex, self.page.counter_label.text)[0]), original,
-            'Counter label was not modified as expected'
+        modified = eval(re.findall(regex, self.page.counter_label.text)[0])
+        self.assertEqual(
+            modified, original+1,
+            'Counter label was not modified as expected; %s clicks' % modified
+        )
+
+    def test_trigger_multiple_events(self):
+        """Test: Trigger click event on button twice, validate dispatched"""
+        regex = '([0-9]{1,3})'
+        original = eval(re.findall(regex, self.page.counter_label.text)[0])
+        self.page.js.trigger_event(
+            element=self.page.add_counter_button,
+            event=('click', 'click'),
+            options={
+                'bubbles': True,
+                'cancelable': False
+            }
+        )
+        for i in range(10):
+            if (original == eval(re.findall(regex, self.page.counter_label.text)[0])):
+                time.sleep(1)
+        modified = eval(re.findall(regex, self.page.counter_label.text)[0])
+        self.assertEqual(
+            modified, original+2,
+            'Counter label was not modified as expected; %s clicks' % modified
         )
 
     def tearDown(self):
