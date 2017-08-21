@@ -55,24 +55,28 @@ print page.js.get_text(element=page.div_with_text)
 page.exit()
 ```
 
-**pyselenium-js** also contains angular.js (1.x) support, including scope and controller access for angular debugging.
+**pyselenium-js** also contains angular.js (1.x) and Angular support, including scope and controller access for angular debugging.
 
 ```python
 class MyPage(Page):
 
   @property
-  def div_with_text(self):
-    return self.browser.find_element_by_css_selector('div.something')
-
-  @property
   def ng_elements(self):
     return self.browser.find_elements_by_css_selector('li[ng-repeat]')
+
+  @property
+  def ng2_elements(self):
+    return self.browser.find_elements_by_css_selector('li.ng2[ng-repeat]')
 
 page = Page(browser=webdriver.Firefox())
 for el in page.ng_elements:
   page.js.ng_toggle_class(element=el, target='active')
   page.js.ng_set_scope_property(element=el, prop='data.views', value=None)
   page.js.ng_set_scope_property(element=el, prop='data.viewed', value=False)
+
+for el in page.ng2_elements:
+  page.js.ng2_set_component_property(element=el, prop='data.likes', value=0)
+  page.js.ng2_set_component_property(element=el, prop='data.viewed', value=False)
 ```
 
 ### Testing
