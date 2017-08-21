@@ -50,6 +50,7 @@ class MyPage(Page):
     return self.browser.find_element_by_css_selector('div.something')
 
 page = MyPage(browser=webdriver.Firefox())
+
 print page.div_with_text.text  # bindings cannot pull text from divs
 print page.js.get_text(element=page.div_with_text)
 page.exit()
@@ -69,6 +70,7 @@ class MyPage(Page):
     return self.browser.find_elements_by_css_selector('li.ng2[ng-repeat]')
 
 page = Page(browser=webdriver.Firefox())
+
 for el in page.ng_elements:
   page.js.ng_toggle_class(element=el, target='active')
   page.js.ng_set_scope_property(element=el, prop='data.views', value=None)
