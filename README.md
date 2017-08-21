@@ -83,7 +83,9 @@ for el in page.ng2_elements:
 
 ### Testing
 
-All module related e2e tests are in the `pyselenium/tests` subdirectory. To setup your environment run `make setup`. To stand up the test application, run `make app`. This will serve the application on `localhost:3000`. To run the test suite, use `make tests`.
+All module related e2e tests are in the `pyselenium/tests` subdirectory. To setup your environment run `make setup`. To stand up the mock application, run `make app`. This will serve the application on `localhost:3000`. To run the test suite, use `make tests`.
+
+*Note as of this time, tests for the Angular 2 bindings are not yet available.*
 
 Requirements:
 * PhantomJS (can be installed using `npm install -g phantomjs-prebuilt`)
