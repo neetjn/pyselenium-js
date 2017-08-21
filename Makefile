@@ -1,13 +1,13 @@
 clean:
 	rm -rf build dist *.egg-info
-	npm run --prefix test cleanup
+	npm run --prefix mock-site cleanup
 
 setup:
-	npm run --prefix test setup
+	npm run --prefix mock-site setup
 
 app:
-	npm run --prefix test app:detached
+	npm run --prefix mock-site app:detached
 
 tests:
-	npm run --prefix test test
+	npm run --prefix mock-site test
 	killall phantomjs
