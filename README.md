@@ -50,34 +50,42 @@ class MyPage(Page):
     return self.browser.find_element_by_css_selector('div.something')
 
 page = MyPage(browser=webdriver.Firefox())
+
 print page.div_with_text.text  # bindings cannot pull text from divs
 print page.js.get_text(element=page.div_with_text)
 page.exit()
 ```
 
-**pyselenium-js** also contains angular.js (1.x) support, including scope and controller access for angular debugging.
+**pyselenium-js** also contains angular.js (1.x) and Angular support, including scope and controller access for angular debugging.
 
 ```python
 class MyPage(Page):
 
   @property
-  def div_with_text(self):
-    return self.browser.find_element_by_css_selector('div.something')
-
-  @property
   def ng_elements(self):
     return self.browser.find_elements_by_css_selector('li[ng-repeat]')
 
+  @property
+  def ng2_elements(self):
+    return self.browser.find_elements_by_css_selector('li.ng2[ng-repeat]')
+
 page = Page(browser=webdriver.Firefox())
+
 for el in page.ng_elements:
   page.js.ng_toggle_class(element=el, target='active')
   page.js.ng_set_scope_property(element=el, prop='data.views', value=None)
   page.js.ng_set_scope_property(element=el, prop='data.viewed', value=False)
+
+for el in page.ng2_elements:
+  page.js.ng2_set_component_property(element=el, prop='data.likes', value=0)
+  page.js.ng2_set_component_property(element=el, prop='data.viewed', value=False)
 ```
 
 ### Testing
 
-All module related e2e tests are in the `pyselenium/tests` subdirectory. To setup your environment run `make setup`. To stand up the test application, run `make app`. This will serve the application on `localhost:3000`. To run the test suite, use `make tests`.
+All module related e2e tests are in the `pyselenium/tests` subdirectory. To setup your environment run `make setup`. To stand up the mock application, run `make app`. This will serve the application on `localhost:3000`. To run the test suite, use `make tests`.
+
+*Note as of this time, tests for the Angular 2 bindings are not yet available.*
 
 Requirements:
 * PhantomJS (can be installed using `npm install -g phantomjs-prebuilt`)

@@ -312,12 +312,14 @@ class E2EJS(object):
     def ng_enable_debugging(self):
         """
         :Description: Enables angular debugging on given webpage.
+        :Warning: This will only work for angular.js 1.x.
         """
         self.browser.execute_script('angular.reloadWithDebugInfo()')
 
     def ng_get_text(self, element):
         """
         :Description: Will return the DOM's value, if not found will default to `innerHTML`.
+        :Warning: This will only work for angular.js 1.x.
         :Warning: This will only work for angular elements.
         :param element: Element for browser instance to target.
         :type element: WebElement
@@ -328,6 +330,7 @@ class E2EJS(object):
     def ng_set_text(self, element, text):
         """
         :Description: Will set a DOM's value, if not found will default to `innerHTML`.
+        :Warning: This will only work for angular.js 1.x.
         :Warning: This will only work for angular elements.
         :param element: Element for browser instance to target.
         :type element: WebElement
@@ -339,6 +342,7 @@ class E2EJS(object):
     def ng_toggle_class(self, element, target):
         """
         :Description: Toggle DOM class.
+        :Warning: This will only work for angular.js 1.x.
         :Warning: This will only work for angular elements.
         :param element: Element for browser instance to target.
         :param target: Class to toggle.
@@ -350,6 +354,7 @@ class E2EJS(object):
     def ng_trigger_event_handler(self, element, event):
         """
         :Description: Trigger angular event handler of element.
+        :Warning: This will only work for angular.js 1.x.
         :Warning: This will only work for angular elements.
         :param element: Element for browser instance to target.
         :param event: Event to trigger.
@@ -376,6 +381,7 @@ class E2EJS(object):
     def ng_get_scope_property(self, element, prop):
         """
         :Description: Will return value of property of element's scope.
+        :Warning: This will only work for angular.js 1.x.
         :Warning: Requires angular debugging to be enabled.
         :param element: Element for browser instance to target.
         :param prop: Property of element's angular scope to target.
@@ -392,6 +398,7 @@ class E2EJS(object):
     def ng_set_scope_property(self, element, prop, value):
         """
         :Description: Will set value of property of angular element's scope.
+        :Warning: This will only work for angular.js 1.x.
         :Warning: Requires angular debugging to be enabled.
         :param element: Element for browser instance to target.
         :param prop: Property of element's angular scope to target.
@@ -409,6 +416,7 @@ class E2EJS(object):
     def ng_call_scope_function(self, element, func, params=()):
         """
         :Description: Will execute scope function with provided parameters.
+        :Warning: This will only work for angular.js 1.x.
         :Warning: Requires angular debugging to be enabled.
         :param element: Element for browser instance to target.
         :param func: Function to execute from angular element scope.
@@ -429,6 +437,7 @@ class E2EJS(object):
     def ng_get_ctrl_property(self, element, prop):
         """
         :Description: Will return value of property of element's controller.
+        :Warning: This will only work for angular.js 1.x.
         :Warning: Requires angular debugging to be enabled.
         :param element: Element for browser instance to target.
         :type element: WebElement
@@ -445,6 +454,7 @@ class E2EJS(object):
     def ng_set_ctrl_property(self, element, prop, value):
         """
         :Description: Will set value of property of element's controller.
+        :Warning: This will only work for angular.js 1.x.
         :Warning: Requires angular debugging to be enabled.
         :param element: Element for browser instance to target.
         :type element: WebElement
@@ -463,6 +473,7 @@ class E2EJS(object):
     def ng_call_ctrl_function(self, element, func, params=()):
         """
         :Description: Will execute controller function with provided parameters.
+        :Warning: This will only work for angular.js 1.x.
         :Warning: Requires angular debugging to be enabled.
         :param element: Element for browser instance to target.
         :param func: Function to execute from angular element controller.
@@ -477,5 +488,59 @@ class E2EJS(object):
             param_str = param_str.replace(param_str[-1], '')
         self.browser.execute_script(
             'angular.element(arguments[0]).controller().%s(%s);' % (func, param_str),
+            element
+        )
+
+    def ng2_get_component_property(self, element, prop):
+        """
+        :Description: Will get value of property of element's component instance.
+        :Warning: This will only work for Angular components.
+        :param element: Element for browser instance to target.
+        :type element: WebElement
+        :param prop: Property of element's component to target.
+        :type prop: basestring
+        :example: 'messages.total'
+        :return: basestring
+        """
+        return self.browser.execute_script(
+            'return ng.probe(arguments[0]).componentInstance%s;' % self.__d2b_notation(prop=prop),
+            element
+        )
+
+    def ng2_set_component_property(self, element, prop, value):
+        """
+        :Description: Will set value of property of element's component instance.
+        :Warning: This will only work for Angular components.
+        :param element: Element for browser instance to target.
+        :type element: WebElement
+        :param prop: Property of element's component to target.
+        :type prop: basestring
+        :example: 'messages.total'
+        :param value: Value to specify to component's property.
+        :type value: None, bool, int, float, basestring
+        """
+        self.browser.execute_script(
+            'ng.probe(arguments[0]).componentInstance%s = %s;' % (
+                self.__d2b_notation(prop=prop), self.__type2js(value=value)
+            ), element
+        )
+
+    def ng2_call_component_function(self, element, func, params=()):
+        """
+        :Description: Will execute the component instance function with provided parameters.
+        :Warning: This will only work for Angular components.
+        :param element: Element for browser instance to target.
+        :param func: Function to execute from component instance.
+        :type func: basestring
+        :param params: Tuple or list of parameters to pass to target function.
+        :type params: tuple, list
+        """
+        param_str = ''
+        for param in params:
+            param_str += '%s,' % self.__type2js(value=param)
+        if param_str.endswith(','):
+            param_str = param_str.replace(param_str[-1], '')
+        self.browser.execute_script(
+            'ng.probe(arguments[0]).componentInstance.%s(%s);' % (func, param_str),
             element
         )
