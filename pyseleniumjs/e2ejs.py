@@ -373,7 +373,7 @@ class E2EJS(object):
         :example: 'messages.total' >> someObject['messages']['total']
         :return: basestring
         """
-        results = re.compile('[a-z]{0,}.').findall(prop)
+        results = re.compile('[[$a-zA-Z]{0,}.').findall(prop)
         for i in range(0, len(results)):
             results[i] = ("['%s']" % results[i]).replace('.', '')
         return ''.join(results)
