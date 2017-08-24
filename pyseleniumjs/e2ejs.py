@@ -276,7 +276,7 @@ class E2EJS(object):
             for e in event:
                 self.browser.execute_script(
                     'e = new %s("%s"); ops = %s; if (ops) {for(key in ops) { \
-                        Object.defineProperty(e, key, { value: ops[key] }) \
+                        Object.defineProperty(e, key, { value: ops[key], configurable: true }) \
                     }} arguments[0].dispatchEvent(e)' % (
                         event_type if event_type else 'Event',
                         e, json.dumps(options) if options else 'undefined'
@@ -285,7 +285,7 @@ class E2EJS(object):
         else:
             self.browser.execute_script(
                 'e = new %s("%s"); ops = %s; if (ops) {for(key in ops) { \
-                    Object.defineProperty(e, key, { value: ops[key] }) \
+                    Object.defineProperty(e, key, { value: ops[key], configurable: true }) \
                 }} arguments[0].dispatchEvent(e)' % (
                     event_type if event_type else 'Event',
                     event, json.dumps(options) if options else 'undefined'
