@@ -18,6 +18,7 @@
 import uuid
 import re
 import json
+import warnings
 
 class E2EJS(object):
     """
@@ -270,30 +271,37 @@ class E2EJS(object):
         :example: { 'bubbles': True, 'cancelable': False }
         :type options: dict
         """
+
         if isinstance(event, (tuple, list)):
             for e in event:
                 self.browser.execute_script(
-                    'arguments[0].dispatchEvent(new %s("%s"%s));' % (
+                    'e = new %s("%s"); ops = %s; if (ops) {for(key in ops) { \
+                        Object.defineProperty(e, key, { value: ops[key], configurable: true }) \
+                    }} arguments[0].dispatchEvent(e)' % (
                         event_type if event_type else 'Event',
-                        e, ', ' + json.dumps(options) if options else ''
+                        e, json.dumps(options) if options else 'undefined'
                     ), element
                 )
         else:
             self.browser.execute_script(
-                'arguments[0].dispatchEvent(new %s("%s"%s));' % (
+                'e = new %s("%s"); ops = %s; if (ops) {for(key in ops) { \
+                    Object.defineProperty(e, key, { value: ops[key], configurable: true }) \
+                }} arguments[0].dispatchEvent(e)' % (
                     event_type if event_type else 'Event',
-                    event, ', ' + json.dumps(options) if options else ''
+                    event, json.dumps(options) if options else 'undefined'
                 ), element
             )
 
     def trigger_keypress(self, element, key_code):
         """
         :Description: Trigger specific key "keypress" event on given element.
+        :Warning: This method will be deprecated in version 2, use trigger_event.
         :param element: Element for browser instance to target.
         :type element: WebElement
         :param key_code: Code of key to invoke event.
         :type key_code: int
         """
+        warnings.warn('Deprecated in version 2 switch to `trigger_event`', UserWarning)
         self.browser.execute_script(
             'var e = new Event("KeyboardEvent"); e.initEvent("keypress", true, true); \
             e.which=%s; arguments[0].dispatchEvent(e);' % key_code,

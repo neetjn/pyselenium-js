@@ -60,7 +60,7 @@ class EventTest(TestCase):
         original = eval(re.findall(regex, self.page.counter_label.text)[0])
         self.page.js.trigger_event(
             element=self.page.add_counter_button,
-            event='click',
+            event='click'
         )
         for i in range(10):
             if (original == eval(re.findall(regex, self.page.counter_label.text)[0])):
@@ -77,11 +77,7 @@ class EventTest(TestCase):
         original = eval(re.findall(regex, self.page.counter_label.text)[0])
         self.page.js.trigger_event(
             element=self.page.add_counter_button,
-            event=('click', 'click'),
-            options={
-                'bubbles': True,
-                'cancelable': False
-            }
+            event=('click', 'click')
         )
         for i in range(10):
             if (original == eval(re.findall(regex, self.page.counter_label.text)[0])):
