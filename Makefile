@@ -1,5 +1,5 @@
 clean:
-	rm -rf build dist *.egg-info
+	rm -rf build dist *.egg-info venv
 	npm run --prefix mock-site cleanup
 
 setup:
