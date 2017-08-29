@@ -317,6 +317,16 @@ class E2EJS(object):
         """
         self.browser.execute_script('arguments[0].scrollIntoView();', element)
 
+    def get_scrolling_offsets(self):
+        """
+        :Description: Returns the page scrolling x and y offsets.
+        :return: dict
+        """
+        return {
+            'x': self.browser.execute_script('return window.pageXOffset'),
+            'y': self.browser.execute_script('return window.pageXOffset')
+        }
+
     def ng_enable_debugging(self):
         """
         :Description: Enables angular debugging on given webpage.
