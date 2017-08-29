@@ -324,7 +324,7 @@ class E2EJS(object):
         """
         return {
             'x': self.browser.execute_script('return window.pageXOffset'),
-            'y': self.browser.execute_script('return window.pageXOffset')
+            'y': self.browser.execute_script('return window.pageYOffset')
         }
 
     def ng_enable_debugging(self):

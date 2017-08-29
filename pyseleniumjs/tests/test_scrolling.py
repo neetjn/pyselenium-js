@@ -37,7 +37,7 @@ class MyPage(Page):
         return self.browser.find_element_by_css_selector('button[ng-click="incrementClicked()"]')
 
     @property
-    def header():
+    def header(self):
         """
         :Description: Returns the header of the web app.
         :return: WebElement
@@ -45,7 +45,7 @@ class MyPage(Page):
         return self.browser.find_element_by_css_selector('header')
 
     @property
-    def footer():
+    def footer(self):
         """
         :Description: Returns the footer of the web app.
         :return: WebElement
@@ -53,7 +53,7 @@ class MyPage(Page):
         return self.browser.find_element_by_css_selector('footer')
 
     @property
-    def user_cards():
+    def user_cards(self):
         """
         :Description: Returns a list of user cards.
         :return [WebElement, ...]
