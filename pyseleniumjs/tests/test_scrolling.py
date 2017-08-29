@@ -61,7 +61,7 @@ class MyPage(Page):
         return self.browser.find_elements_by_css_selector('li[ng-repeat="user in ctrl.users"]')
 
 
-class PropertyTest(TestCase):
+class ScrollingTest(TestCase):
 
     def setUp(self):
         self.page = MyPage(browser=webdriver.PhantomJS())
@@ -69,7 +69,7 @@ class PropertyTest(TestCase):
         self.page.browser.set_window_size(800, 600)
 
     def test_scroll_offset(self):
-        """Test: Set disabled property of button, ensure property set correctly"""
+        """Test: Scroll to bottom of page and ensure page y offset has been incremented"""
         initial_offsets = self.page.js.get_scrolling_offsets()
         self.assertEqual(
             initial_offsets['y'], 0,
