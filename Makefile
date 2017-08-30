@@ -19,3 +19,6 @@ tests:
 	venv/bin/pytest pyseleniumjs/tests
 # kill dangling phantomjs instances
 	killall phantomjs
+
+package:
+	python setup.py sdist
