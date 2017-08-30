@@ -1,5 +1,5 @@
 clean:
-	rm -rf build dist *.egg-info venv .cache
+	rm -rf build dist *.egg-info venv *.pyc .cache
 	rm -rf pyseleniumjs/*.pyc pyseleniumjs/tests/*.pyc pyseleniumjs/tests/__pycache__
 	npm run --prefix mock-site cleanup
 
