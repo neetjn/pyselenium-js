@@ -1,5 +1,6 @@
 clean:
-	rm -rf build dist *.egg-info venv
+	rm -rf build dist *.egg-info venv *.pyc .cache ghostdriver.log
+	rm -rf pyseleniumjs/*.pyc pyseleniumjs/tests/*.pyc pyseleniumjs/tests/__pycache__
 	npm run --prefix mock-site cleanup
 
 setup:
@@ -19,3 +20,6 @@ tests:
 	venv/bin/pytest pyseleniumjs/tests
 # kill dangling phantomjs instances
 	killall phantomjs
+
+package:
+	python setup.py sdist

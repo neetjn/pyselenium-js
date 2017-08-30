@@ -317,6 +317,7 @@ class E2EJS(object):
         """
         self.browser.execute_script('arguments[0].scrollIntoView();', element)
 
+    @property
     def get_scrolling_offsets(self):
         """
         :Description: Returns the page scrolling x and y offsets.

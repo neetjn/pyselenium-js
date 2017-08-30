@@ -70,7 +70,7 @@ class ScrollingTest(TestCase):
 
     def test_scroll_offset(self):
         """Test: Scroll to bottom of page and ensure page y offset has been incremented"""
-        initial_offsets = self.page.js.get_scrolling_offsets()
+        initial_offsets = self.page.js.get_scrolling_offsets
         self.assertEqual(
             initial_offsets['y'], 0,
             'Expected an initial Y offset of 0 found {}'.format(
@@ -80,7 +80,7 @@ class ScrollingTest(TestCase):
         for i in range(10):
             self.page.add_counter_button.click()  # add components to increase page height
         self.page.js.scroll_into_view(element=self.page.user_cards[-1])
-        updated_offsets = self.page.js.get_scrolling_offsets()
+        updated_offsets = self.page.js.get_scrolling_offsets
         self.assertGreater(
             updated_offsets['y'], 0,
             'Expected Y to be greater than 0 found {}'.format(
