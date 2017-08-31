@@ -119,7 +119,17 @@ class E2EJS(object):
         :param element: Element for browser instance to target.
         :type element: WebElement
         """
-        self.browser.execute_script('arguments[0].click();', element)
+        self.trigger_event(
+            element=element,
+            event='click',
+            event_type='MouseEvent',
+            options={
+                'bubbles': True,
+                'cancelBubble': False,
+                'cancelable': True,
+                'isTrusted': True
+            }
+        )
 
     def dbl_click(self, element):
         """
