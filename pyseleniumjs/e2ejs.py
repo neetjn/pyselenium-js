@@ -126,8 +126,7 @@ class E2EJS(object):
             options={
                 'bubbles': True,
                 'cancelBubble': False,
-                'cancelable': True,
-                'isTrusted': True
+                'cancelable': True
             }
         )
 
