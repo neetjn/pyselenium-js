@@ -270,7 +270,7 @@ class E2EJS(object):
         """
         :Description: Trigger specified event of the given element.
         :param element: Element for browser instance to target.
-        :type element: WebElement
+        :type element: WebElement, (WebElement, ...)
         :param event: Event to trigger from target element.
         :type event: basestring, (basestring, ...)
         :param event_type: Event type.
@@ -280,26 +280,21 @@ class E2EJS(object):
         :example: { 'bubbles': True, 'cancelable': False }
         :type options: dict
         """
-
+        if not isinstance(element, (tuple, list)):
+            element = [element]
+        if not isinstance(event, (tuple, list)):
+            event = [event]
         if isinstance(event, (tuple, list)):
-            for e in event:
-                self.browser.execute_script(
-                    'e = new %s("%s"); ops = %s; if (ops) {for(key in ops) { \
-                        Object.defineProperty(e, key, { value: ops[key], configurable: true }) \
-                    }} arguments[0].dispatchEvent(e)' % (
-                        event_type if event_type else 'Event',
-                        e, json.dumps(options) if options else 'undefined'
-                    ), element
-                )
-        else:
-            self.browser.execute_script(
-                'e = new %s("%s"); ops = %s; if (ops) {for(key in ops) { \
-                    Object.defineProperty(e, key, { value: ops[key], configurable: true }) \
-                }} arguments[0].dispatchEvent(e)' % (
-                    event_type if event_type else 'Event',
-                    event, json.dumps(options) if options else 'undefined'
-                ), element
-            )
+            for el in element:
+                for e in event:
+                    self.browser.execute_script(
+                        'e = new %s("%s"); ops = %s; if (ops) {for(key in ops) { \
+                            Object.defineProperty(e, key, { value: ops[key], configurable: true }) \
+                        }} arguments[0].dispatchEvent(e)' % (
+                            event_type if event_type else 'Event',
+                            e, json.dumps(options) if options else 'undefined'
+                        ), el
+                    )
 
     def trigger_keypress(self, element, key_code):
         """

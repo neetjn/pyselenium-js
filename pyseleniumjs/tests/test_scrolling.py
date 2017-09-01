@@ -29,12 +29,12 @@ class Page(object):
 class MyPage(Page):
 
     @property
-    def add_counter_button(self):
+    def add_user_button(self):
         """
-        :Description: Returns the counter increment button.
+        :Description: Returns the add user button.
         :return: WebElement
         """
-        return self.browser.find_element_by_css_selector('button[ng-click="incrementClicked()"]')
+        return self.browser.find_element_by_css_selector('button[ng-click="addUser()"]')
 
     @property
     def header(self):
@@ -78,7 +78,7 @@ class ScrollingTest(TestCase):
             )
         )
         for i in range(10):
-            self.page.add_counter_button.click()  # add components to increase page height
+            self.page.add_user_button.click()  # add components to increase page height
         self.page.js.scroll_into_view(element=self.page.user_cards[-1])
         updated_offsets = self.page.js.get_scrolling_offsets
         self.assertGreater(
