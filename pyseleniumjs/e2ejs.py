@@ -113,24 +113,13 @@ class E2EJS(object):
             element
         ))
 
-    def click(self, element, bubbles=False):
+    def click(self, element):
         """
         :Description: Execute the `click` event on the target element.
         :param element: Element for browser instance to target.
         :type element: WebElement
-        :param bubbles: If enabled, will trickle event down into child elements.
-        :type bubbles: bool
         """
-        self.trigger_event(
-            element=element,
-            event='click',
-            event_type='MouseEvent',
-            options={
-                'bubbles': True,
-                'cancelBubble': False,
-                'cancelable': True
-            } if bubbles else {}
-        )
+        self.browser.execute_script('arguments[0].click()', element)
 
     def dbl_click(self, element):
         """
