@@ -46,6 +46,22 @@ class E2EJS(object):
         else:
             return '"%s"' % value
 
+    @staticmethod
+    def __type2python(value):
+        """
+        :Description: Convert javascript value to executable python value by type.
+        :param value: Value to transform.
+        :type value: None, bool, int float, basestring
+        """
+        if value is 'null':
+            return None
+        elif value in ('true', 'false'):
+            return False if value is 'false' else True
+        elif value.replace('.', '', 1).isdigit():
+            return eval(value)
+        else:
+            return value  # Should be an actual string at this point
+
     def wait(self, condition, element=None, interval=500):
         """
         :Description: Create an interval in js engine window, will clear interval after condition met.
