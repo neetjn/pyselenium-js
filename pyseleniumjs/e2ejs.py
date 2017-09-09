@@ -35,7 +35,8 @@ class E2EJS(object):
         """
         :Description: Convert python value to executable javascript value by type.
         :param value: Value to transform.
-        :type value: None, bool, int float, basestring
+        :type value: None, bool, int, float, basestring
+        :return: basestring
         """
         if value is None:
             return 'null'
@@ -49,9 +50,10 @@ class E2EJS(object):
     @staticmethod
     def __type2python(value):
         """
-        :Description: Convert javascript value to executable python value by type.
+        :Description: Convert javascript value to python value by type.
         :param value: Value to transform.
-        :type value: None, bool, int float, basestring
+        :type value: None, bool, int, float, basestring
+        :return: None, bool, int, float, basestring
         """
         if value is 'null':
             return None
@@ -60,7 +62,7 @@ class E2EJS(object):
         elif value.replace('.', '', 1).isdigit():
             return eval(value)
         else:
-            return value  # Should be an actual string at this point
+            return value
 
     def wait(self, condition, element=None, interval=500):
         """
@@ -171,19 +173,22 @@ class E2EJS(object):
             element
         )
 
-    def get_attribute(self, element, attribute):
+    def get_attribute(self, element, attribute, convert_type=True):
         """
         :Description: Return the given attribute of the target element.
         :param element: Element for browser instance to target.
         :type element: WebElement
         :param attribute: Attribute of target element to return.
         :type attribute: basestring
+        :param convert_type: If enabled, will return pythonic type.
+        :type convert_type: bool
         :return: None, bool, int, float, basestring
         """
-        return self.browser.execute_script(
+        attribute = self.browser.execute_script(
             'return arguments[0].getAttribute("%s");' % attribute,
             element
         )
+        return self.__type2python(attribute) if convert_type else attribute
 
     def set_attribute(self, element, attribute, value):
         """
