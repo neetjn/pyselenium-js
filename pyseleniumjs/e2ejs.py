@@ -62,7 +62,7 @@ class E2EJS(object):
         elif value.replace('.', '', 1).isdigit():
             return eval(value)
         else:
-            return value  # Should be an actual string at this point
+            return value
 
     def wait(self, condition, element=None, interval=500):
         """
