@@ -35,7 +35,8 @@ class E2EJS(object):
         """
         :Description: Convert python value to executable javascript value by type.
         :param value: Value to transform.
-        :type value: None, bool, int float, basestring
+        :type value: None, bool, int, float, basestring
+        :return: basestring
         """
         if value is None:
             return 'null'
@@ -49,9 +50,10 @@ class E2EJS(object):
     @staticmethod
     def __type2python(value):
         """
-        :Description: Convert javascript value to executable python value by type.
+        :Description: Convert javascript value to python value by type.
         :param value: Value to transform.
-        :type value: None, bool, int float, basestring
+        :type value: None, bool, int, float, basestring
+        :return: None, bool, int, float, basestring
         """
         if value is 'null':
             return None
