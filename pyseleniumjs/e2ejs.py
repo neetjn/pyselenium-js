@@ -173,19 +173,21 @@ class E2EJS(object):
             element
         )
 
-    def get_attribute(self, element, attribute):
+    def get_attribute(self, element, attribute, convert_type=True):
         """
         :Description: Return the given attribute of the target element.
         :param element: Element for browser instance to target.
         :type element: WebElement
         :param attribute: Attribute of target element to return.
         :type attribute: basestring
+        :param convert_type: 
         :return: None, bool, int, float, basestring
         """
-        return self.browser.execute_script(
+        attribute = self.browser.execute_script(
             'return arguments[0].getAttribute("%s");' % attribute,
             element
         )
+        return self.__type2python(attribute) if convert_type else attribute
 
     def set_attribute(self, element, attribute, value):
         """
