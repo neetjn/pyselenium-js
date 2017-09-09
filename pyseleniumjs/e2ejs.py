@@ -180,7 +180,8 @@ class E2EJS(object):
         :type element: WebElement
         :param attribute: Attribute of target element to return.
         :type attribute: basestring
-        :param convert_type: 
+        :param convert_type: If enabled, will return pythonic type.
+        :type convert_type: bool
         :return: None, bool, int, float, basestring
         """
         attribute = self.browser.execute_script(
