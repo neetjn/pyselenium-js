@@ -55,14 +55,14 @@ class E2EJS(object):
         :type value: None, bool, int, float, basestring
         :return: None, bool, int, float, basestring
         """
-        if value is 'null':
-            return None
-        elif value in ('true', 'false'):
-            return False if value is 'false' else True
-        elif value.replace('.', '', 1).isdigit():
-            return eval(value)
-        else:
-            return value
+        if isinstance(value, basestring):
+            if value is 'null':
+                return None
+            elif value in ('true', 'false'):
+                return False if value is 'false' else True
+            elif value.replace('.', '', 1).isdigit():
+                return eval(value)
+        return value
 
     def wait(self, condition, element=None, interval=500):
         """
