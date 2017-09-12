@@ -64,33 +64,62 @@ class E2EJS(object):
                 return eval(value)
         return value
 
-    def wait(self, condition, element=None, interval=500):
+    def wait(self, condition, interval, *args):
         """
-        :Description: Create an interval in js engine window, will clear interval after condition met.
+        :Description: Create an interval in vm.window, will clear interval after condition met.
         :param condition: Condition in javascript to pass to interval.
-        :example: '$el.innerText = "cheesecake"'
+        :example: '$el.innerText == "cheesecake"'
+        :example: '$el[0].disabled && $el[1].disabled'
         :type condition: basestring
-        :element: Optional element to target in condition -- will be aliased to '$el' in conditional.
-        :type element: WebElement
         :param interval: Time in milliseconds to execute interval.
         :type interval: int or float
+        :param *args: WebElement or selector of condition element.
+        :type *args: tuple
         :return: basestring
         """
-        hid = lambda: str(uuid.uuid1())[:8]
+        hid = lambda: '$' + str(uuid.uuid1())[:8]
         handle = hid()
-        if element:
-            dom = hid()
+        if len(args):
+            element_handle = hid()
             self.browser.execute_script(
-                'window["$%s"]=arguments[0];window["$%s"]=window.setInterval(function(){if(%s){(window.clearInterval(window["$%s"])||true)&&(window["$%s"]=-1); delete window["$%s"];}}, %s)' % (
-                    dom, handle, condition.replace('$el', 'window["$%s"]' % dom), handle, handle, dom, interval
-                ), element
-            )
+                'window["{}"] = [];'.format(element_handle)
+            )  # create element container in window scope
+            for el in args:
+                if isinstance(el, basestring):
+                    self.browser.execute_script('window["{}"].push({});'.format(
+                        element_handle, '() => document.querySelector("{}")'.format(el)
+                    ))  # assume selector
+                else:
+                    self.browser.execute_script(
+                        'window["{}"].push(arguments[0]);'.format(element_handle), el
+                    )  # assume web element
+            if len(args) == 1:
+                condition = condition.replace('$el', 'window["{}"][0]{}'.format(
+                    element_handle, '()' if isinstance(args[0], basestring) else ''
+                ))
+            else:
+                regex = r'(\$el\[([0-9]{0,3})\])'
+                results = re.findall(regex, condition)  # [('$el[0]', '0'), ('$el[1]', '1'), ...]
+                for result in results:
+                    pos = eval(result[1])
+                    if pos + 1 <= len(args):
+                        condition = condition.replace(result[0], 'window["{}"][{}]{}'.format(
+                            element_handle, pos, '()' if isinstance(args[pos], basestring) else ''
+                        )) 
+            
+            self.browser.execute_script(
+                'window["%s"]=window.setInterval(function(){if(%s){ \
+                (window.clearInterval(window["%s"])||true)&&(window["%s"]=-1); delete window["%s"];}}, %s)' % (
+                    handle, condition, handle, handle, element_handle, interval
+                )
+            )  # create interval
         else:
             self.browser.execute_script(
-                'window["$%s"]=window.setInterval(function(){if(%s){(window.clearInterval(window["$%s"])||true)&&(window["$%s"]=-1);}}, %s)' % (
+                'window["%s"]=window.setInterval(function(){if(%s){ \
+                (window.clearInterval(window["%s"])||true)&&(window["%s"]=-1);}}, %s)' % (
                     handle, condition, handle, handle, interval
                 )
-            )
+            )  # create interval
         return handle
 
     def wait_status(self, handle):
@@ -100,7 +129,7 @@ class E2EJS(object):
         :type handle: basestring
         :return: bool
         """
-        return self.browser.execute_script('return window["$%s"] == -1' % handle)
+        return self.browser.execute_script('return window["%s"] == -1' % handle)
 
     def console_logger(self):
         """
