@@ -87,7 +87,7 @@ class E2EJS(object):
             for el in args:
                 if isinstance(el, basestring):
                     self.browser.execute_script('window["{}"].push({});'.format(
-                        element_handle, '() => document.querySelector("{}")'.format(el)
+                        element_handle, 'function() { return document.querySelector("%s") }' % el
                     ))  # assume selector
                 else:
                     self.browser.execute_script(
