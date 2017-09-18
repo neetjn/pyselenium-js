@@ -326,17 +326,16 @@ class E2EJS(object):
             element = [element]
         if not isinstance(event, (tuple, list)):
             event = [event]
-        if isinstance(event, (tuple, list)):
-            for el in element:
-                for e in event:
-                    self.browser.execute_script(
-                        'e = new %s("%s"); ops = %s; if (ops) {for(key in ops) { \
-                            Object.defineProperty(e, key, { value: ops[key], configurable: true }) \
-                        }} arguments[0].dispatchEvent(e)' % (
-                            event_type if event_type else 'Event',
-                            e, json.dumps(options) if options else 'undefined'
-                        ), el
-                    )
+        for el in element:
+            for e in event:
+                self.browser.execute_script(
+                    'e = new %s("%s"); ops = %s; if (ops) {for(key in ops) { \
+                        Object.defineProperty(e, key, { value: ops[key], configurable: true }) \
+                    }} arguments[0].dispatchEvent(e)' % (
+                        event_type if event_type else 'Event',
+                        e, json.dumps(options) if options else 'undefined'
+                    ), el
+                )
 
     def trigger_keypress(self, element, key_code):
         """
