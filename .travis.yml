@@ -8,7 +8,7 @@ before_install:
   - "pip install virtualenv"
   - "npm install -g chromedriver@2.32.3"  # install chromedriver with headless support
 addons:
-  chrome: 60
+  chrome: stable
 install:
   - "make setup"  # install example app dependencies and test
 script:
