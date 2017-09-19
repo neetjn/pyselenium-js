@@ -88,7 +88,8 @@ All module related e2e tests are in the `pyselenium/tests` subdirectory. To setu
 *Note as of this time, tests for the Angular 2 bindings are not yet available.*
 
 Requirements:
-* PhantomJS (can be installed using `npm install -g phantomjs-prebuilt`)
+* Chromium 60
+* ChromeDriver 2.32.3
 * Node.js 6
 * Python 2.7
 * Pip

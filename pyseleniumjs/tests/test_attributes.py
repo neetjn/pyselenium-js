@@ -40,7 +40,9 @@ class MyPage(Page):
 class AttributeTest(TestCase):
 
     def setUp(self):
-        self.page = MyPage(browser=webdriver.PhantomJS())
+        chrome_options = webdriver.ChromeOptions()
+        chrome_options.add_argument('--headless')
+        self.page = MyPage(browser=webdriver.Chrome(chrome_options=chrome_options))
         self.page.browser.get('http://localhost:3000')
 
     def test_get_set_class_attribute(self):

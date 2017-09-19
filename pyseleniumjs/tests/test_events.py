@@ -67,12 +67,15 @@ class MyPage(Page):
 class EventTest(TestCase):
 
     def setUp(self):
-        self.page = MyPage(browser=webdriver.PhantomJS())
+        chrome_options = webdriver.ChromeOptions()
+        chrome_options.add_argument('--headless')
+        self.page = MyPage(browser=webdriver.Chrome(chrome_options=chrome_options))
         self.page.browser.get('http://localhost:3000')
 
     def test_trigger_single_event(self):
         """Test: Trigger click event on button, validate dispatched"""
         regex = '([0-9]{1,3})'
+        self.page.browser.save_screenshot('jas2.png')
         original = eval(re.findall(regex, self.page.counter_label.text)[0])
         self.page.js.trigger_event(
             element=self.page.add_counter_button,
