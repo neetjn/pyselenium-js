@@ -18,8 +18,6 @@ tests:
 	npm run --prefix mock-site lint
 # run e2e tests
 	venv/bin/pytest pyseleniumjs/tests
-# kill dangling phantomjs instances
-	killall phantomjs
 
 package:
 	python setup.py sdist
