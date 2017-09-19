@@ -6,7 +6,7 @@ env:
 before_install:
   - "nvm install $NODE_VERSION"  # install node.js for example app
   - "pip install virtualenv"
-  - "apt-get install chromium-browser=60"  # install chromium with headless suport
+  - "apt-get install chromium-browser=60.0.3112.113"  # install chromium with headless suport
   - "npm install -g chromedriver@2.32.3"  # install chromedriver with headless support
 install:
   - "make setup"  # install example app dependencies and test
