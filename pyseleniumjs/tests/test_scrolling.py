@@ -64,7 +64,9 @@ class MyPage(Page):
 class ScrollingTest(TestCase):
 
     def setUp(self):
-        self.page = MyPage(browser=webdriver.PhantomJS())
+        chrome_options = webdriver.ChromeOptions()
+        chrome_options.add_argument('--headless')
+        self.page = MyPage(browser=webdriver.Chrome(chrome_options=chrome_options))
         self.page.browser.get('http://localhost:3000')
         self.page.browser.set_window_size(800, 600)
 
