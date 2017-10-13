@@ -105,8 +105,8 @@ class E2EJS(object):
                     if pos + 1 <= len(args):
                         condition = condition.replace(result[0], 'window["{}"][{}]{}'.format(
                             element_handle, pos, '()' if isinstance(args[pos], basestring) else ''
-                        )) 
-            
+                        ))
+
             self.browser.execute_script(
                 'window["%s"]=window.setInterval(function(){if(%s){ \
                 (window.clearInterval(window["%s"])||true)&&(window["%s"]=-1); delete window["%s"];}}, %s)' % (
@@ -478,7 +478,7 @@ class E2EJS(object):
             ), element
         )
 
-    def ng_call_scope_function(self, element, func, params=()):
+    def ng_call_scope_function(self, element, func, params='', return_out=False):
         """
         :Description: Will execute scope function with provided parameters.
         :Warning: This will only work for angular.js 1.x.
@@ -486,18 +486,26 @@ class E2EJS(object):
         :param element: Element for browser instance to target.
         :param func: Function to execute from angular element scope.
         :type func: basestring
-        :param params: Tuple or list of parameters to pass to target function.
-        :type params: tuple, list
+        :param params: String (naked) args, or list of parameters to pass to target function.
+        :type params: basestring, tuple, list
+        :param return_out: Return output of function call otherwise None
+        :type return_out: bool
         """
-        param_str = ''
-        for param in params:
-            param_str += '%s,' % self.__type2js(value=param)
-        if param_str.endswith(','):
-            param_str = param_str.replace(param_str[-1], '')
-        self.browser.execute_script(
-            'angular.element(arguments[0]).scope().%s(%s);' % (func, param_str),
-            element
-        )
+        if isinstance(params, basestring):
+            param_str = params
+        elif isinstance(params, (tuple, list)):
+            param_str = ''
+            for param in params:
+                param_str += '%s,' % self.__type2js(value=param)
+            if param_str.endswith(','):
+                param_str = param_str.replace(param_str[-1], '')
+        else:
+            raise ValueError('Invalid type specified for function parameters')
+        exec_str = 'angular.element(arguments[0]).scope().%s(%s);' % (func, param_str)
+        if return_out:
+            return self.browser.execute_script('return {}'.format(exec_str), element)
+        else:
+            self.browser.execute_script('{}'.format(exec_str), element)
 
     def ng_get_ctrl_property(self, element, prop):
         """
@@ -535,7 +543,7 @@ class E2EJS(object):
             ), element
         )
 
-    def ng_call_ctrl_function(self, element, func, params=()):
+    def ng_call_ctrl_function(self, element, func, params='', return_out=False):
         """
         :Description: Will execute controller function with provided parameters.
         :Warning: This will only work for angular.js 1.x.
@@ -543,18 +551,26 @@ class E2EJS(object):
         :param element: Element for browser instance to target.
         :param func: Function to execute from angular element controller.
         :type func: basestring
-        :param params: Tuple or list of parameters to pass to target function.
-        :type params: tuple, list
+        :param params: String (naked) args, or list of parameters to pass to target function.
+        :type params: basestring, tuple, list
+        :param return_out: Return output of function call otherwise None
+        :type return_out: bool
         """
-        param_str = ''
-        for param in params:
-            param_str += '%s,' % self.__type2js(value=param)
-        if param_str.endswith(','):
-            param_str = param_str.replace(param_str[-1], '')
-        self.browser.execute_script(
-            'angular.element(arguments[0]).controller().%s(%s);' % (func, param_str),
-            element
-        )
+        if isinstance(params, basestring):
+            param_str = params
+        elif isinstance(params, (tuple, list)):
+            param_str = ''
+            for param in params:
+                param_str += '%s,' % self.__type2js(value=param)
+            if param_str.endswith(','):
+                param_str = param_str.replace(param_str[-1], '')
+        else:
+            raise ValueError('Invalid type specified for function parameters')
+        exec_str = 'angular.element(arguments[0]).controller().%s(%s);' % (func, param_str)
+        if return_out:
+            return self.browser.execute_script('return {}'.format(exec_str), element)
+        else:
+            self.browser.execute_script('{}'.format(exec_str), element)
 
     def ng2_get_component_property(self, element, prop):
         """
@@ -590,22 +606,30 @@ class E2EJS(object):
             ), element
         )
 
-    def ng2_call_component_function(self, element, func, params=()):
+    def ng2_call_component_function(self, element, func, params='', return_out=False):
         """
         :Description: Will execute the component instance function with provided parameters.
         :Warning: This will only work for Angular components.
         :param element: Element for browser instance to target.
         :param func: Function to execute from component instance.
         :type func: basestring
-        :param params: Tuple or list of parameters to pass to target function.
-        :type params: tuple, list
+        :param params: String (naked) args, or list of parameters to pass to target function.
+        :type params: basestring, tuple, list
+        :param return_out: Return output of function call otherwise None
+        :type return_out: bool
         """
-        param_str = ''
-        for param in params:
-            param_str += '%s,' % self.__type2js(value=param)
-        if param_str.endswith(','):
-            param_str = param_str.replace(param_str[-1], '')
-        self.browser.execute_script(
-            'ng.probe(arguments[0]).componentInstance.%s(%s);' % (func, param_str),
-            element
-        )
+        if isinstance(params, basestring):
+            param_str = params
+        elif isinstance(params, (tuple, list)):
+            param_str = ''
+            for param in params:
+                param_str += '%s,' % self.__type2js(value=param)
+            if param_str.endswith(','):
+                param_str = param_str.replace(param_str[-1], '')
+        else:
+            raise ValueError('Invalid type specified for function parameters')
+        exec_str = 'ng.probe(arguments[0]).componentInstance.%s(%s);' % (func, param_str)
+        if return_out:
+            return self.browser.execute_script('return {}'.format(exec_str), element)
+        else:
+            self.browser.execute_script('{}'.format(exec_str), element)
