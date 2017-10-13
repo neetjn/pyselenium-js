@@ -9,5 +9,6 @@ export default ['$scope', function($scope) {
   }
   $scope.removeUser = function(user) {
     $scope.ctrl.users.splice(user, 1)
+    return true
   }
 }]

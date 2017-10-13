@@ -503,7 +503,9 @@ class E2EJS(object):
             raise ValueError('Invalid type specified for function parameters')
         exec_str = 'angular.element(arguments[0]).scope().%s(%s);' % (func, param_str)
         if return_out:
-            return self.browser.execute_script('return {}'.format(exec_str), element)
+            return self.__type2python(
+                self.browser.execute_script('return {}'.format(exec_str), element)
+            )
         else:
             self.browser.execute_script('{}'.format(exec_str), element)
 
@@ -568,7 +570,9 @@ class E2EJS(object):
             raise ValueError('Invalid type specified for function parameters')
         exec_str = 'angular.element(arguments[0]).controller().%s(%s);' % (func, param_str)
         if return_out:
-            return self.browser.execute_script('return {}'.format(exec_str), element)
+            return self.__type2python(
+                self.browser.execute_script('return {}'.format(exec_str), element)
+            )
         else:
             self.browser.execute_script('{}'.format(exec_str), element)
 
@@ -630,6 +634,8 @@ class E2EJS(object):
             raise ValueError('Invalid type specified for function parameters')
         exec_str = 'ng.probe(arguments[0]).componentInstance.%s(%s);' % (func, param_str)
         if return_out:
-            return self.browser.execute_script('return {}'.format(exec_str), element)
+            return self.__type2python(
+                self.browser.execute_script('return {}'.format(exec_str), element)
+            )
         else:
             self.browser.execute_script('{}'.format(exec_str), element)
