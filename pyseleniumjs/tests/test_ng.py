@@ -93,7 +93,7 @@ class AngularTest(TestCase):
     @property
     def rand_id(self):
         """
-        :Description: 
+        :Description:
         :return: basestring
         """
         return str(uuid4())
@@ -185,13 +185,25 @@ class AngularTest(TestCase):
         )  # remove user from list
         self.page.js.ng_call_scope_function(
             element=remove_button,
-            func='$apply',
-            params=[]
+            func='$apply'
         )  # apply changes and trigger digest
         self.assertEqual(
             len(self.page.user_list), 0,
             'Expected no users found "%s"' % len(self.page.user_list)
         )
 
+    def test_scope_func_call_return(self):
+        """Test: Invoke `removeUser` from scope and validate return value"""
+        remove_button = self.page.user_remove_button(
+            user=self.page.user_list[0]
+        )  # get removal button of first user in list
+        output = self.page.js.ng_call_scope_function(
+            element=remove_button,
+            func='$parent.removeUser',
+            params=[0],
+            return_out=True
+        )  # remove user from list
+        self.assertEqual(output, True)
+
     def tearDown(self):
-        self.page.exit()                 
+        self.page.exit()
