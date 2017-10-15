@@ -507,7 +507,7 @@ class E2EJS(object):
                 self.browser.execute_script('return {}'.format(exec_str), element)
             )
         else:
-            self.browser.execute_script('{}'.format(exec_str), element)
+            self.browser.execute_script(exec_str, element)
 
     def ng_get_ctrl_property(self, element, prop):
         """
@@ -574,7 +574,7 @@ class E2EJS(object):
                 self.browser.execute_script('return {}'.format(exec_str), element)
             )
         else:
-            self.browser.execute_script('{}'.format(exec_str), element)
+            self.browser.execute_script(exec_str, element)
 
     def ng2_get_component_property(self, element, prop):
         """
@@ -638,4 +638,4 @@ class E2EJS(object):
                 self.browser.execute_script('return {}'.format(exec_str), element)
             )
         else:
-            self.browser.execute_script('{}'.format(exec_str), element)
+            self.browser.execute_script(exec_str, element)
