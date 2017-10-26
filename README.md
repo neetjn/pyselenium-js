@@ -96,8 +96,8 @@ The mock site was created using angular.js 1.6, bulmacss, webpack 2.2, and webpa
 *Note as of this time, tests for the Angular 2 bindings are not yet available.*
 
 Requirements:
-* Chromium 60
-* ChromeDriver 2.32.3
+* Chrome or Chromium (*last confirmed test used version 62*)
+* ChromeDriver (*last confirmed test used version 2.33*)
 * Node.js 6
 * Python 2.7
 * Pip
