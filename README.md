@@ -99,9 +99,8 @@ The mock website was created using angular.js 1.6, bulmacss, webpack 2.2, and we
 Requirements:
 * Chrome or Chromium (*last confirmed test used version 62*)
 * ChromeDriver (*last confirmed test used version 2.33*)
-* Node.js 6
-* Python 2.7
-* Pip
+* Node.js 6+ (with npm)
+* Python 2.7 (with pip)
 
 ### Contributors
 
