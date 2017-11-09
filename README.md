@@ -7,6 +7,7 @@
 
 [![build](https://travis-ci.org/neetjn/pyselenium-js.svg?branch=master)](https://travis-ci.org/neetjn/pyselenium-js)
 [![PyPI version](https://badge.fury.io/py/pyseleniumjs.svg)](https://badge.fury.io/py/pyseleniumjs)
+[![Join the chat at https://gitter.im/riot-view-router/Lobby](https://badges.gitter.im/riot-view-router/Lobby.svg)](https://gitter.im/riot-view-router/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 Lightweight python module to execute frequently used javascript functionality on a Selenium webdriver.
 
