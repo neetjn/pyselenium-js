@@ -1,0 +1,3 @@
+[submodule "pysjs-mock-site"]
+	path = pysjs-mock-site
+	url = git@github.com:neetjn/pysjs-mock-site.git
