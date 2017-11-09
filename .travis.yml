@@ -1,16 +1,21 @@
 language: python
 python:
-  - "2.7"
+- '2.7'
 env:
-  - NODE_VERSION="8"
+- NODE_VERSION="8"
 before_install:
-  - "nvm install $NODE_VERSION"  # install node.js for example app
-  - "pip install virtualenv"
-  - "npm install -g chromedriver"  # install chromedriver with headless support
+- nvm install $NODE_VERSION
+- pip install virtualenv
+- npm install -g chromedriver
 addons:
   chrome: stable
 install:
-  - "make setup"  # install example app dependencies and test
+- make setup
 script:
-  - "make app"  # start example app
-  - "make tests"  # start lint and e2e tests
+- make app
+- make tests
+deploy:
+  provider: pypi
+  user: neetjn
+  password:
+    secure: MA/PIB1BwgxxNnURnSXd06BiyxcCc6dNLYSR994pK+2DJM14F8jTgOapWfHhVZFnjz/Iy8qrMoUosKySe3LFOjmai72ksHl/Dj812zY8pZAN28xsVTd/d/0fAU3L7YL+f5zdExb6ep5WFv6BOkootVMpHtcw+DX8+A0XhNrEuN5PHi39jcozv0SYzoplaNJbN29uLkgEI8L7JKh14EAAjEz+inaPrRmONrnLe2j3BciOjJqIZ2cyeMPUYhcg7waxjztN2bqHbqlhJ/OT63SRodSf4l3gDxHlodryejZv5n2Rv1eCSbhCDyVFx3io/1W3OClrd+fLkZbPHQpxVwx+D5RwM0UvM613bCTqUTgKoAlT2+PBBq0AvahTZew2wqi/lzghCjA1Xdv624ASBCPQiQNM2CI2XqYZtqsdU/Je0T6NhTilpspcvQmvC3JEtdy0myzRnBq16bS+ecu/qEFgugKod4eXFkYhoU7kfBQq+EIITY+8YAQ8pxP+i8stHekdRO+UurWoBOhOHvA4ZzPQIevg1pBvCwpL5jF6LDNFbzJbFS+31ixZDLU4i/1RVwpYNIlXpRd9EzDYPbyrckQVtMU8FGeUbdei4k0dm+M3YiWZ78XqmlP6Mjp3TAdgYGUm86EnLg2a4n/tp00HSt1HDY61RXYx2GAqtMNimtGo+Tk=
