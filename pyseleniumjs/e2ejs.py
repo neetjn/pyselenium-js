@@ -30,8 +30,8 @@ class E2EJS(object):
     def __init__(self, browser):
         self.browser = browser
 
-    @staticmethod
-    def __type2js(value):
+    @classmethod
+    def __type2js(cls, value):
         """
         :Description: Convert python value to executable javascript value by type.
         :param value: Value to transform.
@@ -46,8 +46,8 @@ class E2EJS(object):
             return '%s' % value
         return '"%s"' % value
 
-    @staticmethod
-    def __type2python(value):
+    @classmethod
+    def __type2python(cls, value):
         """
         :Description: Convert javascript value to python value by type.
         :param value: Value to transform.
@@ -417,11 +417,11 @@ class E2EJS(object):
             results[i] = ("['%s']" % results[i]).replace('.', '')
         return ''.join(results)
 
-    @staticmethod
-    def __serialize_params(params):
+    @classmethod
+    def __serialize_params(cls, params):
         param_str = ''
         for param in params:
-            param_str += '%s,' % self.__type2js(value=param)
+            param_str += '%s,' % cls.__type2js(value=param)
         if param_str.endswith(','):
             param_str = param_str.replace(param_str[-1], '')
         return param_str
