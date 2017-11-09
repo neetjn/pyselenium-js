@@ -44,8 +44,7 @@ class E2EJS(object):
             return 'false' if not value else 'true'
         elif isinstance(value, (int, float)):
             return '%s' % value
-        else:
-            return '"%s"' % value
+        return '"%s"' % value
 
     @staticmethod
     def __type2python(value):
@@ -86,17 +85,16 @@ class E2EJS(object):
             )  # create element container in window scope
             for el in args:
                 if isinstance(el, basestring):
+                    # assume selector
                     self.browser.execute_script('window["{}"].push({});'.format(
-                        element_handle, 'function() { return document.querySelector("%s") }' % el
-                    ))  # assume selector
+                        element_handle, 'function() { return document.querySelector("%s") }' % el))
                 else:
+                    # assume web element
                     self.browser.execute_script(
-                        'window["{}"].push(arguments[0]);'.format(element_handle), el
-                    )  # assume web element
+                        'window["{}"].push(arguments[0]);'.format(element_handle), el)
             if len(args) == 1:
                 condition = condition.replace('$el', 'window["{}"][0]{}'.format(
-                    element_handle, '()' if isinstance(args[0], basestring) else ''
-                ))
+                    element_handle, '()' if isinstance(args[0], basestring) else ''))
             else:
                 regex = r'(\$el\[([0-9]{0,3})\])'
                 results = re.findall(regex, condition)  # [('$el[0]', '0'), ('$el[1]', '1'), ...]
@@ -104,22 +102,19 @@ class E2EJS(object):
                     pos = eval(result[1])
                     if pos + 1 <= len(args):
                         condition = condition.replace(result[0], 'window["{}"][{}]{}'.format(
-                            element_handle, pos, '()' if isinstance(args[pos], basestring) else ''
-                        ))
+                            element_handle, pos, '()' if isinstance(args[pos], basestring) else ''))
 
             self.browser.execute_script(
                 'window["%s"]=window.setInterval(function(){if(%s){ \
-                (window.clearInterval(window["%s"])||true)&&(window["%s"]=-1); delete window["%s"];}}, %s)' % (
-                    handle, condition, handle, handle, element_handle, interval
-                )
-            )  # create interval
+                (window.clearInterval(window["%s"])||true)&&(window["%s"]=-1); \
+                delete window["%s"];}}, %s)' % (handle, condition, handle, handle, \
+                element_handle, interval))  # create interval
         else:
             self.browser.execute_script(
                 'window["%s"]=window.setInterval(function(){if(%s){ \
                 (window.clearInterval(window["%s"])||true)&&(window["%s"]=-1);}}, %s)' % (
-                    handle, condition, handle, handle, interval
-                )
-            )  # create interval
+                handle, condition, handle, handle, interval))  # create interval
+
         return handle
 
     def wait_status(self, handle):
@@ -159,8 +154,7 @@ class E2EJS(object):
             arguments[0].getBoundingClientRect().height || \
             arguments[0].getBoundingClientRect().width) && \
             (arguments[0].style.visibility == "" || arguments[0].style.visibility == "visible");',
-            element
-        ))
+            element))
 
     def click(self, element):
         """
@@ -177,10 +171,9 @@ class E2EJS(object):
         :type element: WebElement
         """
         self.browser.execute_script(
-            'var e = document.createEvent("mouseEvent"); e.initEvent("dblclick", true, true); \
-            arguments[0].dispatchEvent(e);',
-            element
-        )
+            'var e = document.createEvent("mouseEvent"); \
+            e.initEvent("dblclick", true, true); \
+            arguments[0].dispatchEvent(e);', element)
 
     def select(self, element):
         """
@@ -189,9 +182,8 @@ class E2EJS(object):
         :type element: WebElement
         """
         self.browser.execute_script(
-            'arguments[0].selected = "selected"; arguments[0].dispatchEvent(new Event("change"));',
-            element
-        )
+            'arguments[0].selected = "selected"; \
+             arguments[0].dispatchEvent(new Event("change"));', element)
 
     def deselect(self, element):
         """
@@ -200,9 +192,8 @@ class E2EJS(object):
         :type element: WebElement
         """
         self.browser.execute_script(
-            'arguments[0].selected = null; arguments[0].dispatchEvent(new Event("change"));',
-            element
-        )
+            'arguments[0].selected = null; \
+             arguments[0].dispatchEvent(new Event("change"));', element)
 
     def get_attribute(self, element, attribute, convert_type=True):
         """
@@ -216,9 +207,8 @@ class E2EJS(object):
         :return: None, bool, int, float, basestring
         """
         attribute = self.browser.execute_script(
-            'return arguments[0].getAttribute("%s");' % attribute,
-            element
-        )
+            'return arguments[0].getAttribute("%s");' % attribute, element)
+
         return self.__type2python(attribute) if convert_type else attribute
 
     def set_attribute(self, element, attribute, value):
@@ -231,12 +221,8 @@ class E2EJS(object):
         :param value: Value of target element's attribute to modify.
         :type value: None, bool, int, float, basestring
         """
-        self.browser.execute_script(
-            'arguments[0].setAttribute("%s", %s);' % (
-                attribute, self.__type2js(value=value)
-            ),
-            element
-        )
+        self.browser.execute_script('arguments[0].setAttribute("%s", %s);' % (
+            attribute, self.__type2js(value=value)), element)
 
     def remove_attribute(self, element, attribute):
         """
@@ -270,9 +256,7 @@ class E2EJS(object):
         :type value: None, bool, int float, basestring
         """
         self.browser.execute_script(
-            'arguments[0]["%s"] = %s' % (prop, self.__type2js(value=value)),
-            element
-        )
+            'arguments[0]["%s"] = %s' % (prop, self.__type2js(value=value)), element)
 
     def get_value(self, element):
         """
@@ -290,10 +274,7 @@ class E2EJS(object):
         :param element: Element for browser instance to target.
         :return: basestring
         """
-        return self.get_property(
-            element=element,
-            prop='innerText'
-        )
+        return self.get_property(element=element, prop='innerText')
 
     def get_raw_text(self, element):
         """
@@ -304,10 +285,7 @@ class E2EJS(object):
         :type element: WebElement
         :return: basestring
         """
-        return self.get_property(
-            element=element,
-            prop='innerHTML'
-        )
+        return self.get_property(element=element, prop='innerHTML')
 
     def trigger_event(self, element, event, event_type=None, options=None):
         """
@@ -335,8 +313,7 @@ class E2EJS(object):
                     }} arguments[0].dispatchEvent(e)' % (
                         event_type if event_type else 'Event',
                         e, json.dumps(options) if options else 'undefined'
-                    ), el
-                )
+                    ), el)
 
     def trigger_keypress(self, element, key_code):
         """
@@ -349,10 +326,10 @@ class E2EJS(object):
         """
         warnings.warn('Deprecated in version 2 switch to `trigger_event`', UserWarning)
         self.browser.execute_script(
-            'var e = new Event("KeyboardEvent"); e.initEvent("keypress", true, true); \
+            'var e = new Event("KeyboardEvent"); \
+            e.initEvent("keypress", true, true); \
             e.which=%s; arguments[0].dispatchEvent(e);' % key_code,
-            element
-        )
+            element)
 
     def scroll_into_view(self, element):
         """
@@ -413,8 +390,7 @@ class E2EJS(object):
         :param target: Class to toggle.
         """
         self.browser.execute_script(
-            'angular.element(arguments[0]).toggleClass("%s");' % target, element
-        )
+            'angular.element(arguments[0]).toggleClass("%s");' % target, element)
 
     def ng_trigger_event_handler(self, element, event):
         """
@@ -425,9 +401,7 @@ class E2EJS(object):
         :param event: Event to trigger.
         """
         self.browser.execute_script(
-            'angular.element(arguments[0]).triggerHandler("%s");' % event,
-            element
-        )
+            'angular.element(arguments[0]).triggerHandler("%s");' % event, element)
 
     @staticmethod
     def __d2b_notation(prop):
@@ -443,6 +417,15 @@ class E2EJS(object):
             results[i] = ("['%s']" % results[i]).replace('.', '')
         return ''.join(results)
 
+    @staticmethod
+    def __serialize_params(params):
+        param_str = ''
+        for param in params:
+            param_str += '%s,' % self.__type2js(value=param)
+        if param_str.endswith(','):
+            param_str = param_str.replace(param_str[-1], '')
+        return param_str
+
     def ng_get_scope_property(self, element, prop):
         """
         :Description: Will return value of property of element's scope.
@@ -457,8 +440,7 @@ class E2EJS(object):
         return self.browser.execute_script(
             'return angular.element(arguments[0]).scope()%s;' % self.__d2b_notation(
                 prop=prop
-            ), element
-        )
+            ), element)
 
     def ng_set_scope_property(self, element, prop, value):
         """
@@ -475,8 +457,7 @@ class E2EJS(object):
         self.browser.execute_script(
             'angular.element(arguments[0]).scope()%s = %s;' % (
                 self.__d2b_notation(prop=prop), self.__type2js(value=value)
-            ), element
-        )
+            ), element)
 
     def ng_call_scope_function(self, element, func, params='', return_out=False):
         """
@@ -494,18 +475,13 @@ class E2EJS(object):
         if isinstance(params, basestring):
             param_str = params
         elif isinstance(params, (tuple, list)):
-            param_str = ''
-            for param in params:
-                param_str += '%s,' % self.__type2js(value=param)
-            if param_str.endswith(','):
-                param_str = param_str.replace(param_str[-1], '')
+            param_str = self.__serialize_params(params)
         else:
             raise ValueError('Invalid type specified for function parameters')
         exec_str = 'angular.element(arguments[0]).scope().%s(%s);' % (func, param_str)
         if return_out:
             return self.__type2python(
-                self.browser.execute_script('return {}'.format(exec_str), element)
-            )
+                self.browser.execute_script('return {}'.format(exec_str), element))
         else:
             self.browser.execute_script(exec_str, element)
 
@@ -523,8 +499,7 @@ class E2EJS(object):
         """
         return self.browser.execute_script(
             'return angular.element(arguments[0]).controller()%s;' % self.__d2b_notation(prop=prop),
-            element
-        )
+            element)
 
     def ng_set_ctrl_property(self, element, prop, value):
         """
@@ -542,8 +517,7 @@ class E2EJS(object):
         self.browser.execute_script(
             'angular.element(arguments[0]).controller()%s = %s;' % (
                 self.__d2b_notation(prop=prop), self.__type2js(value=value)
-            ), element
-        )
+            ), element)
 
     def ng_call_ctrl_function(self, element, func, params='', return_out=False):
         """
@@ -561,18 +535,13 @@ class E2EJS(object):
         if isinstance(params, basestring):
             param_str = params
         elif isinstance(params, (tuple, list)):
-            param_str = ''
-            for param in params:
-                param_str += '%s,' % self.__type2js(value=param)
-            if param_str.endswith(','):
-                param_str = param_str.replace(param_str[-1], '')
+            param_str = self.__serialize_params(params)
         else:
             raise ValueError('Invalid type specified for function parameters')
         exec_str = 'angular.element(arguments[0]).controller().%s(%s);' % (func, param_str)
         if return_out:
             return self.__type2python(
-                self.browser.execute_script('return {}'.format(exec_str), element)
-            )
+                self.browser.execute_script('return {}'.format(exec_str), element))
         else:
             self.browser.execute_script(exec_str, element)
 
@@ -589,8 +558,7 @@ class E2EJS(object):
         """
         return self.browser.execute_script(
             'return ng.probe(arguments[0]).componentInstance%s;' % self.__d2b_notation(prop=prop),
-            element
-        )
+            element)
 
     def ng2_set_component_property(self, element, prop, value):
         """
@@ -607,8 +575,7 @@ class E2EJS(object):
         self.browser.execute_script(
             'ng.probe(arguments[0]).componentInstance%s = %s;' % (
                 self.__d2b_notation(prop=prop), self.__type2js(value=value)
-            ), element
-        )
+            ), element)
 
     def ng2_call_component_function(self, element, func, params='', return_out=False):
         """
@@ -625,17 +592,12 @@ class E2EJS(object):
         if isinstance(params, basestring):
             param_str = params
         elif isinstance(params, (tuple, list)):
-            param_str = ''
-            for param in params:
-                param_str += '%s,' % self.__type2js(value=param)
-            if param_str.endswith(','):
-                param_str = param_str.replace(param_str[-1], '')
+            param_str = self.__serialize_params(params)
         else:
             raise ValueError('Invalid type specified for function parameters')
         exec_str = 'ng.probe(arguments[0]).componentInstance.%s(%s);' % (func, param_str)
         if return_out:
             return self.__type2python(
-                self.browser.execute_script('return {}'.format(exec_str), element)
-            )
+                self.browser.execute_script('return {}'.format(exec_str), element))
         else:
             self.browser.execute_script(exec_str, element)

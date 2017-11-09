@@ -12,7 +12,7 @@
 Lightweight python module to execute frequently used javascript functionality on a Selenium webdriver.
 
 ### About
-**pyselenium-js** is a very simple, lightweight module that helps relieve some of the burden of E2E testing with the official Selenium bindings.
+**pyselenium-js** is a very simple, lightweight module that helps relieve some of the burden of e2e testing with the official Selenium bindings.
 The official Selenium bindings operate in the most natural way a user would operate against a given web page.
 The problem with this, is with more advanced and modern websites, these bindings may not always work as expected on certain/custom DOMs.
 
@@ -92,7 +92,7 @@ for el in page.ng2_elements:
 
 All module related e2e tests are in the `pyselenium/tests` subdirectory. To setup your environment run `make setup`. To stand up the mock site, run `make app`. This will serve the site on `localhost:3000`. To run the test suite, use `make tests`.
 
-The mock site was created using angular.js 1.6, bulmacss, webpack 2.2, and webpack dev server. The mocksite was designed to represent a common website layout with responsive capabilities.
+The mock website was created using angular.js 1.6, bulmacss, webpack 2.2, and webpack dev server. It was designed to represent a common website layout with responsive capabilities. To add new features for unit tests, refer to [pyjs-mock-site](https://github.com/neetjn/pysjs-mock-site) and be sure to update the submodule commit accordingly.
 
 *Note as of this time, tests for the Angular 2 bindings are not yet available.*
 
@@ -103,10 +103,16 @@ Requirements:
 * Python 2.7
 * Pip
 
-### Contributing
+### Contributors
 
-* Make sure your code passes our lint and e2e tests.
-* Any new features added must also be tested in the `pyseleniumjs/tests` subdirectory.
+* **John Nolette** (john@neetgroup.net)
+
+Contributing guidelines are as follows,
+
+* Any new features added must also be unit tested in the `pyseleniumjs/tests` subdirectory.
+* Branches for bugs and features should be structued like so, `issue-x-username`.
+* Include your name and email in the contributors list.
+
 ---
 
 Copyright (c) 2017 John Nolette Licensed under the Apache License, Version 2.0.
