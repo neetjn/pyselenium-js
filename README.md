@@ -92,7 +92,7 @@ for el in page.ng2_elements:
 
 All module related e2e tests are in the `pyselenium/tests` subdirectory. To setup your environment run `make setup`. To stand up the mock site, run `make app`. This will serve the site on `localhost:3000`. To run the test suite, use `make tests`.
 
-The mock website was created using angular.js 1.6, bulmacss, webpack 2.2, and webpack dev server. It was designed to represent a common website layout with responsive capabilities. To add new features for unit tests, refer to [pyjs-mock-site](https://github.com/neetjn/pysjs-mock-site) and be sure to update the submodule commit accordingly.
+The mock website was created using angular.js 1.6, bulmacss, and webpack 3. It was designed to represent a common website layout with responsive capabilities. To add new features for unit tests, refer to [pyjs-mock-site](https://github.com/neetjn/pysjs-mock-site) and be sure to update the submodule commit accordingly.
 
 *Note as of this time, tests for the Angular 2 bindings are not yet available.*
 
