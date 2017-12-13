@@ -18,7 +18,6 @@
 import uuid
 import re
 import json
-import warnings
 from six import string_types
 
 
@@ -316,22 +315,6 @@ class E2EJS(object):
                         event_type if event_type else 'Event',
                         e, json.dumps(options) if options else 'undefined'
                     ), el)
-
-    def trigger_keypress(self, element, key_code):
-        """
-        :Description: Trigger specific key "keypress" event on given element.
-        :Warning: This method will be deprecated in version 2, use trigger_event.
-        :param element: Element for browser instance to target.
-        :type element: WebElement
-        :param key_code: Code of key to invoke event.
-        :type key_code: int
-        """
-        warnings.warn('Deprecated in version 2 switch to `trigger_event`', UserWarning)
-        self.browser.execute_script(
-            'var e = new Event("KeyboardEvent"); \
-            e.initEvent("keypress", true, true); \
-            e.which=%s; arguments[0].dispatchEvent(e);' % key_code,
-            element)
 
     def scroll_into_view(self, element):
         """
