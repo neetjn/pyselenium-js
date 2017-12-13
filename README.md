@@ -93,10 +93,10 @@ The mock website was created using angular.js 1.6, bulmacss, and webpack 3. It w
 *Note as of this time, tests for the Angular 2 bindings are not yet available.*
 
 Requirements:
+* Python 2.7, 3.6 (with pip)
 * Chrome or Chromium (*last confirmed test used version 62*)
 * ChromeDriver (*last confirmed test used version 2.33*)
 * Node.js 6+ (with npm)
-* Python 2.7 (with pip)
 
 ### Contributors
 
