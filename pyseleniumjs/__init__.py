@@ -1,1 +1,1 @@
-from e2ejs import E2EJS
+from pyseleniumjs.e2ejs import E2EJS
