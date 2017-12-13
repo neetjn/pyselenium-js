@@ -15,7 +15,7 @@ The problem with this, is with more advanced and modern websites, these bindings
 An example of this being a div tag taking keyboard input, where div tags do not support the `onfocus` event listener by design -- and the selenium bindings invoke this before attempting to send input to the target DOM.
 
 ### Usage
-This project was created using Python 2.7.x and selenium (lts). **pyselenium-js** can be installed using pip like so,
+**pyselenium-js** supports both Python 2.7 and 3.6 and can be installed using pip like so,
 
 ```bash
 pip install pyseleniumjs
