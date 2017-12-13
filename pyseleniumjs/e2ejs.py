@@ -19,6 +19,8 @@ import uuid
 import re
 import json
 import warnings
+from six import string_types
+
 
 class E2EJS(object):
     """
@@ -35,8 +37,8 @@ class E2EJS(object):
         """
         :Description: Convert python value to executable javascript value by type.
         :param value: Value to transform.
-        :type value: None, bool, int, float, basestring
-        :return: basestring
+        :type value: None, bool, int, float, string
+        :return: string
         """
         if value is None:
             return 'null'
@@ -51,10 +53,10 @@ class E2EJS(object):
         """
         :Description: Convert javascript value to python value by type.
         :param value: Value to transform.
-        :type value: None, bool, int, float, basestring
-        :return: None, bool, int, float, basestring
+        :type value: None, bool, int, float, string
+        :return: None, bool, int, float, string
         """
-        if isinstance(value, basestring):
+        if isinstance(value, string_types):
             if value is 'null':
                 return None
             elif value in ('true', 'false'):
@@ -69,12 +71,12 @@ class E2EJS(object):
         :param condition: Condition in javascript to pass to interval.
         :example: '$el.innerText == "cheesecake"'
         :example: '$el[0].disabled && $el[1].disabled'
-        :type condition: basestring
+        :type condition: string
         :param interval: Time in milliseconds to execute interval.
         :type interval: int or float
         :param *args: WebElement or selector of condition element.
         :type *args: tuple
-        :return: basestring
+        :return: string
         """
         hid = lambda: '$' + str(uuid.uuid1())[:8]
         handle = hid()
@@ -84,7 +86,7 @@ class E2EJS(object):
                 'window["{}"] = [];'.format(element_handle)
             )  # create element container in window scope
             for el in args:
-                if isinstance(el, basestring):
+                if isinstance(el, string_types):
                     # assume selector
                     self.browser.execute_script('window["{}"].push({});'.format(
                         element_handle, 'function() { return document.querySelector("%s") }' % el))
@@ -94,7 +96,7 @@ class E2EJS(object):
                         'window["{}"].push(arguments[0]);'.format(element_handle), el)
             if len(args) == 1:
                 condition = condition.replace('$el', 'window["{}"][0]{}'.format(
-                    element_handle, '()' if isinstance(args[0], basestring) else ''))
+                    element_handle, '()' if isinstance(args[0], string_types) else ''))
             else:
                 regex = r'(\$el\[([0-9]{0,3})\])'
                 results = re.findall(regex, condition)  # [('$el[0]', '0'), ('$el[1]', '1'), ...]
@@ -102,7 +104,7 @@ class E2EJS(object):
                     pos = eval(result[1])
                     if pos + 1 <= len(args):
                         condition = condition.replace(result[0], 'window["{}"][{}]{}'.format(
-                            element_handle, pos, '()' if isinstance(args[pos], basestring) else ''))
+                            element_handle, pos, '()' if isinstance(args[pos], string_types) else ''))
 
             self.browser.execute_script(
                 'window["%s"]=window.setInterval(function(){if(%s){ \
@@ -121,7 +123,7 @@ class E2EJS(object):
         """
         :Description: Check the status of browser wait.
         :param handle: Interval handle returned from `self.wait`.
-        :type handle: basestring
+        :type handle: string
         :return: bool
         """
         return self.browser.execute_script('return window["%s"] == -1' % handle)
@@ -138,7 +140,7 @@ class E2EJS(object):
         """
         :Description: Return console logs as stringified JSON structure.
         :Warning: This will only work once `console_logger` is executed.
-        :return: basestring
+        :return: string
         """
         return self.browser.execute_script('return console.dump()')
 
@@ -201,10 +203,10 @@ class E2EJS(object):
         :param element: Element for browser instance to target.
         :type element: WebElement
         :param attribute: Attribute of target element to return.
-        :type attribute: basestring
+        :type attribute: string
         :param convert_type: If enabled, will return pythonic type.
         :type convert_type: bool
-        :return: None, bool, int, float, basestring
+        :return: None, bool, int, float, string
         """
         attribute = self.browser.execute_script(
             'return arguments[0].getAttribute("%s");' % attribute, element)
@@ -217,9 +219,9 @@ class E2EJS(object):
         :param element: Element for browser instance to target.
         :type element: WebElement
         :param attribute: Attribute of target element to modify.
-        :type attribute: basestring
+        :type attribute: string
         :param value: Value of target element's attribute to modify.
-        :type value: None, bool, int, float, basestring
+        :type value: None, bool, int, float, string
         """
         self.browser.execute_script('arguments[0].setAttribute("%s", %s);' % (
             attribute, self.__type2js(value=value)), element)
@@ -230,7 +232,7 @@ class E2EJS(object):
         :param element: Element for browser instance to target.
         :type element: WebElement
         :param attribute: Attribute of target element to remove.
-        :type attribute: basestring
+        :type attribute: string
         """
         self.browser.execute_script('arguments[0].removeAttribute("%s");' % attribute, element)
 
@@ -240,8 +242,8 @@ class E2EJS(object):
         :param element: Element for browser instance to target.
         :type element: WebElement
         :param prop: Property of target element to return.
-        :type prop: basestring
-        :return: None, bool, int, float, basestring
+        :type prop: string
+        :return: None, bool, int, float, string
         """
         return self.browser.execute_script('return arguments[0]["%s"];' % prop, element)
 
@@ -251,9 +253,9 @@ class E2EJS(object):
         :param element: Element for browser instance to target.
         :type element: WebElement
         :param prop: Property of target element to modify.
-        :type prop: basestring
+        :type prop: string
         :param value: Value of target element's property to modify.
-        :type value: None, bool, int float, basestring
+        :type value: None, bool, int float, string
         """
         self.browser.execute_script(
             'arguments[0]["%s"] = %s' % (prop, self.__type2js(value=value)), element)
@@ -263,7 +265,7 @@ class E2EJS(object):
         :Description: Return the value of the given element.
         :param element: Element for browser instance to target.
         :type element: WebElement
-        :return: basestring
+        :return: string
         """
         return self.get_property(element=element, prop='value')
 
@@ -272,7 +274,7 @@ class E2EJS(object):
         :Description: Return the text content between the tags of the given element.
         :Info: Helpful for reading text from elements that do not support the `value` property.
         :param element: Element for browser instance to target.
-        :return: basestring
+        :return: string
         """
         return self.get_property(element=element, prop='innerText')
 
@@ -283,7 +285,7 @@ class E2EJS(object):
         :Warning: This will return the raw text content of the DOM's child scope.
         :param element: Element for browser instance to target.
         :type element: WebElement
-        :return: basestring
+        :return: string
         """
         return self.get_property(element=element, prop='innerHTML')
 
@@ -293,9 +295,9 @@ class E2EJS(object):
         :param element: Element for browser instance to target.
         :type element: WebElement, (WebElement, ...)
         :param event: Event to trigger from target element.
-        :type event: basestring, (basestring, ...)
+        :type event: string, (string, ...)
         :param event_type: Event type.
-        :type event_type: basestring
+        :type event_type: string
         :example: 'KeyboardEvent'
         :param options: Event options.
         :example: { 'bubbles': True, 'cancelable': False }
@@ -365,7 +367,7 @@ class E2EJS(object):
         :Warning: This will only work for angular elements.
         :param element: Element for browser instance to target.
         :type element: WebElement
-        :return: basestring
+        :return: string
         """
         return self.browser.execute_script('return angular.element(arguments[0]).text();', element)
 
@@ -377,7 +379,7 @@ class E2EJS(object):
         :param element: Element for browser instance to target.
         :type element: WebElement
         :param text: Text used for related operation.
-        :type text: basestring
+        :type text: string
         """
         self.browser.execute_script('angular.element(arguments[0]).text("%s");' % text, element)
 
@@ -408,9 +410,9 @@ class E2EJS(object):
         """
         :Description: Transform javascript dot notation to bracket notation.
         :param prop: Property to transform.
-        :type prop: basestring
+        :type prop: string
         :example: 'messages.total' >> someObject['messages']['total']
-        :return: basestring
+        :return: string
         """
         results = re.compile('[[$a-zA-Z]{0,}.').findall(prop)
         for i in range(0, len(results)):
@@ -433,9 +435,9 @@ class E2EJS(object):
         :Warning: Requires angular debugging to be enabled.
         :param element: Element for browser instance to target.
         :param prop: Property of element's angular scope to target.
-        :type prop: basestring
+        :type prop: string
         :example: 'messages.total'
-        :return: basestring
+        :return: string
         """
         return self.browser.execute_script(
             'return angular.element(arguments[0]).scope()%s;' % self.__d2b_notation(
@@ -449,10 +451,10 @@ class E2EJS(object):
         :Warning: Requires angular debugging to be enabled.
         :param element: Element for browser instance to target.
         :param prop: Property of element's angular scope to target.
-        :type prop: basestring
+        :type prop: string
         :example: 'messages.total'
         :param value: Value to specify to angular element's scope's property.
-        :type value: None, bool, int, float, basestring
+        :type value: None, bool, int, float, string
         """
         self.browser.execute_script(
             'angular.element(arguments[0]).scope()%s = %s;' % (
@@ -466,13 +468,13 @@ class E2EJS(object):
         :Warning: Requires angular debugging to be enabled.
         :param element: Element for browser instance to target.
         :param func: Function to execute from angular element scope.
-        :type func: basestring
+        :type func: string
         :param params: String (naked) args, or list of parameters to pass to target function.
-        :type params: basestring, tuple, list
+        :type params: string, tuple, list
         :param return_out: Return output of function call otherwise None
         :type return_out: bool
         """
-        if isinstance(params, basestring):
+        if isinstance(params, string_types):
             param_str = params
         elif isinstance(params, (tuple, list)):
             param_str = self.__serialize_params(params)
@@ -493,9 +495,9 @@ class E2EJS(object):
         :param element: Element for browser instance to target.
         :type element: WebElement
         :param prop: Property of element's angular controller to target.
-        :type prop: basestring
+        :type prop: string
         :example: 'messages.total'
-        :return: basestring
+        :return: string
         """
         return self.browser.execute_script(
             'return angular.element(arguments[0]).controller()%s;' % self.__d2b_notation(prop=prop),
@@ -509,10 +511,10 @@ class E2EJS(object):
         :param element: Element for browser instance to target.
         :type element: WebElement
         :param prop: Property of element's angular scope to target.
-        :type prop: basestring
+        :type prop: string
         :example: 'messages.total'
         :param value: Value to specify to angular element's controller's property.
-        :type value: None, bool, int, float, basestring
+        :type value: None, bool, int, float, string
         """
         self.browser.execute_script(
             'angular.element(arguments[0]).controller()%s = %s;' % (
@@ -526,13 +528,13 @@ class E2EJS(object):
         :Warning: Requires angular debugging to be enabled.
         :param element: Element for browser instance to target.
         :param func: Function to execute from angular element controller.
-        :type func: basestring
+        :type func: string
         :param params: String (naked) args, or list of parameters to pass to target function.
-        :type params: basestring, tuple, list
+        :type params: string, tuple, list
         :param return_out: Return output of function call otherwise None
         :type return_out: bool
         """
-        if isinstance(params, basestring):
+        if isinstance(params, string_types):
             param_str = params
         elif isinstance(params, (tuple, list)):
             param_str = self.__serialize_params(params)
@@ -552,9 +554,9 @@ class E2EJS(object):
         :param element: Element for browser instance to target.
         :type element: WebElement
         :param prop: Property of element's component to target.
-        :type prop: basestring
+        :type prop: string
         :example: 'messages.total'
-        :return: basestring
+        :return: string
         """
         return self.browser.execute_script(
             'return ng.probe(arguments[0]).componentInstance%s;' % self.__d2b_notation(prop=prop),
@@ -567,10 +569,10 @@ class E2EJS(object):
         :param element: Element for browser instance to target.
         :type element: WebElement
         :param prop: Property of element's component to target.
-        :type prop: basestring
+        :type prop: string
         :example: 'messages.total'
         :param value: Value to specify to component's property.
-        :type value: None, bool, int, float, basestring
+        :type value: None, bool, int, float, string
         """
         self.browser.execute_script(
             'ng.probe(arguments[0]).componentInstance%s = %s;' % (
@@ -583,13 +585,13 @@ class E2EJS(object):
         :Warning: This will only work for Angular components.
         :param element: Element for browser instance to target.
         :param func: Function to execute from component instance.
-        :type func: basestring
+        :type func: string
         :param params: String (naked) args, or list of parameters to pass to target function.
-        :type params: basestring, tuple, list
+        :type params: string, tuple, list
         :param return_out: Return output of function call otherwise None
         :type return_out: bool
         """
-        if isinstance(params, basestring):
+        if isinstance(params, string_types):
             param_str = params
         elif isinstance(params, (tuple, list)):
             param_str = self.__serialize_params(params)
