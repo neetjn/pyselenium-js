@@ -10,7 +10,7 @@ import re
 
 from selenium import webdriver
 from selenium.common.exceptions import WebDriverException
-from .. import E2EJS
+from pyseleniumjs import E2EJS
 
 
 class Page(object):
@@ -75,7 +75,6 @@ class EventTest(TestCase):
     def test_trigger_single_event(self):
         """Test: Trigger click event on button, validate dispatched"""
         regex = '([0-9]{1,3})'
-        self.page.browser.save_screenshot('jas2.png')
         original = eval(re.findall(regex, self.page.counter_label.text)[0])
         self.page.js.trigger_event(
             element=self.page.add_counter_button,
@@ -138,4 +137,4 @@ class EventTest(TestCase):
         )
 
     def tearDown(self):
-        self.page.exit()                 
+        self.page.exit()

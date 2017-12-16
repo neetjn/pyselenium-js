@@ -1,5 +1,5 @@
 """
-Test example web app property manipulation.
+Test example web app attribute manipulation.
 """
 
 from unittest import TestCase
@@ -7,7 +7,7 @@ from warnings import warn
 
 from selenium import webdriver
 from selenium.common.exceptions import WebDriverException
-from .. import E2EJS
+from pyseleniumjs import E2EJS
 
 
 class Page(object):
@@ -37,7 +37,7 @@ class MyPage(Page):
         return self.browser.find_element_by_css_selector('button[ng-click="addUser()"]')
 
 
-class PropertyTest(TestCase):
+class AttributeTest(TestCase):
 
     def setUp(self):
         chrome_options = webdriver.ChromeOptions()
@@ -45,26 +45,31 @@ class PropertyTest(TestCase):
         self.page = MyPage(browser=webdriver.Chrome(chrome_options=chrome_options))
         self.page.browser.get('http://localhost:3000')
 
-    def test_set_get_property(self):
-        """Test: Set disabled property of button, ensure property set correctly"""
-        self.page.js.set_property(
-            element=self.page.add_user_button,
-            prop='disabled',
-            value=True
-        )
-        self.assertTrue(
-            self.page.js.get_property(
+    def test_get_set_class_attribute(self):
+        """Test: Ensure DOM attribute can be pulled, change DOM attribue and verify change"""
+        self.assertIn(
+            'is-primary', self.page.js.get_attribute(
                 element=self.page.add_user_button,
-                prop='disabled'
-            ),
-            'DOM disabled property was not set as expected'
+                attribute='class'
+            ), 'Expected "is_primary" in button class found "%s"' % self.page.js.get_attribute(
+                element=self.page.add_user_button,
+                attribute='class'
+            )
+        )
+        self.page.js.set_attribute(
+            element=self.page.add_user_button,
+            attribute='class',
+            value='button'
         )
         self.assertEqual(
             self.page.js.get_attribute(
                 element=self.page.add_user_button,
-                attribute='disabled'
-            ), '', 'DOM attribute disabled not created after setting property disabled'
+                attribute='class'
+            ), 'button', 'Expected button class to be "button" found "%s"' % self.page.js.get_attribute(
+                element=self.page.add_user_button,
+                attribute='class'
+            )
         )
 
     def tearDown(self):
-        self.page.exit()                 
+        self.page.exit()

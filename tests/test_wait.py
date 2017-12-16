@@ -10,7 +10,7 @@ import time
 
 from selenium import webdriver
 from selenium.common.exceptions import WebDriverException
-from .. import E2EJS
+from pyseleniumjs import E2EJS
 
 
 class Page(object):
@@ -96,4 +96,4 @@ class WaitTest(TestCase):
         )
 
     def tearDown(self):
-        self.page.exit()                 
+        self.page.exit()
