@@ -25,7 +25,7 @@ pip install pyseleniumjs
 ```
 
 Simply import `E2EJS` from `pyselenium-js`.
-If you're using page objects or factories, you can instantiate a new instance in your object's sontructor passing your target web driver.
+If you're using page objects or factories, you can instantiate a new instance in your object's contructor passing your target web driver.
 
 ```python
 from selenium import webdriver
