@@ -155,7 +155,7 @@ class E2EJS(object):
             arguments[0].getBoundingClientRect().height || \
             arguments[0].getBoundingClientRect().width) && \
             (arguments[0].style.visibility == "" || arguments[0].style.visibility == "visible") && \
-            (arguments[0].style.opacity > 0);',
+            (arguments[0].style.opacity ? arguments[0].style.opacity > 0 : true);',
             element))
 
     def click(self, element):
