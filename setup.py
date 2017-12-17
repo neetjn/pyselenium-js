@@ -3,7 +3,7 @@ from setuptools import setup
 setup(
     name='pyseleniumjs',
     description='Small library with javascript utilities for official Python selenium bindings.',
-    version='1.3.5',
+    version='1.3.6',
     url='https://github.com/neetjn/pyselenium-js',
     author='John Nolette',
     author_email='john@neetgroup.net',
