@@ -8,6 +8,8 @@
 
 Lightweight python module to execute frequently used javascript functionality on a Selenium webdriver.
 
+For an all inclusive selenium framework check out [py-component-controller](https://github.com/neetjn/py-component-controller)!
+
 ### About
 **pyselenium-js** is a very simple, lightweight module that helps relieve some of the burden of e2e testing with the official Selenium bindings.
 The official Selenium bindings operate in the most natural way a user would operate against a given web page.
