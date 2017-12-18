@@ -16,7 +16,8 @@ install:
 script:
   - make app
   - make test
-  - codecov
+  - test $TRAVIS_BRANCH = "master" &&
+    codecov
 deploy:
   provider: pypi
   user: neetjn
