@@ -4,7 +4,7 @@ setup(
     name='pyseleniumjs',
     description='Small library with javascript utilities for official Python selenium bindings.',
     version='1.3.6',
-    url='https://github.com/neetjn/pyselenium-js',
+    url='https://neetjn.github.io/pyselenium-js/',
     author='John Nolette',
     author_email='john@neetgroup.net',
     license='Apache2',
