@@ -16,9 +16,7 @@ install:
 script:
   - make app
   - make test
-  - if [ "$TRAVIS_BRANCH" == "master" ]; then
-      codecov
-    fi
+  - if [ "$TRAVIS_BRANCH" == "master" ]; then codecov; fi
 deploy:
   provider: pypi
   user: neetjn
