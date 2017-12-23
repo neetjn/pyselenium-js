@@ -2,7 +2,6 @@
 
 [![build](https://travis-ci.org/neetjn/pyselenium-js.svg?branch=master)](https://travis-ci.org/neetjn/pyselenium-js)
 [![PyPI version](https://badge.fury.io/py/pyseleniumjs.svg)](https://badge.fury.io/py/pyseleniumjs)
-[![Code Health](https://landscape.io/github/neetjn/pyselenium-js/master/landscape.svg?style=flat)](https://landscape.io/github/neetjn/pyselenium-js/master)
 [![codecov](https://codecov.io/gh/neetjn/pyselenium-js/branch/master/graph/badge.svg)](https://codecov.io/gh/neetjn/pyselenium-js)
 [![Join the chat at https://gitter.im/riot-view-router/Lobby](https://badges.gitter.im/riot-view-router/Lobby.svg)](https://gitter.im/riot-view-router/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
