@@ -10,7 +10,8 @@ About
 Best Practices
 ==============
 
-...
+pyselenium-js was designed to be a lightweight, and easily accessible all-purpose javascript driver to cover any functionality the official selenium bindings either don't support or don't cover well.
+To truly exercise the javascript driver, we suggest leveraging page objects and or page factories to simplify integration into your project or test suite.
 
 Asynchronous Javascript Wait
 ============================

@@ -9,9 +9,8 @@ The following code example features a simple implementation using page objects:
 
 .. code-block:: python
 
-    from selenium import webdriver
     from pyseleniumjs import E2EJS
-
+    from selenium import webdriver
 
     class Page(object):
 
@@ -50,4 +49,6 @@ The following code example features a simple implementation using page objects:
 Example Explained
 =================
 
-...
+The pyselenium-js driver can be used in just about any context with a selenium webdriver.
+The driver only requires a selenium webdriver instance to consume, to execute javascript under the hood.
+The example above shows how easy, and seamlessly pyselenium-js can be implemented into existing projects and test suites.
