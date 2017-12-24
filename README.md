@@ -10,7 +10,7 @@ Lightweight python module to execute frequently used javascript functionality on
 
 For an all inclusive selenium framework check out [py-component-controller](https://github.com/neetjn/py-component-controller)!
 
-Official documentation be be read [here](hhttp://pyselenium-js.readthedocs.io).
+Official documentation be be read [here](http://pyselenium-js.readthedocs.io).
 
 ### About
 
