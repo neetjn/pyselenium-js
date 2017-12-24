@@ -66,13 +66,13 @@ Browser Console Logging
 Another very helpful feature of the pyselenium-js driver, is the ability to store and retrieve console browser logs.
 This functionality is **not** supported by the official selenium bindings.
 
-To enable logging, use the api method **console_logger**:
+To enable logging, use the api method *console_logger*:
 
 .. code-block:: python
 
     page.js.console_logger()
 
-To retrieve your browser's logs, refer to **console_dump**:
+To retrieve your browser's logs, refer to *console_dump*:
 
 .. code-block:: python
 
@@ -111,7 +111,17 @@ Additionally, the driver provides an api method *dbl_click* to double click on a
 Selecting Options From Select Elements
 ======================================
 
-...
+The official selenium bindings provide a very round about method of selecting select element options.
+This method also does not work for the Safari webdriver.
+
+The pyselenium-js driver offers an api method **select** that will work across any webdriver on any platform without the use of action chains.
+
+.. code-block:: python
+
+    page.country_selection.click()
+    page.country_option('United States').click()
+    # trigger event "select" to notify the browser this element value has been modified
+    page.js.select(page.country_selection)
 
 Getting and Setting Element Attributes
 ======================================
