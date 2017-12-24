@@ -9,6 +9,6 @@ pyselenium-js can be used on both python 2.7 and python 3.6, as well as the requ
 
 You can download the framework using pip like this:
 
-    pip install pyscc
+    pip install pyseleniumjs
 
 You may consider using virtualenv to create isolated Python environments.
