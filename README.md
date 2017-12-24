@@ -10,7 +10,7 @@ Lightweight python module to execute frequently used javascript functionality on
 
 For an all inclusive selenium framework check out [py-component-controller](https://github.com/neetjn/py-component-controller)!
 
-Official documentation be be read [here](https://readthedocs.org/projects/pyselenium-js).
+Official documentation be be read [here](hhttp://pyselenium-js.readthedocs.io).
 
 ### About
 
@@ -32,7 +32,7 @@ Support is available for both Python 2.7 and 3.6.
 pip install pyseleniumjs
 ```
 
-For more information refer to the official documentation [here](https://readthedocs.org/projects/pyselenium-js).
+For more information refer to the official documentation [here](http://pyselenium-js.readthedocs.io).
 
 ### Testing
 
