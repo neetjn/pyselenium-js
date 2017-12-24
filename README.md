@@ -10,6 +10,8 @@ Lightweight python module to execute frequently used javascript functionality on
 
 For an all inclusive selenium framework check out [py-component-controller](https://github.com/neetjn/py-component-controller)!
 
+Official documentation be be read [here](https://readthedocs.org/projects/pyselenium-js).
+
 ### About
 **pyselenium-js** is a very simple, lightweight module that helps relieve some of the burden of e2e testing with the official Selenium bindings.
 The official Selenium bindings operate in the most natural way a user would operate against a given web page.
@@ -18,11 +20,17 @@ The problem with this, is with more advanced and modern websites, these bindings
 An example of this being a div tag taking keyboard input, where div tags do not support the `onfocus` event listener by design -- and the selenium bindings invoke this before attempting to send input to the target DOM.
 
 ### Usage
-**pyselenium-js** supports both Python 2.7 and 3.6 and can be installed using pip like so,
+This project was created using selenium `3.6.0`.
+
+Support is available for both Python 2.7 and 3.6.
+
+**pyselenium-js** and can be installed using pip like so,
 
 ```bash
 pip install pyseleniumjs
 ```
+
+For more information refer to the official documentation [here](https://readthedocs.org/projects/pyselenium-js).
 
 Simply import `E2EJS` from `pyselenium-js`.
 If you're using page objects or factories, you can instantiate a new instance in your object's contructor passing your target web driver.
