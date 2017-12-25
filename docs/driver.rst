@@ -288,7 +288,8 @@ Refer to the api methods *ng_get_scope_property* and *ng_set_scope_property*:
     # angular.element('#someSelector').scope().data.username = 'foobar'
     page.js.ng_set_scope_property(page.user_tile, 'data.username', 'foobar')
 
-    assert page.js.ng_get_scope_property(page.user_tile, 'data.username'), 'foobar'
+    assert page.js.ng_get_scope_property(
+        page.user_tile, 'data.username') == 'foobar'
 
 Though this shouldn't be a go-to for many test cases, it's certainly helpful for more advanced web applications.
 
@@ -310,7 +311,7 @@ Using the api method *ng_call_scope_function* you may call the scope method dire
 
 .. code-block:: python
 
-    >> angular.element('#someSelector').scope().addUser('john', 'john@neetgroup.net', 22)
+    # angular.element('#someSelector').scope().addUser('john', 'john@neetgroup.net', 22)
     page.js.ng_call_scope_function(
         page.username_field, 'addUser', ['john', 'john@neetgroup.net', 22])
 
@@ -325,7 +326,8 @@ Refer to the api methods *ng_get_ctrl_property* and *ng_set_ctrl_property*:
     # angular.element('#someSelector').controller().UserService.username = 'foobar'
     page.js.ng_ctrl_scope_property(page.user_tile, 'UserService.username', 'foobar')
 
-    assert page.js.ng_ctrl_scope_property(page.user_tile, 'UserService.username'), 'foobar'
+    assert page.js.ng_ctrl_scope_property(
+        page.user_tile, 'UserService.username') == 'foobar'
 
 Though this shouldn't be a go-to for many test cases, it's certainly helpful for more advanced web applications.
 
@@ -347,7 +349,7 @@ Using the api method *ng_call_ctrl_function* you may call the controller method 
 
 .. code-block:: python
 
-    >> angular.element('#someSelector').controller().deleteUser(100100)
+    # angular.element('#someSelector').controller().deleteUser(100100)
     page.js.ng_call_ctrl_function(page.username_field, 'deleteUser', [100100])
 
 Angular (2-5)
@@ -356,9 +358,26 @@ Angular (2-5)
 Get and Set Component Property
 ------------------------------
 
-...
+The pyselenium-js driver provides a simple and easy to use interface for Angular applications to get and set component properties.
+Refer to the api methods *ng2_get_component_property* and *ng2_set_component_property*.
+
+.. code-block:: python
+
+    # ng.probe('#someSelector').componentInstance.username = 'jack'
+    page.js.ng2_set_component_property(page.profile_username, 'username', 'jack')
+
+    assert page.js.ng2_get_component_property(
+        page.profile_username, 'username') == 'jack'
 
 Call Component Function
 -----------------------
 
-...
+To invoke an Angular application component function, refer to the *ng2_call_component_function* api method.
+
+.. code-block:: python
+
+    # ng.probe('#someSelector').componentInstance.logout()
+    page.js.ng2_call_component_function(page.profile_username, 'logout', [])
+
+    # ng.probe('#someSelector').componentInstance.login('username', 'password')
+    page.js.ng2_call_component_function(page.username_field, 'login', ['username', 'password'])
