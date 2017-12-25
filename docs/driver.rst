@@ -254,12 +254,14 @@ To pull the inner text of a given angular element, the javascript driver provide
 
 .. code-block:: python
 
+    # angular.element('#someSelector').text()
     page.js.ng_get_text(page.username_field)
 
 Additionally, the driver provides another api method *ng_set_text* to modify the text of a given angular element.
 
 .. code-block:: python
 
+    # angular.element('#someSelector').text('john_doe')
     page.js.ng_set_text(page.username_field, 'john_doe')
 
 Toggle Element Class
@@ -269,6 +271,7 @@ Toggling the class of an angular element can be done using the api method *ng_to
 
 .. code-block:: python
 
+    # angular.element('#someSelector').toggleSelector('active')
     page.js.ng_toggle_class(page.button, 'active')
 
 Trigger Event Handler
@@ -279,6 +282,7 @@ You may trigger an angular.js element event handler like so:
 
 .. code-block:: python
 
+    # angular.element('#someSelector').triggerHandler('click')
     page.js.ng_trigger_event_handler(page.button, 'click')
 
 Get and Set Scope Property
