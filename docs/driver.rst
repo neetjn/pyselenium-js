@@ -231,6 +231,8 @@ This can be especially helpful when testing fragment identifiers and continuousl
 Angular.js
 ==========
 
+**These methods shouldn't be a go-to for many test cases, but they can certainly helpful for more advanced web applications.**
+
 Enable Debugging
 ----------------
 
@@ -329,8 +331,6 @@ Refer to the api methods *ng_get_ctrl_property* and *ng_set_ctrl_property*:
     assert page.js.ng_ctrl_scope_property(
         page.user_tile, 'UserService.username') == 'foobar'
 
-Though this shouldn't be a go-to for many test cases, it's certainly helpful for more advanced web applications.
-
 Call Controller Function
 ------------------------
 
@@ -354,6 +354,8 @@ Using the api method *ng_call_ctrl_function* you may call the controller method 
 
 Angular (2-5)
 =============
+
+**These methods shouldn't be a go-to for many test cases, but they can certainly helpful for more advanced web applications.**
 
 Get and Set Component Property
 ------------------------------
