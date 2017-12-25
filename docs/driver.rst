@@ -114,7 +114,7 @@ Selecting Options From Select Elements
 The official selenium bindings provide a very round about method of selecting select element options.
 This method also does not work for the Safari webdriver.
 
-The pyselenium-js driver offers an api method **select** that will work across any webdriver on any platform without the use of action chains.
+The pyselenium-js driver offers an api method *select* that will work across any webdriver on any platform without the use of action chains.
 
 .. code-block:: python
 
@@ -126,38 +126,107 @@ The pyselenium-js driver offers an api method **select** that will work across a
 Getting and Setting Element Attributes
 ======================================
 
-...
+Using the pyselenium-js driver, an element’s attribute can be fetched like so:
+
+.. code-block:: python
+
+    page.js.get_attribute(page.checkbox, 'aria-toggled')
+
+Additionally, an element’s attribute can be set using the *set_attribute* api method:
+
+.. code-block:: python
+
+    page.js.set_attribute(page.checkbox, 'aria-toggled', True)
+
+Under the hood, pyselenium-js will automatically convert javascript types into pythonic types and inverse.
 
 Getting and Setting Element Properties
 ======================================
 
-...
+**This feature is not supported by the official selenium bindings (or remote api).**
+
+Using the pyselenium-js driver, an element’s property can be fetched like so:
+
+.. code-block:: python
+
+    page.js.get_property(page.checkbox, 'disabled')
+
+Additionally, an element’s property can be set using the *set_property* api method:
+
+.. code-block:: python
+
+    page.js.set_property(page.checkbox, 'disabled', True)
+
+Under the hood, pyselenium-js will automatically convert javascript types into pythonic types and inverse.
 
 Getting Element Text
 ======================================
 
-...
+To scrape text from an element, refer to the api method `get_text`:
 
+.. code-block:: python
+
+    # pulls the innerText property value from a given element
+    page.js.get_text(page.element)
+    >> 'foobar'
+
+You may alternatively use the api method `get_raw_text` for elements that do not support the `innerText` property.
+
+.. code-block:: python
+
+    # pulls the innerHTML property value from a given element
+    page.js.get_raw_text(page.element)
+    >> '<span>foobar</span>'
 
 Getting Element Value
 ======================================
 
-...
+Input elements provide a property, value, which selenium does **not** provide explicit bindings for.
+Using the api method *get_value* you may pull the value from any input element (including select, button, radiobutton).
+
+.. code-block:: python
+
+    page.js.get_value(page.username_field)
+    >> string
 
 Dispatching Events
 ==================
 
-...
+The pyselenium-js driver allows developers the ability to dispatch configuragle events to a given element.
+Refer to the api method *trigger_event*, which can be used like so:
+
+.. code-block:: python
+
+    # dispatch a naked event 'click'
+    page.js.trigger_event(page.button, event='click')
+
+    # dispatch an event 'click' of type MouseEvent
+    # pass the event options 'bubbles' and 'cancelable'
+    page.js.trigger_event(page.button, event='click', event_type='MouseEvent', options={
+        'bubbles': True,
+        'cancelable': False
+    })
 
 Scrolling an Element Into View
 ==============================
 
-...
+To scroll an element into view, use the api method *scroll_into_view*:
+
+.. code-block:: python
+
+    page.js.scroll_into_view(page.button)
 
 Get Page Scrolling Offsets
 ==========================
 
-...
+The driver provides a property *get_scrolling_offsets* to pull the webdriver's current scrolling coordinates.
+This can be especially helpful when testing fragment identifiers and continuously scrolling content.
+
+.. code-block:: python
+
+    coords = page.js.get_scrolling_offsets
+    page.scroll_to_bottom.click()
+    assert coords['y'] < page.js.get_scrolling_offsets['y']
 
 Angular.js
 ==========
@@ -165,27 +234,48 @@ Angular.js
 Enable Debugging
 ----------------
 
-...
+To enable angular debugging for access to angular element scropes and controllers, refer to the api method *ng_enable_debugging*.
+This method *will* reload the driver's current location.
 
-Get Element Text
+.. code-block:: python
+
+    page.js.ng_enable_debugging()
+
+To verify angular debugging is enabled, a well regarded trick is to search for any existing elements with the class *ng-binding*.
+
+Get and Set Element Text
 ----------------
 
-...
+To pull the inner text of a given angular element, the javascript driver provides an api method *ng_get_text*
 
-Set Element Text
-----------------
+.. code-block:: python
 
-...
+    page.js.ng_get_text(page.username_field)
+
+Additionally, the driver provides another api method *ng_set_text* to modify the text of a given angular element.
+
+.. code-block:: python
+
+    page.js.ng_set_text(page.username_field, 'john_doe')
 
 Toggle Element Class
 --------------------
 
-...
+Toggling the class of an angular element can be done using the api method *ng_toggle_class*:
+
+.. code-block:: python
+
+    page.js.ng_toggle_class(page.button, 'active')
 
 Trigger Event Handler
 ---------------------
 
-...
+Angular.js provides a relatively simple interface for triggering angular element event handlers.
+You may trigger an angular.js element event handler like so:
+
+.. code-block:: python
+
+    page.js.ng_trigger_event_handler(page.button, 'click')
 
 Get and Set Scope Property
 --------------------------
