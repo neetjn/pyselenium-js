@@ -91,6 +91,8 @@ The javascript driver allows you to check for the visibility of a WebElement ins
     page.js.is_visible(page.element)
     >> True, False
 
+This visibility check consists of an element's offset coordinates, and computed style visibility and opacity.
+
 Clicking and Double Clicking Elements
 =====================================
 
