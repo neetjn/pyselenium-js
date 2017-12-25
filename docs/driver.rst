@@ -280,22 +280,75 @@ You may trigger an angular.js element event handler like so:
 Get and Set Scope Property
 --------------------------
 
-...
+The pyselenium-js driver enables angular element scope manipulation, and allows for the extraction of scope property values.
+Refer to the api methods *ng_get_scope_property* and *ng_set_scope_property*:
+
+.. code-block:: python
+
+    # angular.element('#someSelector').scope().data.username = 'foobar'
+    page.js.ng_set_scope_property(page.user_tile, 'data.username', 'foobar')
+
+    assert page.js.ng_get_scope_property(page.user_tile, 'data.username'), 'foobar'
+
+Though this shouldn't be a go-to for many test cases, it's certainly helpful for more advanced web applications.
 
 Call Scope Function
 -------------------
 
-...
+A more advanced feature of the angular.js utilities for pyselenium-js, is the ability to directly invoke scope functions.
+Take for example the following angular.js controller,
+
+.. code-block:: javascript
+
+    angular.controller('homeCtrl', ['$scope', ($scope) => {
+        $scope.addUser(username, email, age) {
+            ...
+        }
+    }])
+
+Using the api method *ng_call_scope_function* you may call the scope method directly like so:
+
+.. code-block:: python
+
+    >> angular.element('#someSelector').scope().addUser('john', 'john@neetgroup.net', 22)
+    page.js.ng_call_scope_function(
+        page.username_field, 'addUser', ['john', 'john@neetgroup.net', 22])
 
 Get and Set Controller Property
 -------------------------------
 
-...
+The pyselenium-js driver enables angular element controller manipulation, and allows for the extraction of controller property values.
+Refer to the api methods *ng_get_ctrl_property* and *ng_set_ctrl_property*:
+
+.. code-block:: python
+
+    # angular.element('#someSelector').controller().UserService.username = 'foobar'
+    page.js.ng_ctrl_scope_property(page.user_tile, 'UserService.username', 'foobar')
+
+    assert page.js.ng_ctrl_scope_property(page.user_tile, 'UserService.username'), 'foobar'
+
+Though this shouldn't be a go-to for many test cases, it's certainly helpful for more advanced web applications.
 
 Call Controller Function
 ------------------------
 
-...
+A more advanced feature of the angular.js utilities for pyselenium-js, is the ability to directly invoke controller functions.
+Take for example the following angular.js controller,
+
+.. code-block:: javascript
+
+    angular.controller('homeCtrl', () => {
+        this.deleteUser(userId) {
+            ...
+        }
+    })
+
+Using the api method *ng_call_ctrl_function* you may call the controller method directly like so:
+
+.. code-block:: python
+
+    >> angular.element('#someSelector').controller().deleteUser(100100)
+    page.js.ng_call_ctrl_function(page.username_field, 'deleteUser', [100100])
 
 Angular (2-5)
 =============
