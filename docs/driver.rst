@@ -6,7 +6,7 @@ About
 =====
 
 The pyselenium-js driver is **just** a utility that exercises the existing selenium webdriver api *execute_script*.
-This project was originally created for convenience sake, but has been shaped into a reusable module to help alleviate some of the terrible burdings experienced while relying on the official selenium bindings for more modern websites and web applications.
+This project was originally created for convenience sake, but has been shaped into a reusable module to help alleviate some of the terrible burdens experienced while relying on the official selenium bindings for more modern websites and web applications.
 
 Best Practices
 ==============
