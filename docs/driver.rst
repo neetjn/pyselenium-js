@@ -40,7 +40,7 @@ This wait request is farmed out to your target web browser, and it's condition c
         250, 'button[ng-click="login()"]')
     >> string
 
-    # the wait method also has the capability to consume multiple elements
+    # multiple elements can be used with the javascript wait
     # the elements can be referenced in the condition with the alias $el[x]
     page.js.wait(
         '$el[0].disabled == false && \
