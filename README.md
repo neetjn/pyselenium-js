@@ -46,7 +46,7 @@ The mock website was created using angular.js 1.6, bulmacss, and webpack 3. It w
 
 Requirements:
 * Python 2.7, 3.6 (with pip)
-* Chrome or Chromium (*last confirmed test used version 62*)
+* Chrome or Chromium (*last confirmed test used version 63*)
 * ChromeDriver (*last confirmed test used version 2.33*)
 * Node.js 6+ (with npm)
 
