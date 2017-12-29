@@ -13,6 +13,10 @@ addons:
   chrome: stable
 install:
   - make setup
+cache:
+  directories:
+    - tests/pysjs-mock-site/node_modules
+    - venv
 script:
   - make app
   - make test
