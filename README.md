@@ -57,7 +57,7 @@ Requirements:
 Contributing guidelines are as follows,
 
 * Any new features added must also be unit tested in the `pyseleniumjs/tests` subdirectory.
-* Branches for bugs and features should be structued like so, `issue-x-username`.
+  * Branches for bugs and features should be structued like so, `issue-x-username`.
 * Include your name and email in the contributors list.
 
 ---
