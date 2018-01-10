@@ -1,3 +1,4 @@
+dist: trusty
 language: python
 python:
   - '2.7'
@@ -17,6 +18,10 @@ cache:
   directories:
     - tests/pysjs-mock-site/node_modules
     - venv
+before_script:
+  - "export DISPLAY=:99.0"
+  - "sh -e /etc/init.d/xvfb start"
+  - sleep 3 # give xvfb some time to start
 script:
   - make app
   - make test

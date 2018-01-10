@@ -57,6 +57,7 @@ class WaitTest(TestCase):
     def setUp(self):
         chrome_options = webdriver.ChromeOptions()
         chrome_options.add_argument('--headless')
+        chrome_options.add_argument('--no-sandbox')
         self.page = MyPage(browser=webdriver.Chrome(chrome_options=chrome_options))
         self.page.browser.get('http://localhost:3000')
 
