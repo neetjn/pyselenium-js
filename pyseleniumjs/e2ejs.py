@@ -59,7 +59,7 @@ class E2EJS(object):
             if value is 'null':
                 return None
             elif value in ('true', 'false'):
-                return False if value is 'false' else True
+                return False if value == 'false' else True
             elif value.replace('.', '', 1).isdigit():
                 return eval(value)
         return value
