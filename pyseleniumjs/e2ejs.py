@@ -45,6 +45,8 @@ class E2EJS(object):
             return 'false' if not value else 'true'
         elif isinstance(value, (int, float)):
             return '%s' % value
+        elif isinstance(value, dict):
+            return json.dumps(dict)
         return '"%s"' % value
 
     @classmethod
@@ -62,6 +64,11 @@ class E2EJS(object):
                 return False if value == 'false' else True
             elif value.replace('.', '', 1).isdigit():
                 return eval(value)
+            elif value.startswith('{') and value.endswidth('}'):
+                try:
+                    return json.loads(value)
+                except ValueError:
+                    return value
         return value
 
     def wait(self, condition, interval, *args):
