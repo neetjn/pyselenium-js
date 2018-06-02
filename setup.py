@@ -16,7 +16,7 @@ setup(
         'Programming Language :: Python :: 3.6'
     ],
     install_requires=[
-        'selenium>=3.6.0',
+        'selenium>=3.12.0',
         'six'
     ],
     packages=['pyseleniumjs']
