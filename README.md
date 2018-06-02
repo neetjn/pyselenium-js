@@ -24,9 +24,9 @@ An example of this being a div tag taking keyboard input, where div tags do not 
 
 ### Usage
 
-This project was created using selenium `3.6.0`.
+This project was created using selenium `3.12.0`.
 
-Support is available for both Python 2.7 and 3.6.
+Support is available for both Python 2.7 and 3.4+.
 
 **pyselenium-js** and can be installed using pip like so,
 
@@ -45,9 +45,9 @@ The mock website was created using angular.js 1.6, bulmacss, and webpack 3. It w
 *Note as of this time, tests for the Angular 2 bindings are not yet available.*
 
 Requirements:
-* Python 2.7, 3.6 (with pip)
-* Chrome or Chromium (*last confirmed test used version 63*)
-* ChromeDriver (*last confirmed test used version 2.33*)
+* Python 2.7, 3.4+ (with pip)
+* Chrome or Chromium (*last confirmed test used version 67*)
+* ChromeDriver (*last confirmed test used version 2.38.3*)
 * Node.js 6+ (with npm)
 
 ### Contributors
