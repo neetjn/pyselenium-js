@@ -62,4 +62,4 @@ Contributing guidelines are as follows,
 
 ---
 
-Copyright (c) 2017 John Nolette Licensed under the Apache License, Version 2.0.
+Copyright (c) 2018 John Nolette Licensed under the Apache License, Version 2.0.
