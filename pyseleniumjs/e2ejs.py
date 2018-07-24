@@ -84,6 +84,7 @@ class E2EJS(object):
         :type *args: tuple
         :return: string
         """
+        condition = condition.replace('"', '\\"')  # sanitize condition
         hid = lambda: '$' + str(uuid.uuid1())[:8]
         handle = hid()
         if len(args):
